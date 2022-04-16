@@ -12,5 +12,19 @@
   "sub_title": "finally, I guess",
   "top_image": "top_image.png",
   "visible": true
+ },
+ {
+  "url_title": "XO",
+  "title": "XO",
+  "sub_title": "XO - Eden",
+  "top_image": "top_image.webp",
+  "visible": true
+ },
+ {
+  "url_title": "Hi-Remember-me",
+  "title": "Hi, Remember me?",
+  "sub_title": "well thanks for that",
+  "top_image": "top_image.jpeg",
+  "visible": true
  }
 ]

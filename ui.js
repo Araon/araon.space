@@ -60,13 +60,14 @@ function createBlog(title, subtitle, folder, topImage, images, content) {
           let style = document.createElement("link");
           style.setAttribute("rel", "stylesheet");
           style.setAttribute("href", "../../index.css");
+          let meta_image_link = `https://araon.xyz/blog/${folder}/top_image.${topImage.split("/")[1].split(";")[0]}`;
           document.getElementsByTagName("head")[0].appendChild(style);
           document.getElementsByTagName("title")[0].textContent = title;
           document.getElementById("blog_title").textContent = title;
           document.getElementById("blog_sub_title").textContent = subtitle;
           document.getElementById("meta_tag_author").setAttribute("content", "Araon");
           document.getElementById("meta_tag_description").setAttribute("content", subtitle);
-          document.getElementById("meta_tag_thumbnail").setAttribute("content", `https://araon.xyz/blog/${folder}/top_image.${topImage.split("/")[1].split(";")[0]}`);
+          document.getElementById("meta_tag_thumbnail").setAttribute("content", meta_image_link);
           document.getElementById(
             "background"
           ).style.background = `url('top_image.${
