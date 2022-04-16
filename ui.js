@@ -66,7 +66,7 @@ function createBlog(title, subtitle, folder, topImage, images, content) {
           document.getElementById("blog_sub_title").textContent = subtitle;
           document.getElementById("meta_tag_author").setAttribute("content", "Araon");
           document.getElementById("meta_tag_description").setAttribute("content", subtitle);
-          document.getElementById("meta_tag_thumbnail").setAttribute("content", `url('top_image.${topImage.split("/")[1].split(";")[0]}')`);
+          document.getElementById("meta_tag_thumbnail").setAttribute("content", `https://araon.xyz/blog/${folder}/top_image.${topImage.split("/")[1].split(";")[0]}`);
           document.getElementById(
             "background"
           ).style.background = `url('top_image.${
