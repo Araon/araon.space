@@ -60,11 +60,14 @@ function createBlog(title, subtitle, folder, topImage, images, content) {
           let style = document.createElement("link");
           style.setAttribute("rel", "stylesheet");
           style.setAttribute("href", "../../index.css");
+          // TODD: bug fix for png images
           let meta_image_link = `https://araon.xyz/blog/${folder}/top_image.${topImage.split("/")[1].split(";")[0]}`;
           document.getElementsByTagName("head")[0].appendChild(style);
           document.getElementsByTagName("title")[0].textContent = title;
           document.getElementById("blog_title").textContent = title;
           document.getElementById("blog_sub_title").textContent = subtitle;
+          
+          // setting meta tags for sharing
           document.getElementById("meta_tag_author").setAttribute("content", "Araon");
           document.getElementById("meta_tag_description").setAttribute("content", subtitle);
           document.getElementById("meta_tag_thumbnail").setAttribute("content", meta_image_link);
@@ -213,6 +216,12 @@ function uiCommand() {
   });
 
   app.post("/createBlog", function(req, res) {
+    // Todo:
+    // 1. add custom author name
+    // 2. add audio file to blog
+    // 3. add time to read
+    // 4. add time when blog posted
+
     let title = req.body.title;
     let subtitle = req.body.subtitle;
     let content = req.body.content ? req.body.content : null;

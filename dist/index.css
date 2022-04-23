@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins");
 @import url("https://fonts.googleapis.com/css?family=Questrial");
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
 body {
   margin: 0%;
   padding: 0%;
@@ -164,10 +165,10 @@ body {
 
 #blog p {
   font-size: 22px;
-  line-height: 2.1em;
+  line-height: 25px;
   word-spacing: 3px;
   margin: 5vh 0px;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 #blog p span {
