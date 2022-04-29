@@ -556,13 +556,13 @@ body {
       rgba(10, 10, 10, 0.3),
       rgb(10, 10, 10, 1)
     ),
-    url("https://raw.githubusercontent.com/Araon/personalsite/nosub/araon/static/img/images/error.png");
+    url("https://raw.githubusercontent.com/Araon/personalsite/nosub/araon/static/img/images/home.png");
   --background-background: linear-gradient(
       0deg,
       rgba(10, 10, 10, 1),
       rgba(10, 10, 10, 0.6)
     ),
-    url("https://raw.githubusercontent.com/Araon/personalsite/nosub/araon/static/img/images/error.png") center center fixed;
+    url("https://raw.githubusercontent.com/Araon/personalsite/nosub/araon/static/img/images/home.png") center center fixed;
   --height: 50vh;
 }
 
@@ -593,6 +593,6 @@ body {
         rgba(10, 10, 10, 1),
         rgba(10, 10, 10, 0)
       ),
-      url("https://raw.githubusercontent.com/Araon/personalsite/nosub/araon/static/img/images/error.png") !important;
+      url("https://raw.githubusercontent.com/Araon/personalsite/nosub/araon/static/img/images/home.png") !important;
   }
 }
