@@ -42,7 +42,7 @@ module.exports.updateHTML = (username, opts) => {
         try {
           console.log("Building HTML/CSS...");
           const repos = await getRepos(username, opts);
-          for (var i = 0; i < 4; i++) {
+          for (var i = 0; i < 5; i++) {
             let element;
             if (repos[i].fork == false) {
               element = document.getElementById("work_section");
