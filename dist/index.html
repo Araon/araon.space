@@ -42,22 +42,37 @@
           Hi! 👋
           <br>
           <br>
-          I'm Soumik Ghosh, a <a href="https://docs.google.com/document/d/e/2PACX-1vS-TL8LZ1gz2pu0kx_qSnmIHRGLqdVYJ32ZSGzKm-QxMcuNpqGe9h2VXMbd7sS6sA/pub" style="text-decoration: none !important; color:lightcoral;">Software enginner</a> based in India. <br>
-          Welcome to my small piece of the internet, where I share my thoughts <br> 
-          and rant about stuff. Documenting stuff I find intriguing<br>
+          I'm Soumik Ghosh, a  <a href="https://docs.google.com/document/d/e/2PACX-1vS-TL8LZ1gz2pu0kx_qSnmIHRGLqdVYJ32ZSGzKm-QxMcuNpqGe9h2VXMbd7sS6sA/pub" style="text-decoration: none !important; color:lightcoral;">Backend Enginner</a><br>
+          With experience in bulding intelligent and robust systems👨‍💻.
           <br>
-          As for hobbies, <br>
-          I <a href="" style="text-decoration: none !important; color:lightskyblue;">Stream</a> and sometimes fiddle with the <a href="#" style="text-decoration: none !important; color:lightsalmon;">guitar</a><br>
+          <br>
+          As for hobbies, i <a href="https://www.twitch.tv/ara0nwastaken" style="text-decoration: none !important; color:lightskyblue;">stream</a> and sometimes fiddle with the <a href="https://www.youtube.com/channel/UCOPMDpL21-Rm3PNUN5oFzJw" style="text-decoration: none !important; color:lightsalmon;">guitar</a> and ramble on my <a href="#blog_section" style="text-decoration: none !important; color:rgb(255, 126, 223);">blog</a> 
+          <br>
+          <br>
+          Lets connect 👉 <a href="mailto:soumik.ghosh1998@gmail.com" style="text-decoration: none !important; color:rgb(246, 117, 117);">over here</a>
         </p>
       </div>
       <div id="work">
-        <h1>Currently i'm working on.</h1>
+        <h1>Currently i'm working on </h1>
         <div class="projects" id="work_section">
+                        <a href="https://github.com/rajdeep-biswas/covid19-prediction" target="_blank">
+                        <section>
+                            <div class="section_title">covid19-prediction</div>
+                            <div class="about_section">
+                            <span style="display:none;">undefined</span>
+                            </div>
+                            <div class="bottom_section">
+                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; Jupyter Notebook</span>
+                                <span><i class="fas fa-star"></i>&nbsp; 2</span>
+                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
+                            </div>
+                        </section>
+                        </a>
                         <a href="https://github.com/Araon/personalsite" target="_blank">
                         <section>
                             <div class="section_title">personalsite</div>
                             <div class="about_section">
-                            <span style="display:block;">2021 - Personal site and blog v3, messing with Flask and Jinja</span>
+                            <span style="display:block;">2021 - Personal site and blog v3, messing with Flask and Jinja(Archived)</span>
                             </div>
                             <div class="bottom_section">
                                 <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; HTML</span>
@@ -91,24 +106,7 @@
                                 <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
                             </div>
                         </section>
-                        </a>
-                        <a href="https://github.com/Araon/Araon_chan" target="_blank">
-                        <section>
-                            <div class="section_title">Araon_chan</div>
-                            <div class="about_section">
-                            <span style="display:block;">Telegram Bot to search and download anime</span>
-                            </div>
-                            <div class="bottom_section">
-                                <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; Python</span>
-                                <span><i class="fas fa-star"></i>&nbsp; 2</span>
-                                <span><i class="fas fa-code-branch"></i>&nbsp; 0</span>
-                            </div>
-                        </section>
                         </a></div>
-      </div>
-      <div id="forks" style="display:none;">
-        <h1>Forks.</h1>
-        <div class="projects" id="forks_section"></div>
       </div>
       <div id="blog_section">
         <h1>Blog and <a style="font-family: 'Square Peg', cursive; color:rgb(255, 135, 135);">Life updates.</a></h1>
@@ -136,7 +134,7 @@
         }
         for (var i = 0; i < blog.length; i++) {
           $("#blogs").append(`
-            <a href="./blog/${blog[i].url_title}/" target="_blank">
+            <a href="./blog/${blog[i].url_title}/">
                 <section>
                     <img src="./blog/${blog[i].url_title}/${blog[i].top_image}">
                     <div class="blog_container">
@@ -157,16 +155,6 @@
     <script>
       const magicProjectsGrid = new MagicGrid({
         container: "#work_section",
-        animate: false,
-        gutter: 30, // default gutter size
-        static: true,
-        useMin: false,
-        maxColumns: 2,
-        useTransform: true
-      });
-
-      const magicForksGrid = new MagicGrid({
-        container: "#forks_section",
         animate: false,
         gutter: 30, // default gutter size
         static: true,
