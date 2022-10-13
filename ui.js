@@ -218,9 +218,10 @@ function uiCommand() {
   app.post("/createBlog", function(req, res) {
     // Todo:
     // 1. add custom author name
-    // 2. add audio file to blog
+    // 2. add time when blog posted
     // 3. add time to read
-    // 4. add time when blog posted
+    // 4. add audio file to blog
+    // 5. make this endpoint visible from blog page
 
     let title = req.body.title;
     let subtitle = req.body.subtitle;
