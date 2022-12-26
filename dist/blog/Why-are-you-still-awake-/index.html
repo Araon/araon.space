@@ -33,6 +33,7 @@
     <div id="blog-display">
       <h1 id="blog_title">Why are you still awake? </h1>
       <h2 id="blog_sub_title">too cliche</h2>
+      <div class="readtime"></div>
       <div id="blog"><p id="para_0_original"></p><p>That day, I developed this love-hate sentiment for airports. Watching you go, made my heart sink. But the fact that you're going to accomplish something, made it sail.</p>
 <p>Since then, each time we make an effort to beat time zones &amp; the four thousand odd miles between us, with pep talks at wee hours, scrabble tournaments, guitar sessions, Skype long walk dates - we win a little in a world that says LDRs don't work.</p>
 <p>My math has improved because I've to keep count of days left to your next visit and calculate time difference during the day. I'm happy that your cooking skills have improved. Because mine never will.</p>
@@ -80,6 +81,12 @@
             "linear-gradient(0deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1))";
         }
       });
+      var words = document.getElementById("blog").innerText.split(" ").length;
+    if (Math.round(words / 1000) < 1) {
+      document.querySelector(".readtime").innerHTML = `<i class='far fa-eye	'></i> 1 min`;
+    }
+    else readtime = Math.round(words / 220);
+    document.querySelector(".readtime").innerHTML = `<i class='far fa-eye	'></i> ${readtime} mins`;
     </script>
   
 
