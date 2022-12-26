@@ -75,7 +75,7 @@ function createBlog(title, subtitle, folder, topImage, images, content) {
             "background"
           ).style.background = `url('top_image.${
             topImage.split("/")[1].split(";")[0]
-          }') center center`;
+          }') 50% 70%; center`;
 
           if (content != null) {
             var parser = new DOMParser();

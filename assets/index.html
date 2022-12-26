@@ -95,6 +95,9 @@
                         <div class="about_section">
                             ${blog[i].sub_title}
                         </div>
+                        <div class="tags">
+                            ${blog[i].tags.map(tag => `<div class="tags_sections">${tag}</div>`).join(' ')}
+                    </div>
                     </div>
                 </section>
             </a>

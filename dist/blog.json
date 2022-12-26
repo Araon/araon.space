@@ -1,37 +1,42 @@
 [
  {
   "url_title": "Hi-there",
-  "title": "\r\nHi! there",
+  "title": "Hi! there",
   "sub_title": "a very brief self explanation",
   "top_image": "top_image.jpeg",
-  "visible": true
+  "visible": true,
+  "tags": ["Personal","Self"]
  },
  {
   "url_title": "Why-are-you-still-awake-",
   "title": "Why are you still awake? ",
-  "sub_title": "<i>way too cringe<i>",
+  "sub_title": "way too cringe",
   "top_image": "top_image.jpeg",
-  "visible": true
+  "visible": true,
+  "tags": ["Writing"]
  },
  {
   "url_title": "When-in-doubt-Castle-",
   "title": "When in doubt, Castle! ",
   "sub_title": "Finally i guess",
   "top_image": "top_image.jpg",
-  "visible": true
+  "visible": true,
+  "tags": ["Learning"]
  },
  {
   "url_title": "New-Game",
   "title": "New Game?",
   "sub_title": "Lets talk video games!",
   "top_image": "top_image.jpeg",
-  "visible": true
+  "visible": true,
+  "tags": ["Story"]
  },
  {
   "url_title": "They-are-still-watching",
   "title": "They are still watching",
   "sub_title": " ",
   "top_image": "top_image.jpg",
-  "visible": true
+  "visible": true,
+  "tags": ["Writing","Fiction"]
  }
 ]

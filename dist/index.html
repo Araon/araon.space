@@ -139,7 +139,9 @@
                         <div class="section_title">${blog[i].title}</div>
                         <div class="about_section">
                             ${blog[i].sub_title}
-                        </div>
+                        </div>                        
+                        <div class="tags">
+                            ${blog[i].tags.map(tag => `<div class="tags_sections">${tag}</div>`).join(' ')}
                     </div>
                 </section>
             </a>

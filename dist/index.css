@@ -340,6 +340,18 @@ body {
   font-weight: bold;
   word-wrap: break-word;
 }
+.tags_sections {
+  font-size: 14px;
+  margin: 2vh 0px;
+  word-wrap: break-word;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.446);
+  color: rgba(7, 7, 7, 0.69);
+  text-decoration: none;
+  padding: 4px 6px;
+  border-radius: 4px;
+  display: inline-block;
+}
 
 .bottom_section {
   margin: 1vh 0px;
@@ -504,7 +516,7 @@ body {
     font-size: 24px;
     margin-top: -1vh;
   }
-
+  
   #profile_blog {
     width: 90vw;
     margin: 0px 5vw;
@@ -516,6 +528,10 @@ body {
   #profile_img_blog {
     width: 65px;
     height: 65px;
+  }
+
+  #post_metadata {
+    
   }
 
   .go_back {

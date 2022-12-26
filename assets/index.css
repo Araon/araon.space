@@ -341,6 +341,19 @@ body {
   word-wrap: break-word;
 }
 
+.tags_sections {
+  font-size: 14px;
+  margin: 2vh 0px;
+  word-wrap: break-word;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.446);
+  color: rgba(7, 7, 7, 0.69);
+  text-decoration: none;
+  padding: 4px 6px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
 .bottom_section {
   margin: 1vh 0px;
   font-size: 14px;
