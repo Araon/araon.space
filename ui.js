@@ -27,6 +27,7 @@ const jsdom = require("jsdom").JSDOM,
   };
 global.DOMParser = new jsdom().window.DOMParser;
 const { getBlog, outDir } = require("./utils");
+const { timeStamp } = require("console");
 
 function createBlog(title, subtitle, folder, topImage, images, content) {
   // Checks to make sure this directory actually exists
@@ -121,12 +122,16 @@ function createBlog(title, subtitle, folder, topImage, images, content) {
                 }
               );
 
+              let date = new Date();
+
               let blog_data = {
                 url_title: folder,
                 title: title,
                 sub_title: subtitle,
                 top_image: `top_image.${topImage.split("/")[1].split(";")[0]}`,
-                visible: true
+                visible: true,
+                tags: ['writing'],
+                timeStamp: date.toLocaleDateString()
               };
               const old_blogs = await getBlog();
               old_blogs.push(blog_data);
@@ -235,7 +240,7 @@ function uiCommand() {
     if (!content) {
       return res.send("something isn't working fine, try again :p");
     }
-    let folder = title.replace(/[^a-zA-Z ]/g, "").replace(/ /g, "-");
+    let folder = title.replace(/[^a-zA-Z0-9 ]/g, "").replace(/ /g, "-");
     let topImage = req.body.top_image;
     let images = req.body.images;
     createBlog(title, subtitle, folder, topImage, images, content);
