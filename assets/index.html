@@ -79,33 +79,66 @@
           document.getElementById("loading").style.display = "none";
         }, 800);
       }, 1500);
-      $.getJSON("blog.json", function(blog) {
-        blog = blog || [];
-        if (blog.length == 0) {
-          return (document.getElementById("blog_section").style.display =
-            "none");
-        }
-        for (var i = 0; i < blog.length; i++) {
-          $("#blogs").append(`
-            <a href="./blog/${blog[i].url_title}/">
-                <section>
-                    <img src="./blog/${blog[i].url_title}/${blog[i].top_image}">
-                    <div class="blog_container">
-                        <div class="section_title">${blog[i].title}</div>
-                        <div class="about_section">
-                            ${blog[i].sub_title}
-                        </div>
-                        <div class="tags">
-                            ${blog[i].tags.map(tag => `<div class="tags_sections">${tag}</div>`).join(' ')}
-                    </div>
-                    </div>
-                </section>
-            </a>
-            `);
-        }
-      }).fail(function() {
+      $.getJSON("blog.json", function (blog) {
+      blog = blog || [];
+      if (blog.length == 0) {
         return (document.getElementById("blog_section").style.display = "none");
-      });
+      }
+      for (var i = 0; i < blog.length; i++) {
+        if (blog[i].visible == false) {
+          // don't show the blog
+          continue;
+        } else {
+          const currentDate = new Date();
+          const dateDifference = currentDate - new Date(blog[i].timeStamp);
+          console.log(currentDate, "|", new Date(blog[i].timeStamp), "|", dateDifference);
+          const years = Math.floor(dateDifference / (1000 * 60 * 60 * 24 * 365));
+          const months = Math.floor(dateDifference / (1000 * 60 * 60 * 24 * 30));
+          const days = Math.floor(dateDifference / (1000 * 60 * 60 * 24));
+
+          let timeAgo;
+          if (years > 0) {
+            timeAgo = `${years} years ago`;
+          } else if (years >= 1) {
+            timeAgo = `A year ago`;
+          } else if (months > 0) {
+            timeAgo = `${months} months ago`;
+          } else if (months === 1) {
+            timeAgo = `A month ago`;
+          } else if (days > 0) {
+            timeAgo = `${days} days ago`;
+          } else if (days >= 1) {
+            timeAgo = `Yesterday`;
+          } else if (days === 0) {
+            timeAgo = 'Today';
+          } else {
+            timeAgo = 'A few days ago';
+          }
+          if (blog[i].tags && blog[i].tags.length > 0) {
+            tagsHtml = `<div class="tags">
+                      <div id="blog_time">${timeAgo} in  
+                        ${blog[i].tags.map(tag => `<div class="tags_sections">${tag}</div>`).join(' ')}
+                      </div>`
+          }
+          $("#blogs").append(`
+      <a href="./blog/${blog[i].url_title}/">
+          <section>
+              <img src="./blog/${blog[i].url_title}/${blog[i].top_image}">
+              <div class="blog_container">
+                  <div class="section_title">${blog[i].title}</div>
+                  <div class="about_section">
+                      ${blog[i].sub_title}
+                  </div>                        
+                  ${tagsHtml}
+              </div>
+          </section>
+      </a>
+      `);
+        }
+      }
+    }).fail(function () {
+      return (document.getElementById("blog_section").style.display = "none");
+    });
     </script>
 
     <script>
