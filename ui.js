@@ -128,11 +128,16 @@ function createBlog(title, subtitle, folder, topImage, images, content) {
                 url_title: folder,
                 title: title,
                 sub_title: subtitle,
+                // check if the format is png else convert it to jpg
+
+                //convertedImage = `top_image.${topImage.split("/")[1].split(";")[0]}`.split(".")[1] == "png" ? `top_image.${topImage.split("/")[1].split(";")[0]}` : `top_image.${topImage.split("/")[1].split(";")[0]}`.split(".")[0] + ".jpg",
+
                 top_image: `top_image.${topImage.split("/")[1].split(";")[0]}`,
                 visible: true,
                 tags: ['writing'],
-                timeStamp: date.toLocaleDateString()
+                timeStamp: date.toLocaleTimeString()
               };
+              console.log(`Saving the following blog details: ${blog_data}`);
               const old_blogs = await getBlog();
               old_blogs.push(blog_data);
               fs.writeFile(
