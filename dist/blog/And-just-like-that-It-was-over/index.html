@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+
+  <meta id="meta_tag_author" name="author" content="Araon">
+  <meta id="meta_tag_description" name="description" content="  ">
+  <meta id="meta_tag_thumbnail" property="og:image" content="https://araon.xyz/blog/And-just-like-that-It-was-over/top_image.jpeg">
+  <meta property="og:type" content="article">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>And just like that, It was over</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="../../index.css"></head>
+
+<body>
+  <div id="loading">
+    <div id="spinner"></div>
+  </div>
+  <a href="/" class="go_back"><i class="fas fa-arrow-left"></i></a>
+  <div id="background_overlay"></div>
+  <div id="background" style="background: url(top_image.jpeg) 50% 45%;"></div>
+  <table id="profile_blog">
+    <tbody>
+      <tr>
+        <td style="width:8vw;">
+          <div id="profile_img_blog"></div>
+        </td>
+        <td style="width:52vw;">
+          <div id="username_blog"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="blog-display">
+    <h1 id="blog_title">And just like that, It was over</h1>
+    <h2 id="blog_sub_title">  </h2>
+    <div class="readtime"></div>
+    <div id="blog"><p id="para_0_original"></p><p>Then just like that, we were over.</p>
+
+<p>This was the one thing that I dreaded the most. The one thing that I tried so hard to deny, and tried so hard to escape from, was finally here… again. And it was eating me out on the inside: this emptiness and unfillable void.</p>
+
+<p>I knew for a fact that this might happen eventually. But I never expected it to be this soon. The highly saturated colors of happiness and burning desire that you once had painted my life with, were now fading into blur, causing disarray to my illusionary colourful world that was seconds away from being completely shattered.</p>
+
+<p>It kept me wondering why it had to happen in such a time when finally things had been doing so well; at a time that I thought I finally grew out of this despicable habit… this seemingly unfixable damage that needed fixing.</p>
+
+<p>People had told me that genuine feelings last longer. So I thought that even in our short moment, what we had was something real. But there I was again, watching it slip through my fingers, like the other past “affections” I had hid. It was wearing out by the minute, for me to impossibly not realize I fell out of love hard just as fast as I dived right in. Or perhaps it was just another obsession I had mistaken as genuine affection. I couldn’t really tell. What was certain was, I was back to my usual self—my reckless, impulsive, indifferent, egotistic self. What was worse, I had now involved another person. And just like the demons under your bed that you can't see but are there, this feeling will still be lying, there unnoticed ,unaltered until you notice it</p>
+
+<p>I couldn’t bring myself to be brutally honest this time. I thought that, if I had to break your heart, I should at least be gentle with it; then get things over with as quickly as possible.</p>
+
+<p>If there was one thing I was sorry for, it was not for the fact that I dragged you into this. I was only sorry for myself, and for the spark that I had lost. I was only sorry that I couldn’t bring myself to feel sorry for delicate matters as this, like betraying someone’s trust. It wasn’t that I didn’t have any conscience, not in the least. But truth be told, I would do it again in a heartbeat, just so I could feel that excitement once more… that thrill of chasing something… that indescribable, addicting dopamine rush that sends anyone spiraling into madness; those very things you once had given me, until not anymore.</p>
+
+<p>To me you are nothing more than a once beautiful memory that trespasses your way into my dreams to mercilessly turn them into nightmares. You are just another beautiful idea… another obsession I got over with… another subject of my hyper-fixation that entertained me for a while. Now all that is drained out, as if I woke up sober to the stench of my own filth after long hours of being drenched in deep intoxication. It was time to clean up, I figured. It was time to move on.</p>
+
+<p>In hindsight, I guess no one could have fixed someone who was not damaged to begin with. All those times I was with you, I was just as me—messed up, spontaneous, fickle, and all over the place.</p>
+
+<p>I didn’t need someone’s fixing. I just wanted to feel something other than being empty, whatever the cost. I just wanted to feel… alive.</p><p></p></div>
+  </div>
+  <div id="footer_blog">
+    <a href="https://github.com/Araon" target="_blank">Something made by Soumik Ghosh 🤙</a>
+  </div>
+  <script type="text/javascript">
+    setTimeout(function () {
+      document.getElementById("loading").classList.add("animated");
+      document.getElementById("loading").classList.add("fadeOut");
+      setTimeout(function () {
+        document.getElementById("loading").classList.remove("animated");
+        document.getElementById("loading").classList.remove("fadeOut");
+        document.getElementById("loading").style.display = "none";
+      }, 800);
+    }, 1500);
+    $.getJSON("../../config.json", function (user) {
+      var icon = document.createElement("link");
+      icon.setAttribute("rel", "icon");
+      icon.setAttribute("href", user[0].userimg);
+      icon.setAttribute("type", "image/png");
+      document.getElementsByTagName("head")[0].appendChild(icon);
+      document.getElementById(
+        "profile_img_blog"
+      ).style.background = `url('${user[0].userimg}') center center`;
+      document.getElementById(
+        "username_blog"
+      ).innerHTML = `<span style="display:${user[0].name == null || !user[0].name ? "none" : "block"
+        };">${user[0].name}</span>@${user[0].username}<b id="blog_time"></b>`;
+
+      if ((user[0].theme = "dark.css")) {
+        document.querySelector("#background_overlay").style.background =
+          "linear-gradient(0deg, rgba(10, 10, 10, 1), rgba(10, 10, 10, 0.1))";
+      } else {
+        document.querySelector("#background_overlay").style.background =
+          "linear-gradient(0deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1))";
+      }
+    });
+    var words = document.getElementById("blog").innerText.split(" ").length;
+    if (Math.round(words / 1000) < 1) {
+      document.querySelector(".readtime").innerHTML = `<i class='far fa-eye	'></i> 1 min`;
+    }
+    else readtime = Math.round(words / 220);
+    document.querySelector(".readtime").innerHTML = `<i class='far fa-eye	'></i> ${readtime} mins`;
+  </script>
+
+
+</body></html>
