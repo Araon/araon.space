@@ -57,4 +57,10 @@ program
   .usage("<command> [options]")
   .parse(process.argv);
 
+program
+  .command("blog")
+  .description("Create a new blog")
+  .option("-f, --file [file]", "specify a markdown file to use")
+  .action(uiCommand);
+
 if (program.args.length === 0) program.help();

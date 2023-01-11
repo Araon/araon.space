@@ -115,10 +115,10 @@
     });
     var words = document.getElementById("blog").innerText.split(" ").length;
     if (Math.round(words / 1000) < 1) {
-      document.querySelector(".readtime").innerHTML = `<i class='far fa-eye	'></i> 1 min`;
+      document.querySelector(".readtime").innerHTML = `1 min read`;
     }
     else readtime = Math.round(words / 220);
-    document.querySelector(".readtime").innerHTML = `<i class='far fa-eye	'></i> ${readtime} mins`;
+    document.querySelector(".readtime").innerHTML = `${readtime} min read`;
   </script>
 </body>
 
