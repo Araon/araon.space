@@ -1,5 +1,6 @@
 const fs = require("fs");
 const express = require("express");
+const markdownIt = require("markdown-it");
 const { updateHTML } = require("./populate");
 const { populateCSS, populateConfig } = require("./build");
 const { updateCommand } = require("./update");
@@ -29,7 +30,8 @@ global.DOMParser = new jsdom().window.DOMParser;
 const { getBlog, outDir } = require("./utils");
 const { timeStamp } = require("console");
 
-function createBlog(title, subtitle, folder, topImage, images, content, tags) {
+
+function createBlog(title, subtitle, folder, topImage, content, images, tags) {
     // Checks to make sure this directory actually exists
     // and creates it if it doesn't
     if (!fs.existsSync(`${outDir}/blog/`)) {
@@ -47,7 +49,6 @@ function createBlog(title, subtitle, folder, topImage, images, content, tags) {
             recursive: true,
         });
     }
-
     fs.copyFile(
         `${__dirname}/assets/blog/blogTemplate.html`,
         `${outDir}/blog/${folder}/index.html`,
@@ -61,10 +62,7 @@ function createBlog(title, subtitle, folder, topImage, images, content, tags) {
                     let style = document.createElement("link");
                     style.setAttribute("rel", "stylesheet");
                     style.setAttribute("href", "../../index.css");
-                    // TODD: bug fix for png images
-                    let meta_image_link = `https://araon.xyz/blog/${folder}/top_image.${
-                        topImage.split("/")[1].split(";")[0]
-                    }`;
+                    
                     document.getElementsByTagName("head")[0].appendChild(style);
                     document.getElementsByTagName(
                         "title"
@@ -83,12 +81,10 @@ function createBlog(title, subtitle, folder, topImage, images, content, tags) {
                         .setAttribute("content", subtitle);
                     document
                         .getElementById("meta_tag_thumbnail")
-                        .setAttribute("content", meta_image_link);
+                        .setAttribute("content", topImage);
                     document.getElementById(
                         "background"
-                    ).style.background = `url('top_image.${
-                        topImage.split("/")[1].split(";")[0]
-                    }') center center`;
+                    ).style.background = `url('${topImage}') center center`;
 
                     if (content != null) {
                         var parser = new DOMParser();
@@ -97,22 +93,31 @@ function createBlog(title, subtitle, folder, topImage, images, content, tags) {
                             content.documentElement.innerHTML;
                     }
 
-                    images = JSON.parse(images);
-                    images.forEach((item, index) => {
-                        var base64Image = item.split(";base64,").pop();
-                        fs.writeFile(
-                            `${outDir}/blog/${folder}/img_${index}.${
-                                item.split("/")[1].split(";")[0]
-                            }`,
-                            base64Image,
-                            {
-                                encoding: "base64",
-                            },
-                            function(err) {
-                                if (err) throw err;
-                            }
-                        );
-                    });
+                    if (images != null && images != "") {
+                        try {
+                            images = JSON.parse(images);
+                            images.forEach((item, index) => {
+                                var base64Image = item.split(";base64,").pop();
+                                fs.writeFile(
+                                    `${outDir}/blog/${folder}/img_${index}.${
+                                        item.split("/")[1].split(";")[0]
+                                    }`,
+                                    base64Image,
+                                    {
+                                        encoding: "base64",
+                                    },
+                                    function(err) {
+                                        if (err) throw err;
+                                    }
+                                );
+                            });
+                            
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    } else {
+                        console.log("No images to add");
+                    }
 
                     fs.writeFile(
                         `${outDir}/blog/${folder}/index.html`,
@@ -121,38 +126,16 @@ function createBlog(title, subtitle, folder, topImage, images, content, tags) {
                         async function(error) {
                             if (error) throw error;
 
-                            var base64ImageTop = topImage
-                                .split(";base64,")
-                                .pop();
-                            fs.writeFile(
-                                `${outDir}/blog/${folder}/top_image.${
-                                    topImage.split("/")[1].split(";")[0]
-                                }`,
-                                base64ImageTop,
-                                {
-                                    encoding: "base64",
-                                },
-                                function(err) {
-                                    if (err) throw err;
-                                }
-                            );
-
                             let date = new Date();
 
                             let blog_data = {
                                 url_title: folder,
                                 title: title,
                                 sub_title: subtitle,
-                                // check if the format is png else convert it to jpg
-
-                                //convertedImage = `top_image.${topImage.split("/")[1].split(";")[0]}`.split(".")[1] == "png" ? `top_image.${topImage.split("/")[1].split(";")[0]}` : `top_image.${topImage.split("/")[1].split(";")[0]}`.split(".")[0] + ".jpg",
-
-                                top_image: `top_image.${
-                                    topImage.split("/")[1].split(";")[0]
-                                }`,
+                                top_image: topImage,
                                 visible: true,
-                                tags: ["writing"],
-                                timeStamp: date.toLocaleTimeString(),
+                                tags: ["writing"], // TODO: add tags
+                                timeStamp: date.toISOString(),
                             };
                             console.log(
                                 `Saving the following blog details: ${blog_data}`
@@ -175,6 +158,26 @@ function createBlog(title, subtitle, folder, topImage, images, content, tags) {
                 .catch(function(error) {
                     console.log(error);
                 });
+        }
+    );
+}
+
+function markdownToHtml(inputData) {
+        const md = markdownIt();
+        return md.render(inputData);  
+}
+
+function readMarkdownFile(file) {
+    fs.readFile(file,"utf8",function(err, data) {
+            if (err) throw err;
+            let title = data.split("\n")[1].split("Title:")[1].trim();
+            let subtitle = data.split("\n")[2].split("subtitle:")[1].trim();
+            let topImage = data.split("\n")[3].split("topImage:")[1].trim();
+            let content = data.split("\n").slice(5).join("\n");
+            content = markdownToHtml(content);
+            let folder = title.replace(/[^a-zA-Z0-9 ]/g, "").replace(/ /g, "-");
+            let images = '';
+            createBlog(title, subtitle, folder, topImage, content, images);
         }
     );
 }
@@ -278,4 +281,5 @@ function uiCommand() {
 
 module.exports = {
     uiCommand,
+    readMarkdownFile
 };

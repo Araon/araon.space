@@ -66,3 +66,6 @@ typings/
 # Editor files and folders
 .vscode/
 .idea/
+
+# blog files
+*.md

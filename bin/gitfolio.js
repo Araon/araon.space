@@ -6,7 +6,7 @@ process.env.OUT_DIR = process.env.OUT_DIR || process.cwd();
 
 const { buildCommand } = require("../build");
 const { updateCommand } = require("../update");
-const { uiCommand } = require("../ui");
+const { uiCommand, readMarkdownFile } = require("../ui");
 const { runCommand } = require("../run");
 const { version } = require("../package.json");
 
@@ -47,6 +47,14 @@ program
   .option("-p, --port [port]", "provide a port for localhost, default is 3000")
   .action(runCommand);
 
+  program
+  .command("blog")
+  .description("Create a new blog")
+  .option("-f, --file [file]", "specify a markdown file to use")
+  .action((cmd) => {
+    readMarkdownFile(cmd.file);
+  });
+
 program.on("command:*", () => {
   console.log("Unknown Command: " + program.args.join(" "));
   program.help();
@@ -57,10 +65,5 @@ program
   .usage("<command> [options]")
   .parse(process.argv);
 
-program
-  .command("blog")
-  .description("Create a new blog")
-  .option("-f, --file [file]", "specify a markdown file to use")
-  .action(uiCommand);
 
 if (program.args.length === 0) program.help();

@@ -130,7 +130,7 @@
       <div id="blogs"></div>
     </div>
     <div id="footer">
-      <a href="https://github.com/Araon" target="_blank">Something made by Soumik Ghosh 🤙</a>
+      <a href="https://github.com/Araon" target="_blank">Something made by Araon 🤙</a>
     </div>
   </div>
   <script type="text/javascript">
@@ -153,41 +153,35 @@
           // don't show the blog
           continue;
         } else {
-          const currentDate = new Date();
-          const dateDifference = currentDate - new Date(blog[i].timeStamp);
-          console.log(currentDate, "|", new Date(blog[i].timeStamp), "|", dateDifference);
-          const years = Math.floor(dateDifference / (1000 * 60 * 60 * 24 * 365));
-          const months = Math.floor(dateDifference / (1000 * 60 * 60 * 24 * 30));
-          const days = Math.floor(dateDifference / (1000 * 60 * 60 * 24));
-
           let timeAgo;
-          if (years > 0) {
-            timeAgo = `${years} years ago`;
-          } else if (years >= 1) {
-            timeAgo = `A year ago`;
-          } else if (months > 0) {
-            timeAgo = `${months} months ago`;
-          } else if (months === 1) {
-            timeAgo = `A month ago`;
-          } else if (days > 0) {
-            timeAgo = `${days} days ago`;
-          } else if (days >= 1) {
-            timeAgo = `Yesterday`;
-          } else if (days === 0) {
-            timeAgo = 'Today';
+          currrentDate = new Date();
+          blogDate = new Date(blog[i].timeStamp);
+          console.log(currrentDate, "-", blogDate);
+          diff = currrentDate - blogDate;
+          // days , month and year
+          daysAgo = diff / (1000 * 60 * 60 * 24);
+          monthsAgo = diff / (1000 * 60 * 60 * 24 * 30);
+          yearsAgo = diff / (1000 * 60 * 60 * 24 * 30 * 12);
+          if (yearsAgo > 1) {
+            timeAgo = Math.floor(yearsAgo) + " years ago";
+          } else if (monthsAgo > 1) {
+            timeAgo = Math.floor(monthsAgo) + " months ago";
+          } else if (daysAgo > 1) {
+            timeAgo = Math.floor(daysAgo) + " days ago";
           } else {
-            timeAgo = 'A few days ago';
+            timeAgo = "Today";
           }
           if (blog[i].tags && blog[i].tags.length > 0) {
             tagsHtml = `<div class="tags">
-                      <div id="blog_time">${timeAgo} in  
+                      <div id="blog_time"> ${timeAgo} in 
                         ${blog[i].tags.map(tag => `<div class="tags_sections">${tag}</div>`).join(' ')}
                       </div>`
           }
           $("#blogs").append(`
       <a href="./blog/${blog[i].url_title}/">
           <section>
-              <img src="./blog/${blog[i].url_title}/${blog[i].top_image}">
+            <img src="./blog/${blog[i].url_title}/${blog[i].top_image}" alt="Not Found" onerror="this.src='${blog[i].top_image}';">
+              <img src="">
               <div class="blog_container">
                   <div class="section_title">${blog[i].title}</div>
                   <div class="about_section">
