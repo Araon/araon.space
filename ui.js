@@ -28,10 +28,9 @@ const jsdom = require("jsdom").JSDOM,
     };
 global.DOMParser = new jsdom().window.DOMParser;
 const { getBlog, outDir } = require("./utils");
-const { timeStamp } = require("console");
 
 
-function createBlog(title, subtitle, folder, topImage, content, images, tags) {
+function createBlog(title, subtitle, folder, topImage, content, tags) {
     // Checks to make sure this directory actually exists
     // and creates it if it doesn't
     if (!fs.existsSync(`${outDir}/blog/`)) {
@@ -93,32 +92,6 @@ function createBlog(title, subtitle, folder, topImage, content, images, tags) {
                             content.documentElement.innerHTML;
                     }
 
-                    if (images != null && images != "") {
-                        try {
-                            images = JSON.parse(images);
-                            images.forEach((item, index) => {
-                                var base64Image = item.split(";base64,").pop();
-                                fs.writeFile(
-                                    `${outDir}/blog/${folder}/img_${index}.${
-                                        item.split("/")[1].split(";")[0]
-                                    }`,
-                                    base64Image,
-                                    {
-                                        encoding: "base64",
-                                    },
-                                    function(err) {
-                                        if (err) throw err;
-                                    }
-                                );
-                            });
-                            
-                        } catch (error) {
-                            console.log(error);
-                        }
-                    } else {
-                        console.log("No images to add");
-                    }
-
                     fs.writeFile(
                         `${outDir}/blog/${folder}/index.html`,
                         "<!DOCTYPE html>" +
@@ -134,11 +107,11 @@ function createBlog(title, subtitle, folder, topImage, content, images, tags) {
                                 sub_title: subtitle,
                                 top_image: topImage,
                                 visible: true,
-                                tags: ["writing"], // TODO: add tags
+                                tags: tags,
                                 timeStamp: date.toISOString(),
                             };
                             console.log(
-                                `Saving the following blog details: ${blog_data}`
+                                `Saving the following blog: ${blog_data.title}`
                             );
                             const old_blogs = await getBlog();
                             old_blogs.push(blog_data);
@@ -168,16 +141,24 @@ function markdownToHtml(inputData) {
 }
 
 function readMarkdownFile(file) {
+
+    if (!file.endsWith(".md")) {
+        console.log("Not a markdown file, Please Provide a markdown file");
+        return;
+    }
     fs.readFile(file,"utf8",function(err, data) {
             if (err) throw err;
+
             let title = data.split("\n")[1].split("Title:")[1].trim();
             let subtitle = data.split("\n")[2].split("subtitle:")[1].trim();
             let topImage = data.split("\n")[3].split("topImage:")[1].trim();
+            let tags = data.split("\n")[4].split("tags:")[1].trim().split(",");
             let content = data.split("\n").slice(5).join("\n");
+
             content = markdownToHtml(content);
+            
             let folder = title.replace(/[^a-zA-Z0-9 ]/g, "").replace(/ /g, "-");
-            let images = '';
-            createBlog(title, subtitle, folder, topImage, content, images);
+            createBlog(title, subtitle, folder, topImage, content, tags);
         }
     );
 }
@@ -251,7 +232,6 @@ function uiCommand() {
         // Todo:
         // 1. add custom author name
         // 4. add audio file to blog
-        // 5. make this endpoint visible from blog page
 
         let title = req.body.title;
         let subtitle = req.body.subtitle;
@@ -267,8 +247,7 @@ function uiCommand() {
         }
         let folder = title.replace(/[^a-zA-Z0-9 ]/g, "").replace(/ /g, "-");
         let topImage = req.body.top_image;
-        let images = req.body.images;
-        createBlog(title, subtitle, folder, topImage, images, content);
+        createBlog(title, subtitle, folder, topImage, content);
         res.redirect("/blog");
     });
 

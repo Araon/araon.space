@@ -47,7 +47,7 @@ program
   .option("-p, --port [port]", "provide a port for localhost, default is 3000")
   .action(runCommand);
 
-  program
+program
   .command("blog")
   .description("Create a new blog")
   .option("-f, --file [file]", "specify a markdown file to use")
@@ -64,6 +64,5 @@ program
   .version(version, "-v --version")
   .usage("<command> [options]")
   .parse(process.argv);
-
 
 if (program.args.length === 0) program.help();

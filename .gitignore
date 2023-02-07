@@ -69,3 +69,6 @@ typings/
 
 # blog files
 *.md
+
+# test files
+*.test.js
