@@ -153,6 +153,11 @@
       if (blog.length == 0) {
         return (document.getElementById("blog_section").style.display = "none");
       }
+      
+      blog.sort(function (a, b) {
+        return new Date(b.timeStamp) - new Date(a.timeStamp);
+      });
+
       for (var i = 0; i < blog.length; i++) {
         if (blog[i].visible == false) {
           // don't show the blog
