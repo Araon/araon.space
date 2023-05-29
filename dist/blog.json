@@ -36,7 +36,7 @@
   "url_title": "New-Game",
   "title": "Why I love video games?",
   "sub_title": " ",
-  "top_image": "top_image.jpeg",
+  "top_image": "https://ik.imagekit.io/ara0n/Blog_Images/why_i_love_video_game.jpg?updatedAt=1685392084751",
   "visible": true,
   "tags": [
    "Personal"
@@ -61,7 +61,7 @@
   "top_image": "top_image.jpeg",
   "visible": true,
   "tags": [
-   "writing"
+   "Writing"
   ],
   "timeStamp": "2022-12-27T00:00:00"
  },
@@ -72,7 +72,7 @@
   "top_image": "https://ik.imagekit.io/ara0n/Blog_Images/and_just_like_that_it_was_over.jpeg?ik-sdk-version=javascript-1.4.3&updatedAt=1676224375317",
   "visible": true,
   "tags": [
-   "writing"
+   "Writing"
   ],
   "timeStamp": "2022-12-28T00:00:00"
  },
@@ -84,7 +84,7 @@
   "visible": true,
   "tags": [
    "Gaming",
-   " Personal"
+   "Personal"
   ],
   "timeStamp": "2023-02-12T18:59:52.739Z"
  },
@@ -95,8 +95,31 @@
   "top_image": "https://ik.imagekit.io/ara0n/Blog_Images/unnamed-tbY4ThAnF-transformed.jpeg?ik-sdk-version=javascript-1.4.3&updatedAt=1676229076614",
   "visible": true,
   "tags": [
-   "writting"
+   "Writing"
   ],
   "timeStamp": "2023-02-12T19:23:39.486Z"
+ },
+ {
+  "url_title": "Your-brain-might-just-be-a-Prediction-Engine",
+  "title": "Your brain might just be a Prediction Engine",
+  "sub_title": "",
+  "top_image": "https://ik.imagekit.io/ara0n/Blog_Images/your_brain_is_a_prediction_engine.png?updatedAt=1685393821521",
+  "visible": true,
+  "tags": [
+   "Human Nature",
+   " Tech"
+  ],
+  "timeStamp": "2023-05-29T20:59:27.017Z"
+ },
+ {
+  "url_title": "Flying-Paper-Planes-to-the-Stars",
+  "title": "Flying Paper Planes to the Stars",
+  "sub_title": "",
+  "top_image": "https://ik.imagekit.io/ara0n/Blog_Images/paper_plane.png?updatedAt=1685395565942",
+  "visible": true,
+  "tags": [
+   "Writing"
+  ],
+  "timeStamp": "2023-05-29T21:26:37.134Z"
  }
 ]

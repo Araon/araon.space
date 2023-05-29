@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+
+  <meta id="meta_tag_author" name="author" content="Araon">
+  <meta id="meta_tag_description" name="description" content="">
+  <meta id="meta_tag_thumbnail" property="og:image" content="https://ik.imagekit.io/ara0n/Blog_Images/paper_plane.png?updatedAt=1685395565942">
+  <meta property="og:type" content="article">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Flying Paper Planes to the Stars</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="../../index.css"></head>
+
+<body>
+  <div id="loading">
+    <div id="spinner"></div>
+  </div>
+  <a href="/" class="go_back"><i class="fas fa-arrow-left"></i></a>
+  <div id="background_overlay"></div>
+  <div id="background" style="background: url(https://ik.imagekit.io/ara0n/Blog_Images/paper_plane.png?updatedAt=1685395565942) center;"></div>
+  <table id="profile_blog">
+    <tbody>
+      <tr>
+        <td style="width:8vw;">
+          <div id="profile_img_blog"></div>
+        </td>
+        <td style="width:52vw;">
+          <div id="username_blog"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="blog-display">
+    <h1 id="blog_title">Flying Paper Planes to the Stars</h1>
+    <h2 id="blog_sub_title"></h2>
+    <div class="readtime"></div>
+    <div id="blog"><hr>
+<p>"If you're given the chance to do whatever you want, no restrictions, no rules, no whatever, what do you think it will be?" She asked beside me after the blinking lights of a jetplane disappeared from the night sky.<br>
+"That's a really difficult question," I said, surprised at where that came from.<br>
+She just smiled, still looking above. "I know. But, seriously, what would you do, go to Paris?<br>
+The word made me smile a little, but I answered, "hmm, I don't know. Maybe not."<br>
+That's when she looked at me, eyebrows curled in disbelief. "Really? Don't you want to get rid of the what-ifs? Paris looks like it's a beautiful city. At least from the movies."<br>
+"Yeah, I'm sure it's beautiful." I closed my eyes and pictured the Eiffel tower. "And of course, I do want to get rid of my what-ifs. But I feel like instead of using it for something like that, something I'm not sure what I'd feel for, I think I'd rather just go back to some of the moments I treasure and experience them again."<br>
+I didn't have to open my eyes to know that her brows are still curled. Her tone was full of disbelief when she spoke again. "Well, that sounds like a total waste of opportunity! You'll go back and do something you already did?!"<br>
+I giggled. Then, I opened my eyes and looked at the thousand twinkling stars sprinkled across the void of the sky. They're beautiful.<br>
+"Let's just say there are moments and feelings I've always wanted to feel twice," I explained, voice so low it was almost a whisper.<br>
+"Like what?"<br>
+"Too many to mention, honestly. Like when we first talked to each other, or that day—my last day at work and everyone was so kind to me, letting me know how I did such a great job and how they'll miss me around. Just the simple things like that, really, where I genuinely felt that my heart was happy. I've always wanted to feel those moments twice."<br>
+"Well, I guess that's not too bad, actually."<br>
+"Yeah. But you know what, the first moment I'll go back to is the night when we were talking on that rooftop about all our frustrations in life, and we wrote our crazy dreams on the sheets of paper from my journal which we then turned into paper planes. Do you remember?<br>
+I looked over at her and found that she, too, was smiling.<br>
+"Of course I do," she answered.<br>
+"I didn't tell you about it, but with every paper plane I flew above the city lights that night, came a genuine wish that it'll reach the stars. I really hoped they did, I believed they did and my heart was happy. I want to feel that again." I closed my eyes again to remember the exact moment. "Who knows, maybe if I can go back and fly our wishes to the stars a second time, maybe they'll finally notice and read them."<br>
+"Yeah, who knows?" she echoed. Then, I felt her head rest softly on my shoulder, a feeling I know like the back of my hand.</p>
+</div>
+  </div>
+  <div id="footer_blog">
+    <a href="https://github.com/Araon" target="_blank">Something made by Soumik Ghosh 🤙</a>
+  </div>
+  <script type="text/javascript">
+    setTimeout(function () {
+      document.getElementById("loading").classList.add("animated");
+      document.getElementById("loading").classList.add("fadeOut");
+      setTimeout(function () {
+        document.getElementById("loading").classList.remove("animated");
+        document.getElementById("loading").classList.remove("fadeOut");
+        document.getElementById("loading").style.display = "none";
+      }, 800);
+    }, 1500);
+    $.getJSON("../../config.json", function (user) {
+      var icon = document.createElement("link");
+      icon.setAttribute("rel", "icon");
+      icon.setAttribute("href", user[0].userimg);
+      icon.setAttribute("type", "image/png");
+      document.getElementsByTagName("head")[0].appendChild(icon);
+      document.getElementById(
+        "profile_img_blog"
+      ).style.background = `url('${user[0].userimg}') center center`;
+      document.getElementById(
+        "username_blog"
+      ).innerHTML = `<span style="display:${user[0].name == null || !user[0].name ? "none" : "block"
+        };">${user[0].name}</span>@${user[0].username}<b id="blog_time"></b>`;
+
+      if ((user[0].theme = "dark.css")) {
+        document.querySelector("#background_overlay").style.background =
+          "linear-gradient(0deg, rgba(10, 10, 10, 1), rgba(10, 10, 10, 0.1))";
+      } else {
+        document.querySelector("#background_overlay").style.background =
+          "linear-gradient(0deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1))";
+      }
+    });
+    var words = document.getElementById("blog").innerText.split(" ").length;
+    if (Math.round(words / 1000) < 1) {
+      document.querySelector(".readtime").innerHTML = `1 min read`;
+    }
+    else readtime = Math.round(words / 220);
+    document.querySelector(".readtime").innerHTML = `${readtime} min read`;
+  </script>
+
+
+</body></html>
