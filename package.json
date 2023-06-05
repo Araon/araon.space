@@ -44,6 +44,7 @@
     "github-emoji": "^1.1.1",
     "got": "^9.6.0",
     "handlebars": "^4.1.2",
+    "jimp": "^0.22.8",
     "jsdom": "^15.1.0",
     "markdown-it": "^13.0.1",
     "ncp": "^2.0.0",

@@ -67,8 +67,6 @@ typings/
 .vscode/
 .idea/
 
-# blog files
-*.md
 
 # test files
 *.test.js
