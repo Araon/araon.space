@@ -159,6 +159,16 @@ function readMarkdownFile(file) {
             
             let folder = title.replace(/[^a-zA-Z0-9 ]/g, "").replace(/ /g, "-");
             createBlog(title, subtitle, folder, topImage, content, tags);
+            // backing the md file up
+            // try catch
+            try {
+                fs.copyFile(file,`${outDir}/blog/${folder}/${folder}.md`, (err) => {
+                    if (err) throw err;
+                    console.log(`Backed up to ${outDir}/blog/${folder}/${folder}.md}`);
+                });
+            } catch (error) {
+                console.log(`Back of the md file was not successful`);
+            }
         }
     );
 }
