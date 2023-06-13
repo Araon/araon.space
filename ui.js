@@ -28,6 +28,7 @@ const jsdom = require("jsdom").JSDOM,
     };
 global.DOMParser = new jsdom().window.DOMParser;
 const { getBlog, outDir } = require("./utils");
+const { logger } = require("handlebars");
 
 
 function createBlog(title, subtitle, folder, topImage, content, tags) {
@@ -159,6 +160,7 @@ function readMarkdownFile(file) {
             
             let folder = title.replace(/[^a-zA-Z0-9 ]/g, "").replace(/ /g, "-");
             createBlog(title, subtitle, folder, topImage, content, tags);
+            logger.log(`Created blog with title ${title}, subtitle ${subtitle}, folder ${folder}, topImage ${topImage}, tags ${tags}`);
             // backing the md file up
             // try catch
             try {
