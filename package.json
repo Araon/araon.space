@@ -18,7 +18,7 @@
     "url": "https://imfunniee.github.io"
   },
   "bugs": "https://github.com/imfunniee/gitfolio/issues",
-  "homepage": "https://github.com/imfunniee/gitfolio",
+
   "keywords": [
     "personal-website",
     "github",
@@ -29,10 +29,6 @@
     "gitfolio",
     "git"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/imfunniee/gitfolio"
-  },
   "license": "GPL-3.0",
   "dependencies": {
     "@chrisoakman/chessboardjs": "^1.0.0",
