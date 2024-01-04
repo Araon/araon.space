@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+
+  <meta id="meta_tag_author" name="author" content="Araon">
+  <meta id="meta_tag_description" name="description" content="">
+  <meta id="meta_tag_thumbnail" property="og:image" content="https://ik.imagekit.io/ara0n/Blog_Images/me.jpg?updatedAt=1704402201189">
+  <meta property="og:type" content="article">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>The world is not a wish-granting factory</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="../../index.css"></head>
+
+<body>
+  <div id="loading">
+    <div id="spinner"></div>
+  </div>
+  <a href="/" class="go_back"><i class="fas fa-arrow-left"></i></a>
+  <div id="background_overlay"></div>
+  <div id="background" style="background: url(https://ik.imagekit.io/ara0n/Blog_Images/me.jpg?updatedAt=1704402201189) center;"></div>
+  <table id="profile_blog">
+    <tbody>
+      <tr>
+        <td style="width:8vw;">
+          <div id="profile_img_blog"></div>
+        </td>
+        <td style="width:52vw;">
+          <div id="username_blog"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="blog-display">
+    <h1 id="blog_title">The world is not a wish-granting factory</h1>
+    <h2 id="blog_sub_title"></h2>
+    <div class="readtime"></div>
+    <div id="blog"><hr>
+<p>Not gonna lie, when people tell me they love me, I feel fuzzy inside. I guess it has something to do with the nights I spent sobbing myself to sleep, with the days when I'm too hard on myself or with my wishes upon shooting stars that are now seemingly forgotten. I mean, I understand that the world is not a wish-granting factory, else we would all be doctors and astronauts. I'm aware that not all of us can live forever, can have monuments erected to us or books that would still be in libraries even if hundreds of years passed.
+But I want to be remembered, even for just a little while.
+I want my brief existence in this world to bring happiness to others, I want the people around me to have a piece of myself that not even time can take back.
+I'm an underachiever in life and there's a pretty good chance that my dreams won't come true till the end. Not that I'm giving up, I hardly do that. And I guess it's part of why I tear up a little when people say they love me, because then I know that when my time is finally up, when the people around me who hold a piece of me have all disappeared and there's nothing left of me to be told in between beer bottles, atleast I knew that I was remembered. That the world is beautiful and I was here, maybe just for a little while, but I was remembered for the person that I managed to become.</p>
+</div>
+  </div>
+  <div id="footer_blog">
+    <a href="https://github.com/Araon" target="_blank">Something made by Soumik Ghosh 🤙</a>
+  </div>
+  <script type="text/javascript">
+    setTimeout(function () {
+      document.getElementById("loading").classList.add("animated");
+      document.getElementById("loading").classList.add("fadeOut");
+      setTimeout(function () {
+        document.getElementById("loading").classList.remove("animated");
+        document.getElementById("loading").classList.remove("fadeOut");
+        document.getElementById("loading").style.display = "none";
+      }, 800);
+    }, 1500);
+    $.getJSON("../../config.json", function (user) {
+      var icon = document.createElement("link");
+      icon.setAttribute("rel", "icon");
+      icon.setAttribute("href", user[0].userimg);
+      icon.setAttribute("type", "image/png");
+      document.getElementsByTagName("head")[0].appendChild(icon);
+      document.getElementById(
+        "profile_img_blog"
+      ).style.background = `url('${user[0].userimg}') center center`;
+      document.getElementById(
+        "username_blog"
+      ).innerHTML = `<span style="display:${user[0].name == null || !user[0].name ? "none" : "block"
+        };">${user[0].name}</span>@${user[0].username}<b id="blog_time"></b>`;
+
+      if ((user[0].theme = "dark.css")) {
+        document.querySelector("#background_overlay").style.background =
+          "linear-gradient(0deg, rgba(10, 10, 10, 1), rgba(10, 10, 10, 0.1))";
+      } else {
+        document.querySelector("#background_overlay").style.background =
+          "linear-gradient(0deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1))";
+      }
+    });
+    var words = document.getElementById("blog").innerText.split(" ").length;
+    if (Math.round(words / 1000) < 1) {
+      document.querySelector(".readtime").innerHTML = `1 min read`;
+    }
+    else readtime = Math.round(words / 220);
+    document.querySelector(".readtime").innerHTML = `${readtime} min read`;
+  </script>
+
+
+</body></html>
