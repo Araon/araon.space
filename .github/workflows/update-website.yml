@@ -1,0 +1,28 @@
+name: Auto Commit
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+          git config --global user.name 'Your Name'
+          git config --global user.email 'your.email@example.com'
+
+      - name: Create file
+        run: echo "$(date +%Y-%m-%d) Auto commit" > lastDeployed.txt
+
+      - name: Commit changes
+        run: |
+          git add commit.txt
+          git commit -m "last deployed at - $(date +%Y-%m-%d)"
+          git push
+
