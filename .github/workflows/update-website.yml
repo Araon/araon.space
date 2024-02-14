@@ -22,7 +22,7 @@ jobs:
 
       - name: Commit changes
         run: |
-          git add commit.txt
+          git add lastDeployed.txt
           git commit -m "last deployed at - $(date +%Y-%m-%d)"
           git push
 
