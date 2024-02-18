@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+
+  <meta id="meta_tag_author" name="author" content="Araon">
+  <meta id="meta_tag_description" name="description" content="">
+  <meta id="meta_tag_thumbnail" property="og:image" content="https://ik.imagekit.io/ara0n/Blog_Images/mc2.jpg?updatedAt=1708267024881">
+  <meta property="og:type" content="article">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>I hate you with everything I have</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="../../index.css"></head>
+
+<body>
+  <div id="loading">
+    <div id="spinner"></div>
+  </div>
+  <a href="/" class="go_back"><i class="fas fa-arrow-left"></i></a>
+  <div id="background_overlay"></div>
+  <div id="background" style="background: url(https://ik.imagekit.io/ara0n/Blog_Images/mc2.jpg?updatedAt=1708267024881) center;"></div>
+  <table id="profile_blog">
+    <tbody>
+      <tr>
+        <td style="width:8vw;">
+          <div id="profile_img_blog"></div>
+        </td>
+        <td style="width:52vw;">
+          <div id="username_blog"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="blog-display">
+    <h1 id="blog_title">I hate you with everything I have</h1>
+    <h2 id="blog_sub_title"></h2>
+    <div class="readtime"></div>
+    <div id="blog"><hr>
+<p>It did seem far fetched when I finally came to truce with myself on a random Tuesday evening. It took every ounce of my bargaining skills to make with myself. Even then the voice did not stop, there was always that dangling 'What if'. I gave myself exactly 2 months to solve this problem that I created for the past 2 years.. wait who am I even kidding.The thing is 7 years doesn't actually helps when you're trying to convince the very thing you stand against. I discovered a new thing about myself today - I stammer. Not the endearing kind, but the kind that leaves words hanging, incomplete, a frustration I might say.
+I don't expect you to be my savior. I've always been a fighter; it's ingrained in my upbringing. I'm not asking you to do what I did for you, and I understand that you might not. However, if loneliness ever catches up with me, I simply ask that you sit next to me. No need for words or jests. You don't even need to hold my hands. All I ask is that you stay with me to remind me that I'm not alone, and that things will improve. I want to know that I'm in a safe place, even when everything around me is chaotic and uncertain.</p>
+</div>
+  </div>
+  <div id="footer_blog">
+    <a href="https://github.com/Araon" target="_blank">Something made by Soumik Ghosh 🤙</a>
+  </div>
+  <script type="text/javascript">
+    setTimeout(function () {
+      document.getElementById("loading").classList.add("animated");
+      document.getElementById("loading").classList.add("fadeOut");
+      setTimeout(function () {
+        document.getElementById("loading").classList.remove("animated");
+        document.getElementById("loading").classList.remove("fadeOut");
+        document.getElementById("loading").style.display = "none";
+      }, 800);
+    }, 1500);
+    $.getJSON("../../config.json", function (user) {
+      var icon = document.createElement("link");
+      icon.setAttribute("rel", "icon");
+      icon.setAttribute("href", user[0].userimg);
+      icon.setAttribute("type", "image/png");
+      document.getElementsByTagName("head")[0].appendChild(icon);
+      document.getElementById(
+        "profile_img_blog"
+      ).style.background = `url('${user[0].userimg}') center center`;
+      document.getElementById(
+        "username_blog"
+      ).innerHTML = `<span style="display:${user[0].name == null || !user[0].name ? "none" : "block"
+        };">${user[0].name}</span>@${user[0].username}<b id="blog_time"></b>`;
+
+      if ((user[0].theme = "dark.css")) {
+        document.querySelector("#background_overlay").style.background =
+          "linear-gradient(0deg, rgba(10, 10, 10, 1), rgba(10, 10, 10, 0.1))";
+      } else {
+        document.querySelector("#background_overlay").style.background =
+          "linear-gradient(0deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1))";
+      }
+    });
+    var words = document.getElementById("blog").innerText.split(" ").length;
+    if (Math.round(words / 1000) < 1) {
+      document.querySelector(".readtime").innerHTML = `1 min read`;
+    }
+    else readtime = Math.round(words / 220);
+    document.querySelector(".readtime").innerHTML = `${readtime} min read`;
+  </script>
+
+
+</body></html>
