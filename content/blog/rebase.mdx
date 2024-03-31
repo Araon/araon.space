@@ -1,0 +1,49 @@
+---
+title: "Git MERGE vs. REBASE: 2 min Guide"
+publishedAt: "2023-08-25"
+summary: "C,mon man it's easy"
+tags: ["git", "computer-science", "coding", "technology"]
+shortTitle: "Git MERGE vs. REBASE"
+---
+
+# Prologue
+
+Imagine you have your main branch with **commits A&B**. Now, what you need to do
+is create a feature branch. This feature branch will have **commits C&D**.
+
+Unfortunately, you’ve been watching a bit too much YouTube and your coworker
+beats you with **commit E**, that’s now on the main branch or the trunk.
+
+What you want to do is use git rebase on your branch to rebase or change the
+base to incorporate the new commits from the main branch. This action will
+modify your **commits to be C' and D'**.
+
+<Image width={600} height={400} src="/blog/rebase/rebase2.gif" />
+
+However, now you'll be able to test with the current situation on the main
+branch. Once you're done with testing, you can merge those changes, resulting in
+a correct history of your development without any unsightly merge commits either
+within the branch or as you move back to the main branch.
+
+Git merge creates a new commit that combines changes from both the feature
+branch and the main branch. Imagine you start working on a feature while others
+are also adding to the main branch. When you’re ready to put your changes into
+the main branch, a merge commit blends your work with the main branch.
+
+<Image width={600} height={400} src="/blog/rebase/image.png" />
+
+On the other hand, git rebase works by moving your feature branch’s changes to
+the end of the main branch’s latest commits. This makes the history look
+straight and tidy, with no extra merge commits.
+
+<Image width={600} height={400} src="/blog/rebase/rebase4.webp" />
+
+**Rebasing:**
+- Provides a cleaner history.
+- Creates a more readable graph.
+- Can be tougher to resolve conflicts.
+
+**Merging:**
+- Preserves history.
+- Is better for handling merge conflicts.
+- Is easy to undo if needed.

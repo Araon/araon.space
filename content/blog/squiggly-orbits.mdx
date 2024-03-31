@@ -1,0 +1,56 @@
+---
+title: "Why Satellite Orbits Look Squiggly on Maps"
+publishedAt: "2023-08-10"
+summary: "Projectons? Whats that?"
+tags: ["Maps", "Geography", "Space"]
+
+shortTitle: "Squiggly Orbits"
+---
+
+Tim Urban from Wait But Why recently posted a puzzle that goes like this:
+
+> An ant is inside the box, 1 cm from the bottom, and wants to go eat the drop of honey on the opposite side, 1 cm from the top. Both the ant and the honey are exactly 6 cm from the walls. Crawling on inside of the box, what’s the shortest distance the ant can crawl to get to the honey?
+
+<Image width={600} height={400} src="/blog/squiggly-orbits/box.webp" />
+<figcaption>_Source: Wait But Why_</figcaption>
+---
+
+The answer reminded me of a question I had when I was 14: Why do satellite orbits or ground tracks look squiggly on maps?
+
+<Image width={600} height={400} src="/blog/squiggly-orbits/world.webp" />
+
+<figcaption> Ground Tracks of Tundra and Molniya Orbit </figcaption>
+
+If you look up a map to track the ISS (International Space Station), you’ll find that the orbital path of the ISS resembles a sine wave on a map. It doesn’t make any sense at first as to why the orbital path of a satellite orbiting Earth would not look straight on a map because according to Newton’s 1st law, a body remains at rest or in motion at a constant speed in a straight line, unless acted upon by a force.
+
+<Image width={600} height={400} src="/blog/squiggly-orbits/world2.webp" />
+
+Circular orbits are possible due to gravitational forces, but the oscillating up-and-down motion doesn’t align with physical principles.
+
+### Maps and Their Challenges
+
+To understand the orbital distortion, a basic understanding of map projections is essential. Mapping the three-dimensional surface of Earth onto a two-dimensional plane is challenging. A variety of projections attempt to address this, but each introduces some form of distortion, altering distances, shapes, or both. The Mercator projection, for instance, significantly enlarges polar regions, creating a misrepresentation of landmasses’ sizes and proportions.
+
+<Image width={600} height={400} src="/blog/squiggly-orbits/map.webp" />
+
+### Distorting Reality
+
+The link between map distortion and satellite orbits becomes clearer when realizing that map projections affect our perception of reality. The intention is to maintain visual coherence, but this often means sacrificing accuracy in size and distance representation.
+
+### Visualizing Orbital Waves
+
+Returning to the main question — why satellite orbits are squiggly on maps? Consider plotting a sine wave on a piece of paper and then rolling it around on itself, making a cylinder. It becomes a circle, inclined to the axis of the cylinder! Or do it the other way around.
+
+As the satellite moves along its orbit, the map distorts its path due to the two-dimensional representation of the spherical Earth. The resulting waviness is an artefact of this projection, not the true orbital path.
+
+<Image width={600} height={400} src="/blog/squiggly-orbits/sphere.gif" />
+
+#### A Circle on a Sphere Unrolls into a Sine Wave
+
+Launching a satellite without inclination, directly above the equator and aligned with Earth’s rotation, results in a linear ground track along the equator. Shifting this satellite to geostationary orbit at around 36,000 kilometers altitude synchronizes its orbital period with Earth’s rotation, causing the ground track to halt, effectively creating a fixed point above the equator.
+
+---
+
+And the answer to The Ant-Honey Problem: Unroll the box into a 2D plane and calculate the length of the path using the Pythagorean theorem.
+<Image width={600} height={400} src="/blog/squiggly-orbits/ant-honey.webp" />
+<figcaption>_Source: Wait But Why_</figcaption>
