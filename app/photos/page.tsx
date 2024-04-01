@@ -24,7 +24,7 @@ export default function Photos() {
             className="animate-in text-secondary"
             style={{ "--index": 1 } as React.CSSProperties}
           >
-            well, al least I tried
+            well, at least I tried
           </p>
         </div>
         <div className="mb-8 md:hidden">
