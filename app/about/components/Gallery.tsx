@@ -7,7 +7,7 @@ import clsx from "clsx";
 import localFont from "next/font/local";
 
 import memoni from "public/gallery/me-moni.jpg"
-import guitar from "public/gallery/guitar.jpg"
+import punehill from "public/gallery/doremon-hill.jpg"
 import medarjeeling from "public/gallery/me-darjeeling.jpg"
 import mearka from "public/gallery/me-arka.jpg"
 
@@ -173,7 +173,7 @@ export default function Gallery() {
           index={3}
         />
         <Photo
-          src={guitar}
+          src={punehill}
           meta="2022-12-10"
           alt={"Guitar"}
           width={245}
