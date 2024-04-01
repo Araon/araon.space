@@ -20,6 +20,7 @@ const nextConfig = {
       "store.storeimages.cdn-apple.com",
       "www.apple.com",
       "i.ytimg.com",
+      "media.licdn.com"
     ],
   },
 };

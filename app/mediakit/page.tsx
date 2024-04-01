@@ -9,7 +9,7 @@ import { YouTube } from "@/components/Stats";
 import Link from "@/components/ui/Link";
 
 export const metadata: Metadata = {
-  title: "Mediakit | Araon",
+  title: "Stats | Araon",
   description:
     "Creator based in Houston. Focuses on topics including consumer technology, software engineering, design, and lifestyle.",
 };
@@ -23,7 +23,7 @@ export default function Mediakit() {
           style={{ "--index": 1 } as React.CSSProperties}
         >
           <div className="flex flex-col gap-1">
-            <h3 className="leading-none text-secondary">Media Kit</h3>
+            <h3 className="leading-none text-secondary">Stats</h3>
             <h2 className="whitespace-nowrap text-4xl font-bold tracking-tight">
               Araon
             </h2>

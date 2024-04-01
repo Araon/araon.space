@@ -52,10 +52,10 @@ export async function generateMetadata(
       description,
       type: "article",
       publishedTime,
-      url: `https://rikiphukon.com/blog/${title}`,
+      url: `https://araon.space/blog/${title}`,
       images: [
         {
-          url: `https://rikiphukon.com/api/og?title=${title}`,
+          url: `https://araon.space/api/og?title=${title}`,
           alt: title,
         },
       ],
@@ -71,7 +71,7 @@ export default async function Post({ params }: { params: any }) {
 
   // const seoTitle = `${post.title} | Araon`;
   // const seoDesc = `${post.summary}`;
-  // const url = `https://rikiphukon.com/blog/${post.slug}`;
+  // const url = `https://araon.space/blog/${post.slug}`;
   // const MDXContent = useMDXComponent(post?.body.code);
 
   if (!post) {

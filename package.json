@@ -23,6 +23,7 @@
     "clsx": "^2.0.0",
     "contentlayer": "^0.3.4",
     "date-fns": "^2.30.0",
+    "dotenv": "^16.4.5",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.285.0",
     "next": "^13.5.6",
@@ -38,7 +39,8 @@
     "slugify": "^1.6.6",
     "swr": "^2.2.4",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "unsplash-js": "^7.0.19"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",

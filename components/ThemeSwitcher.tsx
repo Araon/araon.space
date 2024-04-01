@@ -51,7 +51,7 @@ export default function ThemeSwitcher() {
                     transition={{ type: "spring", bounce: 0.3, duration: 0.3 }}
                     className="absolute right-0 p-2 mt-2 overflow-auto text-base origin-top-right shadow-lg max-h-60 w-42 rounded-xl bg-white dark:bg-black focus:outline-none sm:text-sm capitalize"
                     style={
-                      theme === "terminal" ? { background: "#040605" } : {}
+                      theme === "terminal" ? { background: "#000000" } : {}
                     }
                   >
                     {themes.map((theme) => (

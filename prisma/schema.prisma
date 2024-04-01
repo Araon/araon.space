@@ -16,3 +16,15 @@ model Post {
   slug      String   @unique
   views     Int      @default(0)
 }
+
+model Photos {
+  id         Int      @id @default(autoincrement())
+  photo_id   String   @unique
+  photo_url  String
+  alt_text   String?
+  is_published Boolean @default(true)
+  color      String
+  views      Int
+  width      Int
+  height     Int
+}

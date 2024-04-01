@@ -13,9 +13,10 @@ import clsx from "clsx";
 
 const links = [
   { label: "Blog/Life updates", href: "/blog" },
-  { label: "Photos", href: "/gear" },
+  { label: "Photos", href: "/photos" },
   { label: "Projects", href: "/projects" },
   { label: "Me?", href: "/about" },
+  // { label: "Stats", href: "/mediakit" },
 ];
 
 export default function Navigation() {

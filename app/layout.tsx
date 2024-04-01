@@ -13,12 +13,12 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Home | Araon",
-  description: "very gpu-poor optimist, loves cs, electronics, retro and bikes",
+  description: "loves cs, electronics, retro and bikes",
   openGraph: {
     images: [
       {
-        url: `https://rikiphukon.com/api/og?title=very+gpu+poor+optimist`,
-        alt: "rikiphukon.com",
+        url: `https://araon.space/api/og?title=code+camera+chaos`,
+        alt: "araon.space",
       },
     ],
   },

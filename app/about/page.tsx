@@ -4,12 +4,10 @@ import { Metadata } from "next";
 import Link from "@/components/ui/Link";
 import Section from "@/components/Section";
 import ConnectLinks from "../../components/ConnectLinks";
-// import Workplaces from "./components/Workplaces";
+import Workplaces from "./components/Workplaces";
 import Gallery from "./components/Gallery";
-// import me from "public/gallery/me.jpg"
 import medarjeeling from "public/gallery/me-darjeeling.jpg"
 import guitar from "public/gallery/guitar.jpg"
-// import iitghy from "public/gallery/iitghy.jpg";
 
 export const metadata: Metadata = {
   title: "Me? | Araon",
@@ -27,7 +25,7 @@ export default function About() {
           className="animate-in text-secondary"
           style={{ "--index": 1 } as React.CSSProperties}
         >
-          well...
+          Okay so..
         </p>
       </div>
       <div className="mb-8 md:hidden">
@@ -85,8 +83,17 @@ export default function About() {
               <Link className="underline" href="https://www.instagram.com/ara0n/">
                 photos
               </Link>{" "},
-              practicing my punches or sleeping:)
+              practicing my punches or riding my bike :)
             </p>
+          </div>
+        </Section>
+
+        <Section heading="Work" headingAlignment="left">
+          <div className="flex w-full flex-col gap-8">
+            <p>
+              I started my career freelancing for seniors, building simple websites and renting out game servers.
+            </p>
+            <Workplaces items={workplaces} />
           </div>
         </Section>
 
@@ -127,29 +134,25 @@ export default function About() {
           </div>
         </Section>
 
-        {/* <Section heading="Work" headingAlignment="left">
-          <div className="flex w-full flex-col gap-8">
-            <p>
-              {new Date().getFullYear() - 2022}+ years of professional
-              development experience.
-            </p>
-            <p>
-              I started my career freelancing, building simple wordpress websites.
-            </p>
-            <Workplaces items={workplaces} />
-          </div>
-        </Section> */}
+
       </div>
     </div>
   );
 }
 
-// const workplaces = [
-//   {
-//     title: "",
-//     company: "",
-//     time: "",
-//     imageSrc: "",
-//     link: "",
-//   },
-// ];
+const workplaces = [
+  {
+    title: "SDE 1",
+    company: "Onlinesales.ai",
+    time: "3 Years",
+    imageSrc: "",
+    link: "https:Onlinesales.ai",
+  },
+  {
+    title: "Intern",
+    company: "Matrix",
+    time: "1 Year",
+    imageSrc: "",
+    link: "https://linkedin.com/in/matrix-international-3ab15387",
+  },
+];

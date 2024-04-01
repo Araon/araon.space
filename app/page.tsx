@@ -34,7 +34,7 @@ export default async function Home() {
             className="animate-in text-secondary"
             style={{ "--index": 1 } as React.CSSProperties}
           >
-            backend | python, javascript, golang
+          Code • Camera • Chaos
           </p>
         </div>
         <div
@@ -56,8 +56,7 @@ export default async function Home() {
           className="max-w-lg animate-in text-primary"
           style={{ "--index": 2 } as React.CSSProperties}
         >
-          As for hobbies, i stream and sometimes fiddle with the guitar and ramble on my blog.
-          My works span web, CLI apps, blogs, and tools aimed at aiding fellow developers.
+          Everything Enginnering with a touch of angst
         </p>
         <ul
           className="animated-list flex animate-in flex-col gap-2 text-secondary md:flex-row md:gap-6"
@@ -88,7 +87,7 @@ export default async function Home() {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        <h2 className="text-secondary">Latest Posts</h2>
+        <h2 className="text-secondary">Latest Rambles</h2>
         <PostList posts={posts} />
         <Link
           href="/blog"
