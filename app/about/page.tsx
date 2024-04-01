@@ -7,7 +7,7 @@ import ConnectLinks from "../../components/ConnectLinks";
 import Workplaces from "./components/Workplaces";
 import Gallery from "./components/Gallery";
 import medarjeeling from "public/gallery/me-darjeeling.jpg"
-import guitar from "public/gallery/guitar.jpg"
+import punehill from "public/gallery/doremon-hill.jpg"
 
 export const metadata: Metadata = {
   title: "Me? | Araon",
@@ -48,7 +48,7 @@ export default function About() {
           style={{ "--index": 2 } as React.CSSProperties}
         >
           <Image
-            src={guitar}
+            src={punehill}
             alt={"guitar from k-on"}
             width={220}
             height={260}

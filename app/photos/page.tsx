@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 import Gallery from "./components/Gallery";
 
-import guitar from "public/gallery/guitar.jpg"
+import punehill from "public/gallery/doremon-hill.jpg"
 import medarjeeling from "public/gallery/me-darjeeling.jpg"
 
 
@@ -60,7 +60,7 @@ export default function Photos() {
           style={{ "--index": 2 } as React.CSSProperties}
         >
           <Image
-            src={guitar}
+            src={punehill}
             alt={"guitar from k-on"}
             width={220}
             height={260}
