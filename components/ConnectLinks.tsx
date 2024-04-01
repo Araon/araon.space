@@ -1,10 +1,8 @@
 import {
-  FaBehanceSquare,
-  FaMediumM,
   FaGithub,
   FaInstagram,
-  FaNpm,
   FaHeart,
+  FaTwitch
 } from "react-icons/fa";
 
 interface ConnectLink {
@@ -14,14 +12,14 @@ interface ConnectLink {
 }
 
 const ConnectLinks: ConnectLink[] = [
-  {
-    label: "Upvote ^_^",
-    href: "https://donate.stripe.com/5kA4joa4ObNKatyfYY",
-    icon: <FaHeart />,
-  },
+  // {
+  //   label: "Upvote ^_^",
+  //   href: "https://donate.stripe.com/5kA4joa4ObNKatyfYY",
+  //   icon: <FaHeart />,
+  // },
   {
     label: "Email (General)",
-    href: "mailto:hello@rikiphukon.com",
+    href: "mailto:ayy.soumik@gmail.com",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -33,11 +31,6 @@ const ConnectLinks: ConnectLink[] = [
         <path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" />
       </svg>
     ),
-  },
-  {
-    label: "NPM",
-    href: "https://www.npmjs.com/~phukon",
-    icon: <FaNpm />,
   },
   // {
   //   label: "Partnerships",
@@ -61,24 +54,18 @@ const ConnectLinks: ConnectLink[] = [
   // },
   {
     label: "GitHub",
-    href: "https://github.com/phukon",
+    href: "https://github.com/araon",
     icon: <FaGithub />,
   }, 
-
   {
     label: "Instagram",
-    href: "https://www.instagram.com/kungfukon/",
+    href: "https://www.instagram.com/ara0n/",
     icon: <FaInstagram />,
   },
   {
-    label: "Behance",
-    href: "https://www.behance.net/rikiphukon",
-    icon: <FaBehanceSquare />,
-  },
-  {
-    label: "Medium",
-    href: "https://rikiphukon.medium.com/",
-    icon: <FaMediumM />,
+    label: "Twitch",
+    href: "https://www.twitch.tv/ara0nwastaken",
+    icon: <FaTwitch />,
   },
 ];
 

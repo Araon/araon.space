@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 import clsx from "clsx";
 import localFont from "next/font/local";
 
-import lirmen from "public/gallery/lirmen-nagaland.jpg";
-import meJanlem from "public/gallery/me-janlem.jpg";
-import iitghy from "public/gallery/iitghy.jpg";
-import nr from "public/gallery/nishi-riki.jpg";
+import memoni from "public/gallery/me-moni.jpg"
+import guitar from "public/gallery/guitar.jpg"
+import medarjeeling from "public/gallery/me-darjeeling.jpg"
+import mearka from "public/gallery/me-arka.jpg"
 
 import Halo from "@/components/ui/Halo";
 
@@ -140,44 +140,45 @@ export default function Gallery() {
   return (
     <>
       <section className="relative flex h-[268px] gap-4">
-        <Photo
-          src={meJanlem}
-          meta="2022-04-03"
-          alt="Riki and Janlem"
-          width={324}
-          height={239}
-          rotate={-6}
-          left={-86}
-          index={1}
-        />
-        <Photo
-          src={iitghy}
-          meta="2022-04-07"
-          alt="Dirang Valley, Arunchal Pradesh"
-          width={230}
+      <Photo
+          src={medarjeeling}
+          meta="2023-08-11"
+          alt="Me, Darjeeling"
+          width={260}
           height={250}
           rotate={6.3}
-          left={188}
-          index={2}
+          left={-115}
+          index={1}
           flipDirection="left"
         />
         <Photo
-          src={lirmen}
-          meta="2020-09-20"
-          alt="Lirmen, Nagaland"
-          width={290}
-          height={245}
-          rotate={-5.4}
+          src={memoni}
+          meta="2023-08-19"
+          alt="Soumik and Moni in da club"
+          width={260}
+          height={290}
+          rotate={-6}
+          left={ 108}
+          index={2}
+        />
+
+        <Photo
+          src={mearka}
+          meta="2022-09-25"
+          alt="Me and arka in Baner, Pune"
+          width={245}
+          height={290}
+          rotate={7.4}
           left={343}
           index={3}
         />
         <Photo
-          src={nr}
-          meta="2022-08-28"
-          alt={"Evening walk around the campus"}
-          width={220}
-          height={260}
-          rotate={7.6}
+          src={guitar}
+          meta="2022-12-10"
+          alt={"Guitar"}
+          width={245}
+          height={300}
+          rotate={-5.6}
           left={557}
           index={4}
           flipDirection="left"

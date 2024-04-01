@@ -7,14 +7,13 @@ import ConnectLinks from "../../components/ConnectLinks";
 // import Workplaces from "./components/Workplaces";
 import Gallery from "./components/Gallery";
 // import me from "public/gallery/me.jpg"
-import meJanlem from "public/gallery/me-janlem.jpg";
+import medarjeeling from "public/gallery/me-darjeeling.jpg"
+import guitar from "public/gallery/guitar.jpg"
 // import iitghy from "public/gallery/iitghy.jpg";
-import nr from "public/gallery/nishi-riki.jpg"
 
 export const metadata: Metadata = {
-  title: "About | Araon",
-  description: "very gpu-poor optimist, loves cs, electronics, retro and bikes",
-  // "I am a full-stack developer with a knack for radios and hardware.",
+  title: "Me? | Araon",
+  description: "very gpu-poor optimist, loves cs, hardware, retro and bikes",
 };
 
 export default function About() {
@@ -22,13 +21,13 @@ export default function About() {
     <div className="flex flex-col gap-16 md:gap-24">
       <div>
         <h1 className="animate-in text-3xl font-bold tracking-tight">
-          About Me
+          Who Me?
         </h1>
         <p
           className="animate-in text-secondary"
           style={{ "--index": 1 } as React.CSSProperties}
         >
-          Just a quick glimpse.
+          well...
         </p>
       </div>
       <div className="mb-8 md:hidden">
@@ -37,8 +36,8 @@ export default function About() {
           style={{ "--index": 1 } as React.CSSProperties}
         >
           <Image
-            src={meJanlem}
-            alt={"Riki and Janlem"}
+            src={medarjeeling}
+            alt={"me in darjeeling"}
             width={220}
             height={260}
             className="pointer-events-none relative inset-0 -top-2 h-60 -rotate-6 rounded-2xl bg-gray-400 object-cover shadow-md"
@@ -51,8 +50,8 @@ export default function About() {
           style={{ "--index": 2 } as React.CSSProperties}
         >
           <Image
-            src={nr}
-            alt={"nishi and i"}
+            src={guitar}
+            alt={"guitar from k-on"}
             width={220}
             height={260}
             className="pointer-events-none absolute inset-0 -top-40 left-[45%] w-48 rotate-6 rounded-2xl bg-gray-400 object-cover shadow-md md:left-[60%] md:w-56"
@@ -69,23 +68,24 @@ export default function About() {
       >
         <Section heading="About" headingAlignment="left">
           <div className="flex flex-col gap-6">
-            <p>Namaste, I&apos;m Araon!</p>
+            <p>Hey, I&apos;m Araon!</p>
 
             <p>
-              I love building cool things with code and I&apos;m all about ham
-              radios, computers, and diving deep into the world of hardware
-              geekiness.
+              I love building cool things with code and I&apos;m all about engineering, history, and diving deep into the world of hardware.
             </p>
             <p>
-              I sometimes write on{" "}
-              <Link className="underline" href="https://rikiphukon.medium.com/">
-                Medium
+              I sometimes write on my{" "}
+              <Link className="underline" href="https://araon.space/blog">
+                blog
               </Link>{" "}
-              about computers, life, etc.
+              about computers, life and anything that peaks my curiosity.
             </p>
             <p>
-              When I&apos;m not at my desk I am probably lifting weights,
-              practicing my punches, or at the mountains:)
+              When I&apos;m not at my desk, I am probably taking{" "}
+              <Link className="underline" href="https://www.instagram.com/ara0n/">
+                photos
+              </Link>{" "},
+              practicing my punches or sleeping:)
             </p>
           </div>
         </Section>
@@ -94,8 +94,8 @@ export default function About() {
           <div className="flex w-full flex-col gap-8">
             <p>
               Have a question or just want to chat? Feel free to{" "}
-              <Link href="https://twitter.com/kungfukon">text me</Link>. Try
-              finding me anywhere else at @kungfukon.
+              <Link href="https://twitter.com/ara0n_">text me</Link>. Try
+              finding me anywhere else at @araon.
             </p>
             <ul className="animated-list grid flex-grow grid-cols-1 gap-2 md:grid-cols-2">
               {ConnectLinks.map((link) => (
