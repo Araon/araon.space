@@ -1,8 +1,7 @@
 import Image, { StaticImageData } from "next/image";
 import { Metadata } from "next";
 
-
-import Gallery from "./components/Gallery";
+import Gallery from "@/components/Gallery";
 
 import punehill from "public/gallery/doremon-hill.jpg"
 import medarjeeling from "public/gallery/me-darjeeling.jpg"
