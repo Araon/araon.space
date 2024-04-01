@@ -77,6 +77,14 @@ export default async function Home() {
         className="flex animate-in flex-col gap-8"
         style={{ "--index": 3 } as React.CSSProperties}
       >
+                <h2 className="text-secondary">Latest Rambles</h2>
+        <PostList posts={posts} />
+        <Link
+          href="/blog"
+          className="text-secondary underline underline-offset-4 hover:text-primary"
+        >
+          See All
+        </Link>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>

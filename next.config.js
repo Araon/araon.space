@@ -20,7 +20,8 @@ const nextConfig = {
       "store.storeimages.cdn-apple.com",
       "www.apple.com",
       "i.ytimg.com",
-      "media.licdn.com"
+      "media.licdn.com",
+      "uploads-ssl.webflow.com"
     ],
   },
 };

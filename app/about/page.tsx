@@ -145,14 +145,14 @@ const workplaces = [
     title: "SDE 1",
     company: "Onlinesales.ai",
     time: "3 Years",
-    imageSrc: "",
+    imageSrc: "https://media.licdn.com/dms/image/C560BAQE6DCYuD4cVMA/company-logo_200_200/0/1668495158227/onlinesalesai_logo?e=1720051200&v=beta&t=R0NyQCV6L_477XgeJglIjyRhbHkGDelb1lPGTqyLp1Y",
     link: "https:Onlinesales.ai",
   },
   {
     title: "Intern",
     company: "Matrix",
     time: "1 Year",
-    imageSrc: "",
-    link: "https://linkedin.com/in/matrix-international-3ab15387",
+    imageSrc: "https://media.licdn.com/dms/image/D560BAQGabBcg7xuFCw/company-logo_200_200/0/1697634636389/matrix_international__logo?e=1720051200&v=beta&t=Zl3z4MLqf7aItQeYJnzT7Y68C1115c2xq8GERhb3rDk",
+    link: "https://www.linkedin.com/company/matrix-international-/?originalSubdomain=in",
   },
 ];
