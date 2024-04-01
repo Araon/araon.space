@@ -4,19 +4,21 @@ import { ReactNode } from "react";
 import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import localFont from "next/font/local";
+// import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 
-import memoni from "public/gallery/me-moni.jpg"
-import punehill from "public/gallery/doremon-hill.jpg"
-import medarjeeling from "public/gallery/me-darjeeling.jpg"
-import mearka from "public/gallery/me-arka.jpg"
 
 import Halo from "@/components/ui/Halo";
 
-const ticketingFont = localFont({
-  src: "../../../public/ticketing.woff2",
-  display: "swap",
-});
+// const ticketingFont = localFont({
+//   src: "../../../public/ticketing.woff2",
+//   display: "swap",
+// });
+
+const ticketingFont = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 type PhotoProps = {
   src: StaticImageData | string;
@@ -141,7 +143,7 @@ export default function Gallery() {
     <>
       <section className="relative flex h-[268px] gap-4">
       <Photo
-          src={medarjeeling}
+          src="https://images.unsplash.com/photo-1617395115290-9ac58fa8d961?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           meta="2023-08-11"
           alt="Me, Darjeeling"
           width={260}
@@ -152,7 +154,7 @@ export default function Gallery() {
           flipDirection="left"
         />
         <Photo
-          src={memoni}
+          src="https://images.unsplash.com/photo-1617395115213-b5e0889d4aa0?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           meta="2023-08-19"
           alt="Soumik and Moni in da club"
           width={260}
@@ -163,7 +165,7 @@ export default function Gallery() {
         />
 
         <Photo
-          src={mearka}
+          src="https://images.unsplash.com/photo-1645868379179-93401145aac2?q=80&w=2008&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           meta="2022-09-25"
           alt="Me and arka in Baner, Pune"
           width={245}
@@ -173,7 +175,7 @@ export default function Gallery() {
           index={3}
         />
         <Photo
-          src={punehill}
+          src="https://images.unsplash.com/photo-1645868379193-73e23fccabc6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           meta="2022-12-10"
           alt={"Guitar"}
           width={245}

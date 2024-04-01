@@ -6,16 +6,24 @@ import fetcher from "@/lib/fetcher";
 import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import localFont from "next/font/local";
+// import localFont from "next/font/local";
+
+import {Inter} from "next/font/google";
 
 import Halo from "@/components/ui/Halo";
 
 
 
-const ticketingFont = localFont({
-  src: "../../../public/ticketing.woff2",
-  display: "swap",
-});
+// const ticketingFont = localFont({
+//   src: "../../../public/ticketing.woff2",
+//   display: "swap",
+// });
+
+const ticketingFont = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
 
 type PhotoProps = {
   src: StaticImageData | string;
