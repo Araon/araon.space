@@ -19,11 +19,34 @@ export default function Post({ post, mousePosition }: PostProps) {
   const publishDate = new Date(publishedAt);
   const showNewBadge =
     Math.abs(new Date(publishDate).getTime() - new Date().getTime()) /
-      (24 * 60 * 60 * 1000) <
-    30;
-  const imageHeight = 150;
+      (24 * 60 * 60 * 1000) < 14; 
+    // New badge stays up for 14 days
+  const imageHeight = 180;
   const imageWidth = 300;
   const imageOffset = 24;
+
+  const badgeVariants = {
+    fromBelow: {
+      y: 10,
+      opacity: 0,
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut",
+      },
+    },
+    hover: {
+      y: -5,
+      transition: {
+        duration: 0.1,
+        ease: "easeOut",
+      },
+    },
+  };
+  
 
   return (
     <li className="py-3 group transition-opacity">
@@ -50,6 +73,17 @@ export default function Post({ post, mousePosition }: PostProps) {
         <div className="flex justify-between gap-6 items-center">
           <Section heading={formatDate(publishedAt)}>
             <Link href={`/blog/${slug}`} className="font-medium leading-tight">{title}</Link>
+            {showNewBadge && (
+              <motion.span
+                variants={badgeVariants}
+                initial="frombelow"
+                animate="visible"
+                whileHover={{ ...badgeVariants.hover, backgroundColor: "#54b3ff" }}
+                className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs ml-2"
+              >
+                New
+              </motion.span>
+            )}
           </Section>
           <div className="md:hidden aspect-square min-w-24 w-24 h-24 relative drop-shadow-sm">
             <Image src={image} alt={title} fill className="object-cover rounded"/>
