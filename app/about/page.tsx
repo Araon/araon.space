@@ -6,6 +6,7 @@ import Section from "@/components/Section";
 import ConnectLinks from "../../components/ConnectLinks";
 import Workplaces from "./components/Workplaces";
 import Gallery from "./components/Gallery";
+
 import medarjeeling from "public/gallery/me-darjeeling.jpg"
 import punehill from "public/gallery/doremon-hill.jpg"
 

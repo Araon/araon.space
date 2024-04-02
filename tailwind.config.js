@@ -28,7 +28,7 @@ module.exports = {
         secondary: "var(--gray-4)",
         secondaryA: "var(--gray-a4)",
         tertiary: "var(--gray-3)",
-      },
+              },
       borderColor: {
         primary: "var(--gray-6)",
         secondary: "var(--gray-4)",
