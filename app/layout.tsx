@@ -12,7 +12,7 @@ import Navigation from "@/components/Navigation";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "araon.space",
+  title: "Home | Araon",
   description: "loves cs, electronics, retro and bikes",
   openGraph: {
     images: [
