@@ -32,7 +32,6 @@ Make sure you have Node.js v18.17.0+ installed on your machine.
 - Create a new database in PlanetScale
 - Update the DATABASE_URL environment variable in your project's `.env.local` file with the connection string provided by Supabase
 
-
 ## Deployment
 
 This project can be easily deployed to [Vercel](https://vercel.com/new/clone). Simply connect your Vercel account to your GitHub repository, and Vercel will automatically build and deploy your application with each new push to the main branch.
