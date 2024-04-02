@@ -147,7 +147,7 @@ const workplaces = [
     company: "Onlinesales.ai",
     time: "3 Years",
     imageSrc: "https://media.licdn.com/dms/image/C560BAQE6DCYuD4cVMA/company-logo_200_200/0/1668495158227/onlinesalesai_logo?e=1720051200&v=beta&t=R0NyQCV6L_477XgeJglIjyRhbHkGDelb1lPGTqyLp1Y",
-    link: "https:Onlinesales.ai",
+    link: "https://Onlinesales.ai",
   },
   {
     title: "Intern",
