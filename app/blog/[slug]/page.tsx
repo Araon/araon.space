@@ -40,7 +40,7 @@ export async function generateMetadata(
     title,
     publishedAt: publishedTime,
     summary: description,
-    // image,
+    image,
     // slug,
   } = post;
 
@@ -55,14 +55,12 @@ export async function generateMetadata(
       url: `https://araon.space/blog/${title}`,
       images: [
         {
-          url: `https://araon.space/api/og?title=${title}`,
+          url: `https://araon.space/api/og?title=${title}&image=${image}`,
           alt: title,
         },
       ],
-      
     },
   };
-
   return metadata;
 }
 
