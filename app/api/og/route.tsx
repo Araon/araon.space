@@ -2,16 +2,17 @@
 import { ImageResponse } from "next/server";
 import { NextRequest } from "next/server";
 
-const size = {
-  width: 1200,
-  height: 630,
-};
-
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
   const postTitle = searchParams.get("title");
   const postImage = searchParams.get("image");
-  const postSummery = searchParams.get("summery");
+  let postSummery = searchParams.get("summery");
+
+  if (postSummery === "null" || postSummery === undefined) {
+    postSummery = "";
+  }
+
+  console.log(postSummery);
 
   const baseURL = "https://araon.space/";
 
@@ -60,17 +61,16 @@ export async function GET(req: NextRequest) {
             justifyContent: "flex-end",
             height: "100%",
             width: "100%",
-            padding: "20px 30px",
+            padding: "50px 70px",
             color: "#fff",
           }}
         >
           <h1
             style={{
-              fontSize: "50px",
+              fontSize: "60px",
               width: "100%",
               fontWeight: "bold",
               textOverflow: "ellipsis",
-
               whiteSpace: "nowrap",
               overflow: "hidden",
             }}
@@ -79,10 +79,9 @@ export async function GET(req: NextRequest) {
           </h1>
           <p
             style={{
-              fontSize: "20px",
+              fontSize: "30px",
               width: "100%",
               textOverflow: "ellipsis",
-
               whiteSpace: "nowrap",
               overflow: "hidden",
             }}
@@ -93,8 +92,8 @@ export async function GET(req: NextRequest) {
 
         <div
           style={{
-            left: 42,
-            top: 42,
+            right: 42,
+            bottom: 42,
             position: "absolute",
             display: "flex",
             alignItems: "center",
@@ -102,9 +101,10 @@ export async function GET(req: NextRequest) {
         >
           <span
             style={{
-              width: 24,
-              height: 24,
+              width: 14,
+              height: 14,
               background: "white",
+              borderRadius: "50",
             }}
           />
           <span
@@ -120,8 +120,8 @@ export async function GET(req: NextRequest) {
       </div>
     ),
     {
-      width: size.width,
-      height: size.height,
+      width: 1200,
+      height: 630,
     },
   );
 }
