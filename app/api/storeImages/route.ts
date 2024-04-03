@@ -16,7 +16,7 @@ const unsplash = createApi({
 
 export async function GET() {
   try {
-    const username = "ara0n"; // Replace with your Unsplash username
+    const username = "ara0n";
     const responseData = await unsplash.users.getPhotos({
       username,
       perPage: 100,

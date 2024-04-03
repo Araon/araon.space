@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: `https://araon.space/api/og?title=code+camera+chaos`,
+        url: `https://araon.space/api/og?title=araon.space?image=/gallery/create.jpg`,
         alt: "araon.space",
       },
     ],
