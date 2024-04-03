@@ -21,7 +21,8 @@ const nextConfig = {
       "www.apple.com",
       "i.ytimg.com",
       "media.licdn.com",
-      "uploads-ssl.webflow.com"
+      "uploads-ssl.webflow.com",
+      "j.gifs.com"
     ],
   },
 };

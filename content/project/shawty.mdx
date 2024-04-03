@@ -1,0 +1,36 @@
+---
+title: Shawty
+time: "2024"
+description: A very light url shortner with expiration
+url: "https://github.com/Araon/shawty"
+tags: ["Nodejs", "Mysql", "Docker"]
+index: 2
+---
+<Image width={600} height={400} src="/projects/shawty/image.gif" caption="shawty"/>
+
+A very light url shortner with expiration support
+It takes in a long url like `https://www.youtube.com/watch?v=NpUuuT_EzSs` and return something like `https://biturl.top/zE3YBr`
+
+This is mainly solution from this coding challenge [Write Your Own URL Shortener](https://codingchallenges.fyi/challenges/challenge-url-shortener)
+
+Below are the endpoint is present
+
+[POST]/short
+request
+```json
+{
+    "url":"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects",
+    "expire":"2022-10-05T14:48:00.000Z"
+}
+```
+response
+```json
+{
+    "key": "79f292",
+    "long_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects",
+    "short_url": "http://localhost:4000/short/79f292",
+    "expire": "2022-10-05T14:48:00.000Z"
+}
+```
+
+When the short url is hit ,it redirected using 302 HTTP status code
