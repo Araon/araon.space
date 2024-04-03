@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: `https://araon.space/api/og?title=araon.space?image=/gallery/create.jpg`,
+        url: `https://ik.imagekit.io/ara0n/Blog_Images/why_are_you_still_awake.jpeg`,
         alt: "araon.space",
       },
     ],
