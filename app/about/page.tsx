@@ -69,6 +69,16 @@ export default function About() {
           <div className="flex flex-col gap-6">
             <p>Hey, I&apos;m Araon!</p>
 
+            My full name is Soumik 
+            <p
+            className="animate-in text-secondary"
+            style={{ "--index": 1 } as React.CSSProperties}
+            >
+              IPA /sɔːmɪk/ • सौमिक • সৌমিক • ソウミク
+            </p> but I go by Araon for short. 
+            Araon has a nice ring to it.
+            You’ll probably remember it
+            <br></br>
             <p>
               I love building cool things with code and I&apos;m all about engineering, history, and diving deep into the world of hardware.
             </p>

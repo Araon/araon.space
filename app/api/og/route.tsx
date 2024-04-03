@@ -9,16 +9,23 @@ export async function GET(req: NextRequest) {
     (
       <div
         style={{
-          display: "flex",
+          position: "relative",
           height: "100%",
           width: "100%",
-          alignItems: "center",
-          justifyContent: "center",
-          letterSpacing: "-.02em",
-          fontWeight: 700,
           background: "white",
         }}
       >
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "200px",
+            background:
+              "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%)",
+          }}
+        />
         <div
           style={{
             left: 42,
@@ -46,6 +53,20 @@ export async function GET(req: NextRequest) {
         </div>
         <div
           style={{
+            position: "absolute",
+            bottom: 42,
+            left: 42,
+            display: "flex",
+            alignItems: "center",
+            fontSize: 40,
+            color: "white",
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+          }}
+        >
+          {postTitle}
+        </div>
+        <div
+          style={{
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",
@@ -64,7 +85,6 @@ export async function GET(req: NextRequest) {
         </div>
       </div>
     ),
-
     {
       width: 1920,
       height: 1080,
