@@ -12,8 +12,6 @@ export async function GET(req: NextRequest) {
     postSummery = "";
   }
 
-  console.log(postSummery);
-
   const baseURL = "https://araon.space/";
 
   const imageURL = `${baseURL}${postImage}`;

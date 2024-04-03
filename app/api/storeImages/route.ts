@@ -24,7 +24,6 @@ export async function GET() {
     });
 
     const data = responseData.response;
-    console.log(data);
 
     if (!data?.results) {
       return new Response("No results found", { status: 404 });
@@ -41,17 +40,24 @@ export async function GET() {
       width: photo.width,
     }));
 
-    const savedPhotos = await prisma.photos.createMany({
-      data: photos,
-      skipDuplicates: true,
-    });
+    // Update existing photos or create new ones
+    for (const photo of photos) {
+      await prisma.photos.upsert({
+        where: { photo_id: photo.photo_id },
+        update: { views: photo.views },
+        create: photo,
+      });
+    }
 
-    return new Response(JSON.stringify({ data: savedPhotos }), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
+    return new Response(
+      JSON.stringify({ message: "Views updated successfully" }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
   } catch (err) {
     console.error(err);
     return new Response("Internal Server Error", { status: 500 });
