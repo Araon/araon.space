@@ -7,8 +7,8 @@ import ConnectLinks from "../../components/ConnectLinks";
 import Workplaces from "./components/Workplaces";
 import Gallery from "./components/Gallery";
 
-import medarjeeling from "public/gallery/me-darjeeling.jpg"
-import punehill from "public/gallery/doremon-hill.jpg"
+import medarjeeling from "public/gallery/me-darjeeling.jpg";
+import punehill from "public/gallery/doremon-hill.jpg";
 
 export const metadata: Metadata = {
   title: "Me? | Araon",
@@ -68,19 +68,19 @@ export default function About() {
         <Section heading="About" headingAlignment="left">
           <div className="flex flex-col gap-6">
             <p>Hey, I&apos;m Araon!</p>
-
-            My full name is Soumik 
+            My full name is Soumik Ghosh
             <p
-            className="animate-in text-secondary"
-            style={{ "--index": 1 } as React.CSSProperties}
+              className="animate-in text-secondary"
+              style={{ "--index": 1 } as React.CSSProperties}
             >
               IPA /sɔːmɪk/ • सौमिक • সৌমিক • ソウミク
-            </p> but I go by Araon for short. 
-            Araon has a nice ring to it.
-            You’ll probably remember it
+            </p>{" "}
+            but I go by Araon for short. Araon has a nice ring to it. You’ll
+            probably remember it
             <br></br>
             <p>
-              I love building cool things with code and I&apos;m all about engineering, history, and diving deep into the world of hardware.
+              I love building cool things with code and I&apos;m all about
+              engineering, history, and diving deep into the world of hardware.
             </p>
             <p>
               I sometimes write on my{" "}
@@ -91,10 +91,13 @@ export default function About() {
             </p>
             <p>
               When I&apos;m not at my desk, I am probably taking{" "}
-              <Link className="underline" href="https://www.instagram.com/ara0n/">
+              <Link
+                className="underline"
+                href="https://www.instagram.com/ara0n/"
+              >
                 photos
-              </Link>{" "},
-              practicing my punches or riding my bike :)
+              </Link>{" "}
+              , practicing my punches or riding my bike :)
             </p>
           </div>
         </Section>
@@ -102,7 +105,8 @@ export default function About() {
         <Section heading="Work" headingAlignment="left">
           <div className="flex w-full flex-col gap-8">
             <p>
-              I started my career freelancing for seniors, building simple websites and renting out game servers.
+              I started my career freelancing for seniors, building simple
+              websites and renting out game servers.
             </p>
             <Workplaces items={workplaces} />
           </div>
@@ -144,8 +148,6 @@ export default function About() {
             </ul>
           </div>
         </Section>
-
-
       </div>
     </div>
   );
@@ -156,14 +158,16 @@ const workplaces = [
     title: "SDE 1",
     company: "Onlinesales.ai",
     time: "3 Years",
-    imageSrc: "https://media.licdn.com/dms/image/C560BAQE6DCYuD4cVMA/company-logo_200_200/0/1668495158227/onlinesalesai_logo?e=1720051200&v=beta&t=R0NyQCV6L_477XgeJglIjyRhbHkGDelb1lPGTqyLp1Y",
+    imageSrc:
+      "https://media.licdn.com/dms/image/C560BAQE6DCYuD4cVMA/company-logo_200_200/0/1668495158227/onlinesalesai_logo?e=1720051200&v=beta&t=R0NyQCV6L_477XgeJglIjyRhbHkGDelb1lPGTqyLp1Y",
     link: "https://Onlinesales.ai",
   },
   {
     title: "Intern",
     company: "Matrix",
     time: "1 Year",
-    imageSrc: "https://media.licdn.com/dms/image/D560BAQGabBcg7xuFCw/company-logo_200_200/0/1697634636389/matrix_international__logo?e=1720051200&v=beta&t=Zl3z4MLqf7aItQeYJnzT7Y68C1115c2xq8GERhb3rDk",
+    imageSrc:
+      "https://media.licdn.com/dms/image/D560BAQGabBcg7xuFCw/company-logo_200_200/0/1697634636389/matrix_international__logo?e=1720051200&v=beta&t=Zl3z4MLqf7aItQeYJnzT7Y68C1115c2xq8GERhb3rDk",
     link: "https://www.linkedin.com/company/matrix-international-/?originalSubdomain=in",
   },
 ];
