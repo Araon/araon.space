@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = req.nextUrl;
+    const { searchParams } = new URL(req.url);
     const postIdSlug = searchParams.get("postId");
 
     const comments = await prisma.comments.findMany({
