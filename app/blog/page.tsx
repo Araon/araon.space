@@ -4,7 +4,7 @@ import PostList from "./components/ui/PostList";
 // import NewsletterSignupForm from "./components/ui/NewsletterSignupForm";
 
 export const metadata: Metadata = {
-  title: "Blog/Life updates. | Araon",
+  title: "Stories/Notes | Araon",
   description:
     "I write about programming, stories, and occasionally life updates!",
 };
@@ -26,7 +26,7 @@ export default function Blog() {
             className="animate-in text-secondary"
             style={{ "--index": 1 } as React.CSSProperties}
           >
-            {posts.length} posts about engineering, life, more ...
+            {posts.length} rants about life, engineering and more ...
           </p>
         </div>
       </div>

@@ -7,7 +7,7 @@ import medarjeeling from "public/gallery/me-darjeeling.jpg"
 import meCamera from "public/gallery/create.jpg"
 
 export const metadata: Metadata = {
-  title: "Photos | Araon",
+  title: "Photographs | Araon",
   description: "Some photos I took",
 };
 

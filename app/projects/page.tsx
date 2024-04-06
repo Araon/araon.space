@@ -6,7 +6,7 @@ import { allProjects, Project } from ".contentlayer/generated";
 import Halo from "@/components/ui/Halo";
 
 export const metadata: Metadata = {
-  title: "Projects | Araon",
+  title: "Works | Araon",
   description:
     "Here are some of the projects I've worked on.",
 };
@@ -21,7 +21,7 @@ export default function Blog() {
         <div className="flex flex-col gap-8">
           <div>
             <h1 className="animate-in text-3xl font-bold tracking-tight">
-              Build fast, Ship fast
+              Build fast, Ship fast.
             </h1>
             <p
               className="animate-in text-secondary"

@@ -9,6 +9,10 @@ import Mdx from "@/app/blog/components/ui/MdxWrapper";
 import ViewCounter from "@/app/blog/components/ui/ViewCounter";
 import PostList from "@/app/blog/components/ui/PostList";
 // import Subscribe from "@/app/blog/components/ui/NewsletterSignupForm";
+
+import CommentList from "@/app/blog/components/ui/CommentList";
+import CommentSection from "@/app/blog/components/ui/CommentSection";
+
 import { formatDate } from "lib/formatdate";
 
 import Avatar from "@/public/avatar.jpg";
@@ -41,7 +45,7 @@ export async function generateMetadata(
     publishedAt: publishedTime,
     summary: description,
     image,
-    // slug,
+        // slug,
   } = post;
 
   const metadata: Metadata = {
@@ -64,7 +68,7 @@ export async function generateMetadata(
   return metadata;
 }
 
-export default async function Post({ params }: { params: any }) {
+export default async function Post({ params }: { params: any  }) {
   const post = allPosts.find((post) => post.slug === params.slug);
 
   // const seoTitle = `${post.title} | Araon`;
@@ -140,8 +144,9 @@ export default async function Post({ params }: { params: any }) {
           <Mdx code={post.body.code} />
         </div>
       </article>
-
       <Tags tags={post.tags} />
+      <CommentSection postId={post.slug} />
+      <CommentList postId={post.slug} />
 
       {/* <Subscribe /> */}
 

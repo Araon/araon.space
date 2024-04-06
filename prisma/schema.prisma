@@ -15,6 +15,7 @@ model Post {
   id        Int      @id @default(autoincrement())
   slug      String   @unique
   views     Int      @default(0)
+  comments  Comments[]
 }
 
 model Photos {
@@ -27,4 +28,15 @@ model Photos {
   views      Int
   width      Int
   height     Int
+}
+
+model Comments {
+  id         String    @id @default(uuid())
+  postId     String
+  content    String
+  author     String
+  show_comments Boolean @default(true)
+  ip_identity String
+  createdAt  DateTime  @default(now())
+  post       Post      @relation(fields: [postId], references: [slug])
 }
