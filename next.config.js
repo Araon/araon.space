@@ -22,7 +22,8 @@ const nextConfig = {
       "i.ytimg.com",
       "media.licdn.com",
       "uploads-ssl.webflow.com",
-      "j.gifs.com"
+      "j.gifs.com",
+      "dicebear.com"
     ],
   },
 };

@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     return Response.json({ comments: comments });
   } catch (error) {
     console.error(error);
-    return new Response("Something went wrong", { status: 200 });
+    return new Response(`Something went wrong: ${error}`, { status: 200 });
   } finally {
     await prisma.$disconnect();
   }
