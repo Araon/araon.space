@@ -1,4 +1,5 @@
 // Fetch comments for a post
+export const dynamic = 'force-dynamic';
 import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
 
