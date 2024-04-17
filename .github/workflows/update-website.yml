@@ -1,8 +1,11 @@
 name: Auto Commit
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
+  push:
+    branches:
+    - v2
+  # schedule:
+  #   - cron: '0 0 * * *'
 
 jobs:
   auto-commit:
