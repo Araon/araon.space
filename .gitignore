@@ -46,3 +46,6 @@ generated
 
 .vscode
 .vscode/
+
+# obsidian
+.obsidian

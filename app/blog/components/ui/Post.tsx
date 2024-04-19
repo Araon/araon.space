@@ -19,8 +19,8 @@ export default function Post({ post, mousePosition }: PostProps) {
   const publishDate = new Date(publishedAt);
   const showNewBadge =
     Math.abs(new Date(publishDate).getTime() - new Date().getTime()) /
-      (24 * 60 * 60 * 1000) < 14; 
-    // New badge stays up for 14 days
+      (24 * 60 * 60 * 1000) < 5; 
+    // New badge stays up for 5 days
   const imageHeight = 180;
   const imageWidth = 300;
   const imageOffset = 24;

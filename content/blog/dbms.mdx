@@ -1,0 +1,210 @@
+---
+title: But what even is a database?
+publishedAt: 2024-04-24
+summary: database internals
+tags:
+  - Computer-Science
+  - Tech
+  - Database
+---
+
+### Motivation:
+As a backend developer, it's crucial to have a basic understanding of how a database management system (DBMS) works. This knowledge can make you a more well-rounded developer, boost your confidence, and help you make better decisions when choosing a database for your application. We will delve deeper into the internal workings of a DBMS, the basic terminology, and the primary components and subsystems that form a DBMS. 
+But before going forward lets make sure we have our terminology on the same page.
+
+
+<Alert>
+As a side note, please be aware that while no specific prerequisites are required, it is beneficial to have some prior experience working with databases to fully grasp the upcoming content.
+</Alert>
+
+So when we refer to databases like MySQL or PostgreSQL, we are actually talking about database management systems (DBMS). 
+A database is simply a collection of data or information that is stored and can be retrieved, while a DBMS encompasses everything around the database, such as the query language, security, replication, transactions, and more. A database management system as the name suggests has many underlying subsystems or layers that makes sure the ACID properties are withheld. There’s no common blueprint for database management system design, as each database is built slightly differently. However, there are common components and subsystems that we can observer out in the wild.
+<Image
+  width={1920}
+  height={1080}
+  caption="DBMS Architecture Diagram"
+  src="/blog/dbms/Arch.png"
+/>
+
+To better explain this , lets assume we are firing a single database command 
+
+```sql
+select * from urls where code = "ffd9f9";
+```
+
+Upon firing this, each of the layers starts their work - starting with
+
+### 1. Transport or Communication Layer:
+
+The communication layer is responsible for managing the communications between the client applications and the actual database system.
+Mainly there are two types of architecture 
+
+- Two-tier architecture
+- Three-tier architecture
+
+In a two-tier architecture, the application resides on the client machine and directly interacts with the database system on the server machine through query language statements. But as the amount of data grew so as the scale and security aspect of this layer also needed an update, soon this architecture became less common in modern applications.
+
+In contrast, the three-tier architecture is more commonly used in modern database applications. In this architecture, the client machine acts solely as a front-end and does not contain any direct database calls. The front-end communicates with an application server, which in turn communicates with the database system to access data. The business logic of the application is embedded in the application server as there less coupling, this provides better security and performance.
+<Image
+  width={1920}
+  height={1080}
+  caption="Two-tier and Three-tier architectures."
+  src="/blog/dbms/tier-arch.png"
+/>
+Now when a request comes to a database, they usually come in the form of a query expressed in some query language and are received by the client communication component.Based on the type of query recived the query is pased to either the query processor or to the execution engine.\
+The Communication layer is also responsible for handling inter-cluster communication, which is communication between different database nodes in a database cluster.
+<Image
+  width={1920}
+  height={1080}
+  caption="Transport/Communication Layer"
+  src="/blog/dbms/transportLayer.png"
+/>
+### 2. Query Processor:
+
+On the book [Database System Concepts](https://github.com/omarhosny206/Database-System-Concepts-7th-edition/blob/master/Book/Database%20System%20Concepts.pdf), right after network communication layer section, you'll find this piece of text
+
+>We do not expect users to write their queries in a way that suggests the most efficient evaluation plan. Rather, it is the responsibility of the system to construct a query evaluation plan that minimizes the cost of query evaluation; this task is called query optimization
+
+I absolutely adore this passage and it's not because it talks down to anyone. Instead, it highlights the remarkable foresight and thoughtfulness that goes into designing these systems.
+
+So,
+after the request is received, it is passed to the query processor. The query processor interprets, validates, and performs access control and permission checks on the query.
+
+Parsing of a query means for a given query we have to identify in how many ways the given request can be fulfilled. Every query must be parsed at least once.\
+There are two types of parsing: soft parsing and hard parsing. 
+
+- Soft parsing means that the database can reuse a previous execution plan for the same query. 
+- Hard parsing means that the database has to create a new execution plan for the query.
+
+Hard parsing happens when the database can't find a previous execution plan or if the plan is no longer valid. In this case, the Optimizer has to look at all the possible ways to execute the query and choose the best one. This process can take some time, but it's important to make sure the query runs as fast as possible.
+
+The access control can only be done when the the query has been fully parsed. The query then goes through the query optimizer, which removes redundant parts and finds the most efficient way to execute the query based on internal statistics and data placement
+
+Then the query is presented in the form of an execution plan, as an series of operations that have to be carried out in a specific order so that the outcome can be considered complete. There are multiple execution plans to satisfy the same query but they all have different efficiently - The task of the optimiser is to pick the best available plan. This is done by looking at each of the execution plan(they call it path for pgsql) and the associated cost and then just pick the one that has least cost.
+To more dive deep into understanding how query is parsed and optimised, you can check this fantastic [blog](https://www.red-gate.com/simple-talk/databases/oracle-databases/understanding-sql-query-parsing-part-1/)
+
+<Image
+  width={1920}
+  height={1080}
+  caption="Query Processor."
+  src="/blog/dbms/queryProcessor.png"
+/>
+
+Here's a helpful tip: Using the keyword `Explain` before executing your query will display the execution plan, which can be a valuable tool for optimizing your queries. By analyzing the execution plan, you can identify opportunities to minimize the number of scanned rows and effectively utilize the indexes associated with the table, resulting in improved query performance.
+
+```SQL
+-- without any filters
+mysql> explain select * from urls;
++----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+
+| id | select_type | table | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |
++----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+
+|  1 | SIMPLE      | urls  | NULL       | ALL  | NULL          | NULL | NULL    | NULL | 5939 |   100.00 | NULL  |
++----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+
+1 row in set, 1 warning (0.00 sec)
+
+-- with filters
+mysql> explain select * from urls where code = "ffd9f9";
++----+-------------+-------+------------+-------+------------------+---------+---------+-------+------+----------+-------+
+| id | select_type | table | partitions | type  | possible_keys    | key     | key_len | ref   | rows | filtered | Extra |
++----+-------------+-------+------------+-------+------------------+---------+---------+-------+------+----------+-------+
+|  1 | SIMPLE      | urls  | NULL       | const | PRIMARY,idx_code | PRIMARY | 42      | const |    1 |   100.00 | NULL  |
++----+-------------+-------+------------+-------+------------------+---------+---------+-------+------+----------+-------+
+1 row in set, 1 warning (0.00 sec)
+```
+
+### 3. Query Cache:
+
+<Alert>
+NOTE: The query cache is deprecated as of MySQL 5.7.20, and is removed in MySQL 8.0.
+</Alert>
+
+The query cache stores the results of select queries, and if a query's result is found in the cache, it is returned immediately, skipping further execution.The query cache stores the text of a SELECT statement along with the corresponding result that was sent to the client. It is shared among sessions, so a result set generated by one client can be sent in response to the same query issued by another client. The query cache can be useful in an environment where tables do not change very often and the server receives many identical queries. However, it is not supported for partitioned tables and is automatically disabled for queries involving partitioned tables.
+Now you'd say with cache, there's a possibiity of the cache data being stale but the query cache does not return stale data, as any relevant entries in the query cache are flushed when tables are modified. The query cache can be disabled at server startup by setting this variable `query_cache_size=0`.
+
+<Image
+  width={1920}
+  height={1080}
+  caption="Query Cache"
+  src="/blog/dbms/queryCache.png"
+/>
+
+The query cache offers potential for substantial performance improvement, but it may not be beneficial under all circumstances and can even lead to a performance decrease in some cases. It is important to test the operation of the server with the cache enabled and disabled to verify that it is beneficial, and to retest periodically as server workload changes.
+
+### 4. Execution Engine:
+Compared with the query processor, the execution engine is a fairly simple system where it just follows the execution plan this produced by the query parser.
+The execution plan is executed by the execution engine, which aggregates results from remote and local execution. Remote execution involves reading and writing data from different database nodes inside the database cluster, while local queries are executed by the storage engine.
+
+
+
+### 5. Storage Engine:
+
+The storage engine is the heart of a database system, where the data management magic happens. It is responsible for managing how data is stored and accessed both in memory and on disk. This core component is what makes a database fit into a particular category, such as relational or document databases. The storage engine organizes data in relations or tables (columns and rows) or flexible documents, and it can store data in a row-oriented or column-oriented fashion. Additionally, storage engines can store data in memory or on disk, resulting in in-memory or disk-based databases.
+
+#### Disk-based and In-Memory Databases:
+
+Disk-based databases store data on disk and load it into memory as needed. This approach allows them to handle large amounts of data that may not fit entirely into memory. However, disk operations are slower than memory operations, which can impact performance. Disk-based databases are often used when data persistence is a priority, and they are typically better suited for workloads involving complex queries or large amounts of data.
+<Image
+  width={1920}
+  height={1080}
+  caption="Disk vs In-memory"
+  src="/blog/dbms/memoryvsdisk.jpg"
+/>
+In contrast, in-memory databases store data primarily in memory for faster access. This approach allows for high-speed data processing and real-time analytics. However, in-memory databases are limited by the available memory size, and data may need to be persisted to disk periodically to prevent data loss in case of power failure or system crash. In-memory databases are often used for real-time applications, high-performance computing, and other workloads where speed is a priority.
+
+Here are some examples
+
+- Disk-based databases: MySQL, PostgreSQL, Oracle (e.g., e-commerce platforms, web applications)
+- In-memory databases: Redis, Memcached, SAP HANA (e.g., caching, session management, real-time analytics)
+
+#### OLTP and OLAP Databases:
+
+Online Transaction Processing (OLTP) and Online Analytical Processing (OLAP) are two different types of database workloads with different requirements for data storage and access.
+
+OLTP databases are optimized for transactional operations, such as insertions, updates, and deletions. They typically handle a large number of short online transactions and require fast query processing. OLTP databases often use a row-oriented storage layout, where data for each row is stored together. This layout is efficient for querying and updating individual records.
+
+On the other hand, OLAP databases are optimized for complex analytical queries and data aggregation. They typically handle fewer transactions but require complex data processing and aggregation. OLAP databases often use a column-oriented storage layout, where data for each column is stored together. This layout is efficient for performing operations on entire columns and for data compression, making it well-suited for data warehousing and business intelligence applications.
+
+<Image
+  width={1920}
+  height={1080}
+  caption="OLTP vs OLAP"
+  src="/blog/dbms/oltpvsolap.jpeg"
+/>
+
+Checkout this awesome [blog](https://medium.com/bluecore-engineering/deciding-between-row-and-columnar-stores-why-we-chose-both-3a675dab4087) to know more about it
+
+Here are some examples
+
+- OLTP databases: MySQL, PostgreSQL, Microsoft SQL Server (e.g., banking, e-commerce, reservation systems)
+- OLAP databases: Apache Hive, Google BigQuery, Amazon Redshift (e.g., data warehousing, business intelligence)
+
+#### Row-oriented and Column-oriented Storage:
+
+Row-oriented storage organizes data by rows, where each row represents a record, and columns represent the fields of the record. This layout is efficient for transactional systems (OLTP) that frequently access, insert, update, or delete individual records. However, it may be less efficient for complex analytical queries that require scanning and aggregating large amounts of data.
+
+<Image
+  width={1920}
+  height={1080}
+  caption="Row-oriented"
+  src="/blog/dbms/col.webp"
+/>
+
+In contrast, column-oriented storage organizes data by columns, where each column represents a field, and rows represent the records. This layout is efficient for analytical systems (OLAP) that perform complex queries involving aggregation, filtering, and joining of large datasets. Column-oriented storage can also provide better data compression, as similar data is stored together. However, it may be less efficient for transactional operations that require frequent updates or deletions of individual records.
+<Image
+  width={1920}
+  height={1080}
+  src="/blog/dbms/row.webp"
+  caption="Columnn-oridnted"
+/>
+Here are some examples
+
+- Row-oriented storage: MySQL, PostgreSQL (e.g., CRM systems, transactional systems)
+- Column-oriented storage: Apache Cassandra, Google Bigtable (e.g., analytical systems, large-scale data processing)
+
+### End Credits
+In this blog, we've covered the basics of a DBMS, including the terminology and the main components and subsystems that make it up. We've talked about the transport or communication layer, query processor, query cache, execution engine, and storage engine.
+
+But let's be real, each database is built a little differently, and there's no one-size-fits-all blueprint for DBMS design. However, they all have some common components and subsystems that we can observe.
+
+In my next blog, I'm going to dive deeper into transaction management and logs. We'll talk about how transactions ensure data integrity and consistency, and how logs help with recovery and replication. So, stay tuned for that!
+
