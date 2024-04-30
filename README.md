@@ -29,7 +29,7 @@ Make sure you have Node.js v18.17.0+ installed on your machine.
 ## Database Setup
 
 - Sign up for a supabase account
-- Create a new database in PlanetScale
+- Create a new database in supabase
 - Update the DATABASE_URL environment variable in your project's `.env.local` file with the connection string provided by Supabase
 
 ## Deployment
