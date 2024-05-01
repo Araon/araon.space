@@ -67,8 +67,7 @@ export default function About() {
       >
         <Section heading="About" headingAlignment="left">
           <div className="flex flex-col gap-6">
-            <p>Hey, I&apos;m Araon!</p>
-            My full name is Soumik Ghosh
+            <p>Hey, I&apos;m Soumik!</p>
             <p
               className="animate-in text-secondary"
               style={{ "--index": 1 } as React.CSSProperties}
@@ -80,14 +79,14 @@ export default function About() {
             <br></br>
             <p>
               I love building cool things with code and I&apos;m all about
-              engineering, history, and diving deep into the world of hardware.
+              engineering, history, and hardware.
             </p>
             <p>
-              I sometimes write on my{" "}
+              I write on my{" "}
               <Link className="underline" href="https://araon.space/blog">
                 blog
               </Link>{" "}
-              about computers, life and anything that peaks my curiosity.
+              about computers, life and anything that peaks my interest.
             </p>
             <p>
               When I&apos;m not at my desk, I am probably taking{" "}
@@ -105,8 +104,7 @@ export default function About() {
         <Section heading="Work" headingAlignment="left">
           <div className="flex w-full flex-col gap-8">
             <p>
-              I started my career freelancing for seniors, building simple
-              websites and renting out game servers.
+              I started my career freelancing for seniors, building discord bots and renting out game servers.
             </p>
             <Workplaces items={workplaces} />
           </div>

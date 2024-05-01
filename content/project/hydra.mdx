@@ -6,10 +6,20 @@ url: "https://github.com/Araon/Hydra"
 tags: ["Python","Golang", "Postgres"]
 index: 1
 ---
-<Image width={600} height={400} src="/projects/hydra/image.png" caption="HLD"/>
-Hydra is a task scheduler designed for handling high task volumes across multiple workers.
+## Introduction
+In today's world, where computational demands are constantly increasing, the need for efficient and scalable task scheduling systems has become paramount. Hydra is a distributed task scheduler designed to handle high volumes of tasks across multiple workers, making it an ideal solution for running distributed computations on a cluster of devices, such as Raspberry Pis.\
+The motivation behind Hydra stems from the challenges faced when running computationally intensive tasks on resource-constrained devices like Raspberry Pis. By distributing the workload across multiple devices, Hydra enables efficient utilization of available resources, leading to faster execution times and improved overall performance.
+### Architecture Overview
+Hydra follows a modular architecture, consisting of four main components:
 
-## Run locally 💻
+- Scheduler: A Flask application that provides a RESTful API for scheduling tasks and retrieving their status.
+- Coordinator: Another Flask application responsible for managing tasks, registering workers, and distributing tasks for execution.
+- Worker: A Go application that executes assigned tasks, updates their status, and sends heartbeats to the Coordinator.
+- Database: A PostgreSQL database for storing task details and aiding in task management.
+
+<Image width={600} height={400} src="/projects/hydra/image.png" caption="HLD"/>
+
+## Running Hydra Locally 💻
 create a .env file with the following details
 ```bash
 POSTGRES_DB=
@@ -22,24 +32,28 @@ and then run the following command to build and run using docker
 docker compose up --scale worker=3
 ```
 
-## Details
-Written in Python and GO, it comprises:
+## Raspberry Pi Integration
+Hydra is designed to seamlessly integrate with Raspberry Pis, allowing you to leverage the combined computational power of multiple devices. To run Hydra on Raspberry Pis, you'll need to install the required dependencies (Python, Golang, PostgreSQL) and deploy the Worker component on each device.\
+One potential challenge when running Hydra on Raspberry Pis is the limited resources available on these devices. To mitigate this, Hydra employs efficient task distribution and load balancing strategies, ensuring that tasks are assigned to available workers in a balanced manner.
+### Task Distribution and Load Balancing
+The Coordinator component in Hydra is responsible for distributing tasks to available workers using a round-robin scheduling algorithm. This approach ensures that tasks are evenly distributed across all registered workers, preventing any single worker from becoming overwhelmed.
+Additionally, the Coordinator periodically fetches tasks scheduled to run within the next 30 seconds and assigns them to available workers. This proactive approach ensures that workers always have tasks to execute, maximizing resource utilization.
+### Fault Tolerance and Scalability
+Hydra is designed with fault tolerance and scalability in mind. The Coordinator monitors worker availability through periodic heartbeats, automatically unregistering workers that fail to respond. This mechanism ensures that tasks are not assigned to unresponsive or failed workers, improving overall system reliability.
+Scalability is achieved by allowing new workers to be dynamically added or removed from the system. As more computational resources become available (e.g., additional Raspberry Pis), Hydra can automatically distribute tasks across the expanded worker pool, leveraging the increased computing power.
+### Example Use Case: Distributed Image Processing
+One practical use case for Hydra on Raspberry Pis is distributed image processing. Imagine you have a large collection of images that need to be processed (e.g., resizing, filtering, or applying machine learning models). By breaking down the image processing tasks and distributing them across multiple Raspberry Pis using Hydra, you can significantly reduce the overall processing time.
+### Performance Considerations
+When running Hydra on resource-constrained devices like Raspberry Pis, performance optimizations become crucial. Hydra is designed with efficiency in mind, leveraging lightweight technologies (Flask, Golang) and optimized communication protocols (HTTPS) to minimize overhead.
+Additionally, Hydra employs efficient task distribution and load balancing strategies to ensure that tasks are evenly distributed across available workers, preventing resource bottlenecks and maximizing utilization.
+### Future Enhancements
+While Hydra already offers a robust and scalable task scheduling solution, several future enhancements are planned to further improve its capabilities:
 
-- Scheduler: Receives tasks and schedules them for execution.
-- Coordinator: Manages task selection, worker registration, and distribution of tasks for execution.
-- Worker: Executes assigned tasks, reporting status back to the Coordinator.
-- Database: PostgreSQL database stores task details, aiding task management.
+- Task Prioritization: Implementing task prioritization mechanisms to ensure that critical tasks are executed first, based on user-defined priorities.
+- Advanced Scheduling Algorithms: Exploring more advanced scheduling algorithms, such as task affinity or resource-aware scheduling, to optimize task assignment based on specific requirements or resource constraints.
+- Resource Monitoring and Allocation: Integrating resource monitoring and allocation strategies to dynamically adjust task distribution based on the available resources on each worker.
 
-Communication between components uses https for scalability and fault tolerance.
-
-### Scheduler 🗓️
-This is a simple Flask application that provides a RESTful API for scheduling tasks. The application uses SQLAlchemy as an ORM for interacting with the database.
-The scheduler acts as the i/o for the system and has the has the following responsibilities
-
-- Schedule a task with a command and a scheduled time.
-- Retrieve a task by its ID.
-
-Below are the endpoints avaliable
+### Below are the endpoints avaliable
 ```bash
 POST /schedule
 {
@@ -55,34 +69,4 @@ GET /schedule/<task_id>
 ```
 Retrieve a task status by its ID.
 
-### Coordinator 🧠
-This is a Flask application that provides a RESTful API for a task coordinator service. The coordinator service is responsible for managing tasks and workers. It schedules tasks to be executed by workers, maintains the status of tasks, and handles worker registration and heartbeats.
 
-Below are the responsibities
-
-- Register and unregister workers
-- Schedule tasks to be picked up by workers
-- Update task status (started, completed, failed)
-- Periodically fetch tasks and assign them to available workers
-- Handle worker heartbeats to monitor their availability
-
-Background Tasks
-
-The coordinator periodically fetches tasks that are scheduled to run within the next 30 seconds and assigns them to available workers using round-robin scheduling.
-The coordinator checks worker heartbeats periodically to monitor their availability and unregisters workers that have missed too many heartbeats.
-
-### Worker 💪
-
-This is a Go application that provides a RESTful API for a worker service. The worker service is responsible for executing tasks assigned to it by the coordinator service, sending heartbeats to the coordinator, and updating the status of tasks it is executing.
-
-Below are the responsibities
-- Register with the coordinator service
-- Receive tasks from the coordinator service
-- Execute tasks and update their status
-- Send heartbeats to the coordinator service
-
-Background Tasks
-
-- The worker registers itself with the coordinator service when it starts.
-- The worker sends heartbeats to the coordinator service to monitor its availability.
-- The worker updates the status of tasks it is executing (started, completed, failed).

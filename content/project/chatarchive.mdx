@@ -1,0 +1,41 @@
+---
+title: Discord Chat Exporter
+time: "2023"
+description: Script to scrape data from discord channel and add them to a static HTML 
+url: "https://github.com/Araon/dc-archiver"
+tags: ["Python","Discord", "Flask"]
+index: 3
+---
+# Discord Chat Exporter
+
+A simple Python script that exports a Discord channel's chat history into a static website that mimics the look of Discord's dark theme.
+
+This uses a discord bot token, so make sure the bot is in the server and has access to the channel you want to export.
+
+## Preview
+![Screenshot](https://raw.githubusercontent.com/Araon/dc-archiver/master/unnamed.png)
+
+## Features
+
+- Fetches all messages from a specified Discord channel.
+- Exports the messages into a JSON file.
+- Generates a static website from the JSON file with Flask and Jinja.
+- The website includes avatar images, author names, messages, and timestamps for each message.
+- The website's design imitates Discord's dark theme.
+
+## Requirements
+
+- Python 3.6+
+- Discord.py
+- Flask
+- Jinja2
+
+## Usage
+
+1. Clone this repository and navigate into the directory:
+
+```bash
+git clone https://github.com/yourusername/discord-chat-exporter.git
+cd discord-chat-exporter
+```
+add the bot token , channel id and server id to the scraper.py then run the script

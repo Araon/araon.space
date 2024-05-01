@@ -8,12 +8,18 @@ index: 2
 ---
 <Image width={600} height={400} src="/projects/shawty/image.gif" caption="shawty"/>
 
-A very light url shortner with expiration support
-It takes in a long url like `https://www.youtube.com/watch?v=NpUuuT_EzSs` and return something like `https://biturl.top/zE3YBr`
+In today's fast-paced digital world, sharing lengthy URLs can be a hassle, especially when you're limited by character counts or simply want a cleaner, more shareable link. Enter Shawty, a lightweight yet powerful URL shortener that not only compacts long URLs into bite-sized links but also offers the added convenience of expiration support.
 
-This is mainly solution from this coding challenge [Write Your Own URL Shortener](https://codingchallenges.fyi/challenges/challenge-url-shortener)
+### The Problem
+Have you ever tried to share a lengthy URL, only to struggle with formatting or character limits? Or perhaps you've encountered situations where you'd like to share a temporary link that becomes obsolete after a certain period? Shawty was born to solve these very problems, providing a seamless solution for shortening URLs and ensuring they remain accessible only for a specified duration.
 
-Below are the endpoint is present
+### The Solution
+Shawty takes a long URL like `https://www.youtube.com/watch?v=NpUuuT_EzSs` and transforms it into a concise, shareable link such as `https://biturl.top/zE3YBr`. But that's not all – with Shawty, you can also set an expiration date for your shortened URLs, ensuring that they remain active only for the desired period.
+
+This project was inspired by the coding challenge Write Your Own URL Shortener and serves as a practical solution to the problem of managing long and temporary URL
+
+### How It Works
+Shawty exposes a simple yet powerful API endpoint for shortening URLs:
 
 [POST]/short
 request
@@ -33,4 +39,13 @@ response
 }
 ```
 
-When the short url is hit ,it redirected using 302 HTTP status code
+When a shortened URL is accessed, Shawty performs a 302 HTTP redirect to the original long URL, ensuring a seamless user experience.
+### Technologies Used
+Shawty is built using the following technologies:
+
+- Node.js: A powerful JavaScript runtime for building server-side applications.
+- MySQL: A reliable and scalable open-source relational database for storing URL mappings and expiration information.
+- Docker: A containerization platform that simplifies deployment and ensures consistent execution environments.
+
+### Getting Started
+To get started with Shawty, simply clone the repository from GitHub and follow the installation and usage instructions provided in the README.

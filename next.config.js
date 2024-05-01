@@ -23,7 +23,8 @@ const nextConfig = {
       "media.licdn.com",
       "uploads-ssl.webflow.com",
       "j.gifs.com",
-      "dicebear.com"
+      "dicebear.com",
+      "raw.githubusercontent.com"
     ],
   },
 };

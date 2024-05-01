@@ -1,0 +1,60 @@
+---
+title: MOSDAC
+time: "2020"
+description: A scraper to create very interesting videos MOSDAC Satellite Data
+url: "https://github.com/Araon/MOSDAC_Video_Generator"
+tags: ["Python","WebScraping", "FFMPEG"]
+index: 5
+---
+In the aftermath of the two powerful cyclones that struck West Bengal, I embarked on a project to visualize their progression using satellite imagery. The goal was to create a mesmerizing timelapse video that would capture the cyclones' formation and movement across the region.
+
+The source of the data was [MOSDAC](https://www.mosdac.gov.in/) (Meteorological and Oceanographic Satellite Data Archival Centre), an invaluable resource for satellite imagery and data. MOSDAC publishes live images and data captured by Indian geostationary satellites like [INSAT-3D](https://www.isro.gov.in/INSAT_3D.html) and [INSAT-3DR](https://www.isro.gov.in/INSAT_3DR.html) on a daily basis. This wealth of information is a goldmine for researchers, meteorologists, and data enthusiasts alike.
+
+To obtain the necessary data, I developed a Python script to scrape MOSDAC's publicly available image gallery. Over the course of 30 days, the script downloaded and archived over 550 individual satellite images, each providing a snapshot of the cyclones' evolution.
+
+The resulting timelapse offers a unique perspective on the cyclones' progression:
+
+<Image
+width={640}
+height={480}
+caption="L1B FULL DISK"
+src="https://raw.githubusercontent.com/Araon/MOSDAC_Video_Generator/master/demos/INSAT-3D.gif"
+/>
+
+
+As the timelapse unfolds, you can witness the cyclones taking shape and their paths across the Indian peninsula. The sun's reflection on the ocean, moving from right to left, serves as a natural indicator of time, allowing you to track the passage of days effortlessly.
+
+Here's a glimpse into the code used to scrape the images from MOSDAC's website:
+```Python
+def download_images(sat_id, month):
+    ...
+    for day in range(1, 32):
+        found_image = False
+        ...
+        for time in time_list:
+            link = f"https://mosdac.gov.in/.../3DIMG_{day+month+year}_{time}_{sat_id}.jpg"
+            response = requests.get(link, stream=True)
+            if response.ok:
+                with open(f"images/{day}-{time}.jpg", "wb") as f:
+                    f.write(response.content)
+                print(f"Image found: {day}-{time}")
+                found_image = True
+        
+        if not found_image:
+            print(f"No image on {year}-{month}-{day}")
+```
+Once the images were downloaded, I utilized OpenCV to stitch them together into a seamless timelapse video:
+```Python
+def generate_video(path, filename, fps=25):
+    ...
+    out = cv2.VideoWriter(filename, cv2.VideoWriter_fourcc(*'DIVX'), fps, size)
+    for i, img in enumerate(images):
+        out.write(img)
+    out.release()
+```
+
+### Future enhancements
+- Daily Wallpaper Generation:
+One fascinating extension could be to generate daily wallpapers or backgrounds based on the satellite imagery from MOSDAC. Instead of creating a timelapse video, the script could download the latest satellite image each day and process it to create a visually appealing wallpaper. These wallpapers could showcase various meteorological and geographical features captured by the satellites, providing a unique and ever-changing backdrop for users' devices.
+- Local Rain Prediction:
+Leveraging the wealth of data available from MOSDAC, it might be possible to develop a localized rain prediction system. By analyzing patterns in the satellite imagery, cloud formations, temperature gradients, and other relevant data, a machine learning model could be trained to forecast the likelihood of precipitation in specific regions. This could be particularly useful for agricultural purposes, disaster preparedness, or even personal planning.
