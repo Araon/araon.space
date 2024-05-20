@@ -153,7 +153,15 @@ export default function About() {
 
 const workplaces = [
   {
-    title: "SDE 1",
+    title: "SDE",
+    company: "GrowthX",
+    time: "Present",
+    imageSrc:
+      "https://media.licdn.com/dms/image/D560BAQEoiyoo__Lm0w/company-logo_200_200/0/1707057683269/growthxclub_logo?e=1724284800&v=beta&t=b-xlyFu220SkgvpDp8Asu2_J5TwumQO4yOpA0VxFyO4",
+    link: "https://www.growthx.club",
+  },
+  {
+    title: "SDE",
     company: "Onlinesales.ai",
     time: "3 Years",
     imageSrc:
