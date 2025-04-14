@@ -1,20 +1,10 @@
-import { allProjects, Post as PostType } from ".contentlayer/generated";
-import Image from "next/image";
+import { allProjects } from ".contentlayer/generated";
 import { notFound } from "next/navigation";
 
 import Mdx from "@/app/blog/components/ui/MdxWrapper";
-import PostList from "@/app/blog/components/ui/PostList";
-import Tags from "@/components/Tags";
 import Link from "@/components/ui/Link";
-import { formatDate } from "lib/formatdate";
-
-type PostProps = {
-  post: PostType;
-  related: PostType[];
-};
 
 export default function Project({ params }: { params: any }) {
-  // const post = allPosts.find((post) => post.slug === params.slug);
   const post = allProjects.find((post) => post.slug === params.slug);
 
   if (!post) {

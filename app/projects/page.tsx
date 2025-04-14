@@ -7,10 +7,8 @@ import Halo from "@/components/ui/Halo";
 
 export const metadata: Metadata = {
   title: "Works | Araon",
-  description:
-    "Here are some of the projects I've worked on.",
+  description: "Here are some of the side-projects I've worked on.",
 };
-
 
 export default function Blog() {
   const sortedProjects = allProjects.slice().sort((a, b) => a.index - b.index);
@@ -27,7 +25,7 @@ export default function Blog() {
               className="animate-in text-secondary"
               style={{ "--index": 1 } as React.CSSProperties}
             >
-              Here are some of the projects I&apos;ve worked on.
+              Here are some of the side-projects I&apos;ve worked on.
             </p>
           </div>
         </div>
