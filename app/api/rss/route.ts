@@ -65,9 +65,3 @@ export async function GET() {
     },
   });
 }
-
-// Optional: Add a JSON feed variant
-export async function generateJSONFeed() {
-  // Similar to the above but returns JSON feed format
-  // This would be implemented in /api/rss/json/route.ts
-}
