@@ -1,6 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
 
+// Add route segment config to mark this route as dynamic
+export const dynamic = 'force-dynamic';
+
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
