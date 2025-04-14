@@ -24,6 +24,7 @@
     "contentlayer": "^0.3.4",
     "date-fns": "^2.30.0",
     "dompurify": "^3.0.11",
+    "feed": "^4.2.2",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.285.0",
     "next": "^13.5.6",

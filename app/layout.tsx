@@ -57,6 +57,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Araon's Blog RSS Feed"
+          href="/api/rss"
+        />
+        <link
+          rel="alternate"
+          type="application/json"
+          title="Araon's Blog JSON Feed"
+          href="/api/rss/json"
+        />
+      </head>
       <Suspense>
         <PostHogPageview />
       </Suspense>
