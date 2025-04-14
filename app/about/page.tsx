@@ -6,6 +6,7 @@ import Section from "@/components/Section";
 import ConnectLinks from "../../components/ConnectLinks";
 import Workplaces from "./components/Workplaces";
 import Gallery from "./components/Gallery";
+import AudioButton from "@/components/AudioButton";
 
 import medarjeeling from "public/gallery/me-darjeeling.jpg";
 import punehill from "public/gallery/doremon-hill.jpg";
@@ -76,10 +77,15 @@ export default function About() {
               style={{ "--index": 1 } as React.CSSProperties}
             >
               IPA /sɔːmɪk/ • सौमिक • সৌমিক • ソウミク
-            </p>{" "}
-            but I go by Araon for short. Araon has a nice ring to it. You’ll
-            probably remember it
-            <br></br>
+            </p>
+            <p>
+              but I go by{" "}
+              <AudioButton audioPath="/araon.mp3" tooltipText="It's irish">
+                Araon
+              </AudioButton>{" "}
+              on the internet. <br></br>
+              Araon has a nice ring to it. You&apos;ll probably remember it
+            </p>
             <p>
               I love building cool things with code and I&apos;m all about
               engineering, history, and hardware.
@@ -107,8 +113,8 @@ export default function About() {
         <Section heading="Work" headingAlignment="left">
           <div className="flex w-full flex-col gap-8">
             <p>
-              I started my career freelancing for seniors, building discord bots
-              and renting out game servers.
+              I started my career freelancing for college seniors, building
+              discord bots and renting out game servers.
             </p>
             <Workplaces items={workplaces} />
           </div>

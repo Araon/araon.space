@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Home | Araon",
-  description: "loves cs, electronics, retro and bikes",
+  description: "Code • Camera • Chaos",
   metadataBase: new URL("https://araon.space"),
   openGraph: {
     title: "araon.space",

@@ -15,9 +15,6 @@ type Track = {
 };
 
 function TrackItem({ track, index }: { track: Track; index: number }) {
-  // State to hold text color based on album art
-  const [textColor, setTextColor] = useState("#FFF");
-
   const sizeClass =
     index % 5 === 0
       ? "h-96" // Large items
