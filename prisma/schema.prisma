@@ -8,6 +8,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url = env("DATABASE_URL")
+  directUrl = env("DATABASE_DIRECT_URL")
   relationMode = "prisma"
 }
 
@@ -39,4 +40,10 @@ model Comments {
   ip_identity String
   createdAt  DateTime  @default(now())
   post       Post      @relation(fields: [postId], references: [slug])
+}
+
+model BlockedIp {
+  id        Int      @id @default(autoincrement())
+  ip        String   @unique
+  blockedAt DateTime @default(now())
 }

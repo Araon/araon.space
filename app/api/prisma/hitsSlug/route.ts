@@ -1,13 +1,32 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
+import { headers } from "next/headers";
 
 // Add route segment config to mark this route as dynamic
 export const dynamic = 'force-dynamic';
 
 const prisma = new PrismaClient();
 
+function getIP() {
+  const FALLBACK_IP_ADDRESS = "0.0.0.0";
+  const forwardedFor = headers().get("x-forwarded-for");
+
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0] ?? FALLBACK_IP_ADDRESS;
+  }
+
+  return headers().get("x-real-ip") ?? FALLBACK_IP_ADDRESS;
+}
+
 export async function GET(req: NextRequest) {
   try {
+    const ip = getIP();
+    // Check if IP is blocked
+    const blocked = await prisma.blockedIp.findUnique({ where: { ip } });
+    if (blocked) {
+      return new Response("Access denied", { status: 403 });
+    }
+
     const searchParams = req.nextUrl.searchParams;
     const slug = searchParams.get("slug");
 

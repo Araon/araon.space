@@ -2,16 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { headers } from "next/headers";
 
-import RateLimiter from 'rate-limiter-flexible';
+import { RateLimiterMemory } from "rate-limiter-flexible";
 
 const prisma = new PrismaClient();
 
-// const limiter = new RateLimiter({
-//   points: 100, // Allow 100 requests
-//   duration: 15 * 60, // Per 15 minutes
-//   blockDuration: 60 * 60 , // Block for 1 hour if limit is exceeded
-// });
-
+const limiter = new RateLimiterMemory({
+  points: 5, // Allow 5 comments
+  duration: 60 * 60, // Per hour (60 * 60 seconds)
+  blockDuration: 60 * 60 * 24, // Block for 24 hours if limit is exceeded
+});
 
 function getIP() {
   const FALLBACK_IP_ADDRESS = "0.0.0.0";
@@ -25,14 +24,34 @@ function getIP() {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = getIP();
+  // Check if IP is blocked
+  const blocked = await prisma.blockedIp.findUnique({ where: { ip } });
+  if (blocked) {
+    return NextResponse.json(
+      { error: "You have been blocked from commenting." },
+      { status: 403 }
+    );
+  }
   try {
-
-    // await limiter.consume(req.ip);
+    // Rate limit check
+    try {
+      await limiter.consume(ip);
+    } catch (rateLimiterRes) {
+      // Block the IP in the database
+      await prisma.blockedIp.upsert({
+        where: { ip },
+        update: { blockedAt: new Date() },
+        create: { ip },
+      });
+      return NextResponse.json(
+        { error: "You have been blocked due to excessive requests." },
+        { status: 429 }
+      );
+    }
 
     const body = await req.json();
     const { postId, content, author } = body;
-    
-    console.log('Got data from front end: ', content, author)
 
     if (!content || !author) {
       return NextResponse.json(
@@ -41,7 +60,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const ip_identity = getIP();
+    const ip_identity = ip;
+
+    const post = await prisma.post.findUnique({
+      where: {
+        id: postId,
+      },
+    });
+
+    if (!post) {
+      return NextResponse.json({ error: "Invalid post ID" }, { status: 400 });
+    }
 
     const newComment = await prisma.comments.create({
       data: {
