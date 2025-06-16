@@ -45,24 +45,40 @@ export async function generateMetadata(
     publishedAt: publishedTime,
     summary: description,
     image,
-        // slug,
+    slug,
   } = post;
+
+  // Use absolute URLs
+  const url = `https://araon.space/blog/${slug}`;
+  const ogImage = image 
+    ? `https://araon.space${image}` 
+    : `https://ik.imagekit.io/ara0n/Blog_Images/why_are_you_still_awake.jpeg`;
 
   const metadata: Metadata = {
     title: `${title} | Araon`,
     description,
     openGraph: {
-      title: `${title} | Araon`,
+      title,
       description,
       type: "article",
       publishedTime,
-      url: `https://araon.space/blog/${title}`,
+      url,
+      siteName: 'araon.space',
       images: [
         {
-          url: `https://araon.space/api/og?title=${title}&image=${image}`,
+          url: ogImage,
+          width: 1200,
+          height: 630,
           alt: title,
         },
       ],
+      locale: 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
     },
   };
   return metadata;
