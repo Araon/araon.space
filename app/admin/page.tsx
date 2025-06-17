@@ -53,8 +53,7 @@ export default function AdminPage() {
                   <Image height={24} width={24} src="/crown.svg" alt="Admin" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-primary">Blog Editor</h1>
-                  <p className="text-sm text-secondary">Create and manage your blog posts</p>
+                  <h1 className="text-2xl font-bold text-primary">Editor</h1>
                 </div>
               </div>
               <button

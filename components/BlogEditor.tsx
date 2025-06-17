@@ -1,8 +1,13 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import { useTheme } from 'next-themes';
+
+// Import MDEditor styles
+import '@uiw/react-md-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
 
 // Dynamically import the markdown editor to avoid SSR issues
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { 
@@ -15,6 +20,8 @@ const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
 });
 
 export default function BlogEditor() {
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [summary, setSummary] = useState('');
@@ -28,6 +35,14 @@ export default function BlogEditor() {
   
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Determine the current theme
+  const currentTheme = theme === 'system' ? systemTheme : theme;
+  const isDark = currentTheme === 'dark' || currentTheme === 'terminal';
+  
   // Auto-generate slug from title
   const generateSlug = (title: string) => {
     return title
@@ -290,14 +305,17 @@ export default function BlogEditor() {
       {/* Content Editor */}
       <div className="space-y-2">
         <label className="block text-sm font-medium text-primary">Content</label>
-        <div className="border border-secondary rounded-lg overflow-hidden" data-color-mode="light">
+        <div 
+          className="border border-secondary rounded-lg overflow-hidden" 
+          data-color-mode={mounted ? (isDark ? 'dark' : 'light') : 'light'}
+        >
           <MDEditor
             value={content}
             onChange={(val) => setContent(val || '')}
             height={500}
             preview="edit"
             hideToolbar={false}
-            data-color-mode="light"
+            data-color-mode={mounted ? (isDark ? 'dark' : 'light') : 'light'}
           />
         </div>
         <p className="text-xs text-tertiary">
