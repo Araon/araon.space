@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import BlogEditor from '@/components/BlogEditor';
 import LoginForm from '@/components/LoginForm';
+import Image from 'next/image';
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Check if user is already authenticated
@@ -21,8 +21,6 @@ export default function AdminPage() {
       }
     } catch (error) {
       console.error('Auth check failed:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -41,38 +39,48 @@ export default function AdminPage() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
       {!isAuthenticated ? (
         <LoginForm onLogin={handleLogin} />
       ) : (
-        <div>
-          <header className="bg-white shadow">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between items-center py-6">
-                <h1 className="text-3xl font-bold text-gray-900">Blog Editor</h1>
-                <button
-                  onClick={handleLogout}
-                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors"
-                >
-                  Logout
-                </button>
+        <div className="mx-auto max-w-[700px] px-6 pb-24 pt-16 md:px-6 md:pb-44 md:pt-20">
+          {/* Admin Header */}
+          <header className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-secondary rounded-lg border border-primary">
+                  <Image height={24} width={24} src="/crown.svg" alt="Admin" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-primary">Blog Editor</h1>
+                  <p className="text-sm text-secondary">Create and manage your blog posts</p>
+                </div>
               </div>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-secondary hover:text-primary border border-secondary hover:border-primary rounded-md transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Sign out
+              </button>
+            </div>
+            
+            {/* Status indicator */}
+            <div className="flex items-center gap-2 px-3 py-2 bg-tertiary rounded-md border border-secondary">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-xs text-secondary">Admin session active</span>
             </div>
           </header>
-          <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+
+          {/* Blog Editor */}
+          <main>
             <BlogEditor />
           </main>
         </div>
       )}
-    </div>
+    </>
   );
 }
