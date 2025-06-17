@@ -9,7 +9,7 @@ tags:
 ---
 
 ### Motivation:
-As a backend developer, it's crucial to have a basic understanding of how a database management system (DBMS) works. This knowledge can make you a more well-rounded developer, boost your confidence, and help you make better decisions when choosing a database for your application. We will delve deeper into the internal workings of a DBMS, the basic terminology, and the primary components and subsystems that form a DBMS. 
+As a backend developer, it's crucial to have a basic understanding of how a database management system (DBMS) works. This knowledge can make you a more well-rounded developer, boost your confidence, and help you make better decisions when choosing a database for your application. We will delve deeper into the internal workings of a DBMS, the basic terminology, and the primary components and subsystems that form a DBMS.
 But before going forward lets make sure we have our terminology on the same page.
 
 
@@ -17,7 +17,7 @@ But before going forward lets make sure we have our terminology on the same page
 As a side note, please be aware that while no specific prerequisites are required, it is beneficial to have some prior experience working with databases to fully grasp the upcoming content.
 </Alert>
 
-So when we refer to databases like MySQL or PostgreSQL, we are actually talking about database management systems (DBMS). 
+So when we refer to databases like MySQL or PostgreSQL, we are actually talking about database management systems (DBMS).
 A database is simply a collection of data or information that is stored and can be retrieved, while a DBMS encompasses everything around the database, such as the query language, security, replication, transactions, and more. A database management system as the name suggests has many underlying subsystems or layers that makes sure the ACID properties are withheld. There’s no common blueprint for database management system design, as each database is built slightly differently. However, there are common components and subsystems that we can observer out in the wild.
 <Image
   width={1920}
@@ -26,7 +26,7 @@ A database is simply a collection of data or information that is stored and can 
   src="/blog/dbms/Arch.png"
 />
 
-To better explain this , lets assume we are firing a single database command 
+To better explain this , lets assume we are firing a single database command
 
 ```sql
 select * from urls where code = "ffd9f9";
@@ -37,7 +37,7 @@ Upon firing this, each of the layers starts their work - starting with
 ### 1. Transport or Communication Layer:
 
 The communication layer is responsible for managing the communications between the client applications and the actual database system.
-Mainly there are two types of architecture 
+Mainly there are two types of architecture
 
 - Two-tier architecture
 - Three-tier architecture
@@ -71,9 +71,9 @@ So,
 after the request is received, it is passed to the query processor. The query processor interprets, validates, and performs access control and permission checks on the query.
 
 Parsing of a query means for a given query we have to identify in how many ways the given request can be fulfilled. Every query must be parsed at least once.\
-There are two types of parsing: soft parsing and hard parsing. 
+There are two types of parsing: soft parsing and hard parsing.
 
-- Soft parsing means that the database can reuse a previous execution plan for the same query. 
+- Soft parsing means that the database can reuse a previous execution plan for the same query.
 - Hard parsing means that the database has to create a new execution plan for the query.
 
 Hard parsing happens when the database can't find a previous execution plan or if the plan is no longer valid. In this case, the Optimizer has to look at all the possible ways to execute the query and choose the best one. This process can take some time, but it's important to make sure the query runs as fast as possible.

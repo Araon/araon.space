@@ -39,7 +39,7 @@ def download_images(sat_id, month):
                     f.write(response.content)
                 print(f"Image found: {day}-{time}")
                 found_image = True
-        
+
         if not found_image:
             print(f"No image on {year}-{month}-{day}")
 ```
