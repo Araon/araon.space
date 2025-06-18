@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
   if (blocked) {
     return NextResponse.json(
       { error: "You have been blocked from commenting." },
-      { status: 403 }
+      { status: 403 },
     );
   }
   try {
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
       });
       return NextResponse.json(
         { error: "You have been blocked due to excessive requests." },
-        { status: 429 }
+        { status: 429 },
       );
     }
 
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
 
     const post = await prisma.post.findUnique({
       where: {
-        id: postId,
+        slug: postId,
       },
     });
 
