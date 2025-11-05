@@ -25,7 +25,10 @@ const nextConfig = {
       "j.gifs.com",
       "dicebear.com",
       "raw.githubusercontent.com",
-      "i.scdn.co" // Spotify album artwork
+      "i.scdn.co",
+      "en.wikipedia.org",
+      "www.universetoday.com",
+      "p.potaufeu.asahi.com"
     ],
   },
 };
