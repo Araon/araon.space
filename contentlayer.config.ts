@@ -2,7 +2,7 @@ import {
   defineDocumentType,
   makeSource,
   ComputedFields,
-} from "contentlayer/source-files"; // eslint-disable-line
+} from "contentlayer2/source-files"; // eslint-disable-line
 import rehypePrism from "rehype-prism-plus";
 import rehypeSlug from "rehype-slug";
 
@@ -76,6 +76,7 @@ export default makeSource({
   contentDirPath: "content",
   documentTypes: [Post, Project, Code],
   mdx: {
-    rehypePlugins: [rehypePrism, rehypeSlug],
+    // Cast until rehype/unified typings catch up with Contentlayer 2.
+    rehypePlugins: [rehypePrism as any, rehypeSlug as any],
   },
 });
