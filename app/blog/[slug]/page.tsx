@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import type { Metadata, ResolvingMetadata } from "next";
 import { allPosts, Post as PostType } from ".contentlayer/generated";
 
@@ -34,11 +34,6 @@ export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  // Handle admin route confusion
-  if (params.slug === 'admin') {
-    redirect('/admin');
-  }
-
   const post = allPosts.find((post) => post.slug === params.slug);
 
   if (!post) {
@@ -90,11 +85,6 @@ export async function generateMetadata(
 }
 
 export default async function Post({ params }: { params: any  }) {
-  // Handle admin route confusion
-  if (params.slug === 'admin') {
-    redirect('/admin');
-  }
-
   const post = allPosts.find((post) => post.slug === params.slug);
 
   // const seoTitle = `${post.title} | Araon`;
