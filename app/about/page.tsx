@@ -96,7 +96,7 @@ export default function About() {
               <Link className="underline" href="https://araon.space/blog">
                 blog
               </Link>{" "}
-              about computers, life and anything that peaks my interest.
+              about computers, life and anything that piques my interest.
             </p>
             <p>
               When I&apos;m not at my desk, I am probably taking{" "}

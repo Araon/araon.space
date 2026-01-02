@@ -6,7 +6,6 @@ import RecommendedPost from "./components/ui/RecommendedPost";
 import { RiRssFill } from "react-icons/ri";
 import Link from "next/link";
 import { getRecommendedPosts } from "@/lib/getTopPosts";
-// import NewsletterSignupForm from "./components/ui/NewsletterSignupForm";
 
 export const metadata: Metadata = {
   title: "Stories/Notes | Araon",
@@ -131,13 +130,6 @@ export default async function Blog() {
         </div>
       )}
 
-      {/* Newsletter Section */}
-      <div
-        className="animate-in"
-        style={{ "--index": 5 } as React.CSSProperties}
-      >
-        {/* <NewsletterSignupForm/> */}
-      </div>
     </div>
   );
 }
