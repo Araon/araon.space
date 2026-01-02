@@ -4,7 +4,6 @@ import { ReactNode } from "react";
 import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-// import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 
 import medarjeeling from "public/gallery/me-darjeeling.jpg"

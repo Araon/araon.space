@@ -7,8 +7,6 @@ import Tags from "@/components/Tags";
 import Link from "@/components/ui/Link";
 import Mdx from "@/app/blog/components/ui/MdxWrapper";
 import ViewCounter from "@/app/blog/components/ui/ViewCounter";
-import PostList from "@/app/blog/components/ui/PostList";
-// import Subscribe from "@/app/blog/components/ui/NewsletterSignupForm";
 
 import CommentList from "@/app/blog/components/ui/CommentList";
 import CommentSection from "@/app/blog/components/ui/CommentSection";
@@ -16,11 +14,6 @@ import CommentSection from "@/app/blog/components/ui/CommentSection";
 import { formatDate } from "lib/formatdate";
 
 import Avatar from "@/public/avatar.jpg";
-
-type PostProps = {
-  post: PostType;
-  related: PostType[];
-};
 
 type Props = {
   params: {
@@ -86,11 +79,6 @@ export async function generateMetadata(
 
 export default async function Post({ params }: { params: any  }) {
   const post = allPosts.find((post) => post.slug === params.slug);
-
-  // const seoTitle = `${post.title} | Araon`;
-  // const seoDesc = `${post.summary}`;
-  // const url = `https://araon.space/blog/${post.slug}`;
-  // const MDXContent = useMDXComponent(post?.body.code);
 
   if (!post) {
     notFound();
@@ -164,20 +152,7 @@ export default async function Post({ params }: { params: any  }) {
       <CommentSection postId={post.slug} />
       <CommentList postId={post.slug} />
 
-      {/* <Subscribe /> */}
-
       <Link href="/blog">← All Blogs</Link>
-      {/* {related.length ? (
-        <div className="flex flex-col items-start gap-6">
-          <h2>Related posts</h2>
-          <div className="will-change-transform">
-            <PostList posts={related} />
-          </div>
-          <Link href="/blog" underline>
-            ← See all
-          </Link>
-        </div>
-      ) : null} */}
     </div>
   );
 }
