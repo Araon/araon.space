@@ -13,6 +13,7 @@ import punehill from "public/gallery/doremon-hill.jpg";
 import growthxLogo from "public/company/growthx.svg";
 import onlinesalesLogo from "public/company/onlinesales.svg";
 import matrixLogo from "public/company/matrix.svg";
+import NagarroLogo from "public/company/nagarro.svg";
 
 export const metadata: Metadata = {
   title: "Me? | Araon",
@@ -198,14 +199,21 @@ export default function About() {
 
 const workplaces = [
   {
-    title: "SDE",
-    company: "GrowthX",
+    title: "Staff Engineer",
+    company: "Nagarro",
     time: "Present",
+    imageSrc: NagarroLogo,
+    link: "https://www.nagarro.com",
+  },
+  {
+    title: "Senior SDE",
+    company: "GrowthX",
+    time: "1 Year",
     imageSrc: growthxLogo,
     link: "https://www.growthx.club",
   },
   {
-    title: "SDE",
+    title: "SDE 1",
     company: "Onlinesales.ai",
     time: "3 Years",
     imageSrc: onlinesalesLogo,

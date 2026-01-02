@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="nagarroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#00C9A7;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#00A651;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <rect width="200" height="200" fill="url(#nagarroGradient)" rx="8"/>
+    <text x="100" y="115" font-family="Arial, sans-serif" font-size="38" font-weight="bold" fill="white" text-anchor="middle" letter-spacing="1">Nagarro</text>
+</svg>

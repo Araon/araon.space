@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="200" height="200" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <rect width="200" height="200" fill="#000000"/>
-    <text x="100" y="120" font-family="Arial" font-size="48" fill="white" text-anchor="middle">GrowthX</text>
+    <defs>
+        <linearGradient id="growthxGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <rect width="200" height="200" fill="url(#growthxGradient)" rx="8"/>
+    <circle cx="100" cy="70" r="25" fill="none" stroke="white" stroke-width="3"/>
+    <path d="M 85 70 L 100 50 L 115 70 M 100 50 L 100 95" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <text x="100" y="140" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle" letter-spacing="1">GrowthX</text>
 </svg>
