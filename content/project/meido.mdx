@@ -1,0 +1,65 @@
+---
+title: Meido
+time: "2022-2025"
+description: Telegram bot to search and download anime - with MongoDB caching for instant access
+url: "https://github.com/Araon/Meido"
+tags: ["Python", "Telegram Bot", "MongoDB", "FFmpeg"]
+index: 5
+---
+
+A Telegram bot that sends anime directly to your inbox. Search for any anime, and Meido will download and deliver the episode right to your Telegram chat.
+
+<Image width={600} height={400} src="/projects/meido/image.png" caption="Meido - Anime Delivery Bot"/>
+
+### The Problem
+
+You want to watch anime. You search online. You get bombarded with ads, redirects, and sketchy download buttons. What if you could just message a bot, ask for an episode, and get it delivered instantly?
+
+### How It Works
+
+Meido uses [animdl](https://github.com/justfoolingaround/animdl) for searching and downloading anime files, and stores them in MongoDB for faster subsequent access.
+
+```
+User: /search naruto
+Meido: Found 5 results...
+User: /download naruto 1
+Meido: Downloading episode 1...
+Meido: [Video File]
+```
+
+### Architecture
+
+The system consists of:
+- **Telegram Bot** - Handles user interactions via Pyrogram
+- **animdl Integration** - Searches and downloads from multiple anime sources
+- **MongoDB Cache** - Stores downloaded episodes for instant access
+- **FFmpeg** - Handles video conversion and processing
+
+### Features
+
+- 🎬 Download anime episodes on demand
+- 💾 Cache downloaded episodes for instant access
+- 📱 Send videos directly to Telegram
+- 🔍 Search from multiple anime sources
+- ⚡ Fast response times for cached content
+
+### Why MongoDB?
+
+When someone requests a popular episode, chances are others will want it too. By caching in MongoDB, the second request is instant - no re-downloading required.
+
+### Running It Yourself
+
+```bash
+git clone https://github.com/Araon/Meido.git
+cd Meido
+pip install -r requirements.txt
+```
+
+You'll need:
+- Python 3.9+
+- MongoDB instance
+- FFmpeg installed
+- Telegram Bot Token
+- Telegram API credentials from [my.telegram.org](https://my.telegram.org)
+
+Configure your `.env` file and you're good to go!
