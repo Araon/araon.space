@@ -1,9 +1,6 @@
-// Fetch comments for a post
 export const dynamic = "force-dynamic";
-import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export async function GET(req: NextRequest) {
   try {
@@ -22,7 +19,5 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error(error);
     return new Response(`Something went wrong: ${error}`, { status: 200 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

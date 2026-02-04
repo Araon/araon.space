@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { headers } from "next/headers";
+import { prisma } from "@/lib/prisma";
 
 import { RateLimiterMemory } from "rate-limiter-flexible";
-
-const prisma = new PrismaClient();
 
 const limiter = new RateLimiterMemory({
   points: 5, // Allow 5 comments
@@ -88,7 +86,5 @@ export async function POST(req: NextRequest) {
       { error: "Something went wrong" },
       { status: 500 },
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
