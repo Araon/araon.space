@@ -1,0 +1,37 @@
+=== BASELINE METRICS (v2 - original code) ===
+
+hitsSlug endpoint (10 requests):
+  Request 1: 560ms
+  Request 2: 535ms
+  Request 3: 537ms
+  Request 4: 536ms
+  Request 5: 548ms
+  Request 6: 538ms
+  Request 7: 539ms
+  Request 8: 537ms
+  Request 9: 540ms
+  Request 10: 548ms
+
+topPosts endpoint (10 requests):
+  Request 1: 406ms
+  Request 2: 401ms
+  Request 3: 409ms
+  Request 4: 407ms
+  Request 5: 397ms
+  Request 6: 405ms
+  Request 7: 456ms
+  Request 8: 435ms
+  Request 9: 459ms
+  Request 10: 448ms
+
+getComments endpoint (10 requests):
+  Request 1: 403ms
+  Request 2: 405ms
+  Request 3: 405ms
+  Request 4: 403ms
+  Request 5: 402ms
+  Request 6: 400ms
+  Request 7: 406ms
+  Request 8: 409ms
+  Request 9: 401ms
+  Request 10: 403ms

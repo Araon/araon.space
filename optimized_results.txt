@@ -1,0 +1,37 @@
+=== OPTIMIZED METRICS (perf/database-layer) ===
+
+hitsSlug endpoint (10 requests - uses upsert):
+  Request 1: 733ms
+  Request 2: 325ms
+  Request 3: 336ms
+  Request 4: 332ms
+  Request 5: 327ms
+  Request 6: 326ms
+  Request 7: 319ms
+  Request 8: 321ms
+  Request 9: 320ms
+  Request 10: 326ms
+
+topPosts endpoint (10 requests - has views index):
+  Request 1: 246ms
+  Request 2: 189ms
+  Request 3: 193ms
+  Request 4: 196ms
+  Request 5: 196ms
+  Request 6: 193ms
+  Request 7: 193ms
+  Request 8: 193ms
+  Request 9: 192ms
+  Request 10: 194ms
+
+getComments endpoint (10 requests - has postId index):
+  Request 1: 224ms
+  Request 2: 196ms
+  Request 3: 192ms
+  Request 4: 195ms
+  Request 5: 193ms
+  Request 6: 190ms
+  Request 7: 190ms
+  Request 8: 199ms
+  Request 9: 194ms
+  Request 10: 194ms
