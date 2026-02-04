@@ -17,6 +17,7 @@ model Post {
   slug      String   @unique
   views     Int      @default(0)
   comments  Comments[]
+  @@index([views])
 }
 
 model Photos {
@@ -40,6 +41,7 @@ model Comments {
   ip_identity String
   createdAt  DateTime  @default(now())
   post       Post      @relation(fields: [postId], references: [slug])
+  @@index([postId])
 }
 
 model BlockedIp {

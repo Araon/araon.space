@@ -1,10 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
+import { prisma } from "@/lib/prisma";
 
-// Add route segment config to mark this route as dynamic
-export const dynamic = 'force-dynamic';
-
-const prisma = new PrismaClient();
+export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   try {
@@ -14,13 +11,13 @@ export async function GET(req: NextRequest) {
     // Get posts ordered by view count (descending)
     const topPosts = await prisma.post.findMany({
       orderBy: {
-        views: 'desc'
+        views: "desc",
       },
       take: limit,
       select: {
         slug: true,
-        views: true
-      }
+        views: true,
+      },
     });
 
     return new Response(JSON.stringify({ posts: topPosts }), {
@@ -32,7 +29,5 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error(error);
     return new Response("Internal Server Error", { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
