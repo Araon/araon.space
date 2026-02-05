@@ -1,0 +1,47 @@
+name: Compress Images
+
+on:
+  pull_request:
+    paths:
+      - "**.jpg"
+      - "**.jpeg"
+      - "**.png"
+      - "**.webp"
+      - "**.gif"
+
+jobs:
+  compress-images:
+    name: Compress Images
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compress images
+        id: calibre
+        uses: calibreapp/image-actions@main
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: false
+        env:
+          # Quality settings (0-100, higher = better quality)
+          JPEG_QUALITY: 80
+          PNG_QUALITY: 80
+          WEBP_QUALITY: 80
+          # GIF quality (1-200, higher = better quality)
+          GIF_QUALITY: 80
+
+      - name: Create pull request
+        if: steps.calibre.outputs.markdown != ''
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: compress images"
+          title: "chore: compress images"
+          body: ${{ steps.calibre.outputs.markdown }}
+          branch: compress-images-${{ github.run_id }}
+          delete-branch: true
