@@ -1,7 +1,11 @@
 name: Check Image Sizes
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - v2
     paths:
       - "**.jpg"
       - "**.jpeg"
@@ -18,14 +22,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2
 
       - name: Get changed image files
         id: changed-files
         run: |
-          # Get list of changed image files in the PR
-          changed_files=$(git diff --name-only --diff-filter=ACMRT origin/${{ github.base_ref }}...HEAD | grep -E '\.(jpg|jpeg|png|webp|gif)$' || true)
+          # Get list of changed image files in the last commit
+          changed_files=$(git diff --name-only HEAD~1 HEAD | grep -E '\.(jpg|jpeg|png|webp|gif)$' || true)
           echo "files=$changed_files" >> $GITHUB_OUTPUT
+          echo "Changed image files: $changed_files"
 
           # Check each file size
           max_size=1048576  # 1MB in bytes
@@ -47,22 +52,27 @@ jobs:
           echo "has_large_files=$has_large_files" >> $GITHUB_OUTPUT
           echo "large_files=$large_files" >> $GITHUB_OUTPUT
 
-      - name: Post PR comment
+      - name: Create warning issue
         if: steps.changed-files.outputs.has_large_files == 'true'
         uses: actions/github-script@v7
         with:
           script: |
             const largeFiles = `${{ steps.changed-files.outputs.large_files }}`;
+            const runUrl = `${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`;
+            const commitUrl = `${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}`;
+
             const body = `## ⚠️ Large Image Files Detected
 
-            The following images exceed 1MB and should be compressed before merging:
+            Large images were pushed in commit [${{ github.sha }}](${commitUrl}):
             ${largeFiles}
 
             ### Recommendations:
             - Use WebP format for better compression
             - Compress PNGs with [TinyPNG](https://tinypng.com/) or [Squoosh](https://squoosh.app/)
             - Consider converting GIFs to WebM for better compression
-            - The image compression workflow will run automatically after merge
+            - Images will be auto-compressed by the compression workflow
+
+            [View workflow run](${runUrl})
 
             ### To compress locally:
             \`\`\`bash
@@ -70,15 +80,17 @@ jobs:
             npx imagemin-cli "path/to/image.png" --out-dir="path/to/output" --plugin=pngquant
             \`\`\``;
 
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
+            github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: body
+              title: `Warning: Large images detected in commit ${{ github.sha }}`,
+              body: body,
+              labels: ['images', 'warning', 'automated']
             });
 
       - name: Fail if large images found
         if: steps.changed-files.outputs.has_large_files == 'true'
         run: |
-          echo "Error: Large image files detected (>1MB). Please compress them before merging."
+          echo "Error: Large image files detected (>1MB). Please compress them."
+          echo "Images will be auto-compressed, but consider using smaller images in the future."
           exit 1

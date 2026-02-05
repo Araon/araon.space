@@ -1,7 +1,11 @@
 name: Compress Images
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - v2
     paths:
       - "**.jpg"
       - "**.jpeg"
@@ -13,15 +17,23 @@ jobs:
   compress-images:
     name: Compress Images
     runs-on: ubuntu-latest
-    if: github.event.pull_request.head.repo.full_name == github.repository
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2
+
+      - name: Get changed image files
+        id: changed-files
+        run: |
+          # Get list of changed image files in the last commit
+          changed_files=$(git diff --name-only HEAD~1 HEAD | grep -E '\.(jpg|jpeg|png|webp|gif)$' || true)
+          echo "files=$changed_files" >> $GITHUB_OUTPUT
+          echo "Changed image files: $changed_files"
 
       - name: Compress images
+        if: steps.changed-files.outputs.files != ''
         id: calibre
         uses: calibreapp/image-actions@main
         with:
@@ -35,13 +47,11 @@ jobs:
           # GIF quality (1-200, higher = better quality)
           GIF_QUALITY: 80
 
-      - name: Create pull request
+      - name: Commit compressed images
         if: steps.calibre.outputs.markdown != ''
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: compress images"
-          title: "chore: compress images"
-          body: ${{ steps.calibre.outputs.markdown }}
-          branch: compress-images-${{ github.run_id }}
-          delete-branch: true
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          git diff --staged --quiet || git commit -m "chore: compress images [skip ci]"
+          git push
