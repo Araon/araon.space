@@ -43,8 +43,8 @@ export async function generateMetadata(
 
   // Use absolute URLs
   const url = `https://araon.space/blog/${slug}`;
-  const ogImage = image 
-    ? `https://araon.space${image}` 
+  const ogImage = image
+    ? `https://araon.space${image}`
     : `https://ik.imagekit.io/ara0n/Blog_Images/why_are_you_still_awake.jpeg`;
 
   const metadata: Metadata = {
@@ -56,7 +56,7 @@ export async function generateMetadata(
       type: "article",
       publishedTime,
       url,
-      siteName: 'araon.space',
+      siteName: "araon.space",
       images: [
         {
           url: ogImage,
@@ -65,10 +65,10 @@ export async function generateMetadata(
           alt: title,
         },
       ],
-      locale: 'en_US',
+      locale: "en_US",
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title,
       description,
       images: [ogImage],
@@ -77,7 +77,7 @@ export async function generateMetadata(
   return metadata;
 }
 
-export default async function Post({ params }: { params: any  }) {
+export default async function Post({ params }: { params: any }) {
   const post = allPosts.find((post) => post.slug === params.slug);
 
   if (!post) {
@@ -151,6 +151,23 @@ export default async function Post({ params }: { params: any  }) {
       <Tags tags={post.tags} />
       <CommentSection postId={post.slug} />
       <CommentList postId={post.slug} />
+
+      <div className="mt-8 ">
+        <p className="text-sm text-secondary">
+          - 100% human written, including emdashes. Sigh.
+        </p>
+        <p className="mt-2 text-sm text-secondary">
+          - This post is licensed under{" "}
+          <a
+            href="https://creativecommons.org/licenses/by-sa/4.0/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary underline underline-offset-2 hover:text-blue-500"
+          >
+            CC BY-SA 4.0
+          </a>
+        </p>
+      </div>
 
       <Link href="/blog">← All Blogs</Link>
     </div>
