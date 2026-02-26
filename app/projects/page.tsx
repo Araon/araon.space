@@ -11,7 +11,9 @@ export const metadata: Metadata = {
 };
 
 export default function Blog() {
-  const sortedProjects = allProjects.slice().sort((a, b) => a.index - b.index);
+  const sortedProjects = allProjects
+    .slice()
+    .sort((a, b) => b.time.localeCompare(a.time));
 
   return (
     <div className="mx-auto max-w-[700px]">
