@@ -15,6 +15,8 @@ import onlinesalesLogo from "public/company/onlinesales.svg";
 import matrixLogo from "public/company/matrix.svg";
 import NagarroLogo from "public/company/nagarro.svg";
 
+import FavoriteArtwork from "./components/FavoriteArtwork";
+
 export const metadata: Metadata = {
   title: "Me? | Araon",
   description: "very gpu-poor optimist, loves cs, hardware, retro and bikes",
@@ -107,6 +109,9 @@ export default function About() {
                 photos
               </Link>{" "}
               or riding my bike somewhere.
+            </p>
+            <p>
+              My favorite artwork is <FavoriteArtwork />.
             </p>
           </div>
         </Section>

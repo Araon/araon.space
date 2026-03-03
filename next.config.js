@@ -28,7 +28,8 @@ const nextConfig = {
       "i.scdn.co",
       "en.wikipedia.org",
       "www.universetoday.com",
-      "p.potaufeu.asahi.com"
+      "p.potaufeu.asahi.com",
+      "lh3.googleusercontent.com",
     ],
   },
 };
