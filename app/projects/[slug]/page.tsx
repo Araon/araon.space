@@ -4,6 +4,12 @@ import { notFound } from "next/navigation";
 import Mdx from "@/app/blog/components/ui/MdxWrapper";
 import Link from "@/components/ui/Link";
 
+export async function generateStaticParams() {
+  return allProjects.map((project) => ({
+    slug: project.slug,
+  }));
+}
+
 export default function Project({ params }: { params: any }) {
   const post = allProjects.find((post) => post.slug === params.slug);
 

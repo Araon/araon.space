@@ -21,6 +21,15 @@ const postComputedFields: ComputedFields = {
     type: "string",
     resolve: (doc) => `/blog/${getSlug(doc)}/image.png`,
   },
+  readingTime: {
+    type: "string",
+    resolve: (doc) => {
+      const wordsPerMinute = 200;
+      const words = doc.body.raw.trim().split(/\s+/).length;
+      const minutes = Math.ceil(words / wordsPerMinute);
+      return `${minutes} min read`;
+    },
+  },
 };
 
 export const Post = defineDocumentType(() => ({

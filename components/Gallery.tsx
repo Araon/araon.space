@@ -130,7 +130,7 @@ function Photo({
             width={newWidth}
             height={newHeight}
             className="pointer-events-none absolute inset-0 h-full w-full rounded-2xl bg-gray-400 object-cover"
-            priority
+            priority={index <= 2}
             aria-describedby={`photo-${index}-description`}
           />
           {meta && (

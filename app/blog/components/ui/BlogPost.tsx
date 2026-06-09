@@ -13,20 +13,12 @@ type BlogPostProps = {
 };
 
 export default function BlogPost({ post }: BlogPostProps) {
-  const { publishedAt, slug, title, image, summary, body } = post;
+  const { publishedAt, slug, title, image, summary, readingTime } = post;
   const publishDate = new Date(publishedAt);
   const showNewBadge =
     Math.abs(new Date(publishDate).getTime() - new Date().getTime()) /
       (24 * 60 * 60 * 1000) < 5; 
     // New badge stays up for 5 days
-
-  // Calculate reading time based on word count
-  const calculateReadingTime = (content: string) => {
-    const wordsPerMinute = 200;
-    const words = content.trim().split(/\s+/).length;
-    const minutes = Math.ceil(words / wordsPerMinute);
-    return `${minutes} min read`;
-  };
 
   const badgeVariants = {
     fromBelow: {
@@ -110,7 +102,7 @@ export default function BlogPost({ post }: BlogPostProps) {
                 {formatDate(publishedAt)}
               </time>
               <span className="opacity-40">•</span>
-              <span>{calculateReadingTime(body.raw)}</span>
+              <span>{readingTime}</span>
             </div>
           </div>
         </div>

@@ -1,28 +1,33 @@
 import { allPosts } from ".contentlayer/generated";
 import type { Post } from ".contentlayer/generated";
+import { prisma } from "@/lib/prisma";
+import { unstable_cache } from "next/cache";
 
 interface PostWithViews extends Post {
   views?: number;
 }
 
+// Cache the direct database query using Next.js unstable_cache
+const fetchTopPostsFromDb = unstable_cache(
+  async (limit: number) => {
+    return await prisma.post.findMany({
+      orderBy: {
+        views: "desc",
+      },
+      take: limit,
+      select: {
+        slug: true,
+        views: true,
+      },
+    });
+  },
+  ["top-posts-views"],
+  { revalidate: 300 } // Revalidate every 5 minutes
+);
+
 export async function getTopPostsByViews(limit: number = 5): Promise<PostWithViews[]> {
   try {
-    // Construct the API URL - use localhost in development, otherwise use the deployment URL
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
-                   (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://araon.space');
-    
-    // Fetch view data from the API
-    const response = await fetch(`${baseUrl}/api/prisma/topPosts?limit=${limit}`, {
-      next: { revalidate: 300 } // Revalidate every 5 minutes
-    });
-    
-    if (!response.ok) {
-      console.error('Failed to fetch top posts');
-      return [];
-    }
-    
-    const data = await response.json();
-    const topPostsWithViews = data.posts || [];
+    const topPostsWithViews = await fetchTopPostsFromDb(limit);
     
     // Match with contentlayer posts and add view counts
     const topPosts: PostWithViews[] = topPostsWithViews
@@ -36,8 +41,7 @@ export async function getTopPostsByViews(limit: number = 5): Promise<PostWithVie
         }
         return null;
       })
-      .filter(Boolean) // Remove null entries
-      .slice(0, limit);
+      .filter(Boolean) as PostWithViews[];
     
     return topPosts;
   } catch (error) {

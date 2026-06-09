@@ -1,11 +1,8 @@
-"use client";
-
 import { allPosts } from ".contentlayer/generated";
-import BlogPostList from "../components/ui/BlogPostList";
 import Link from "next/link";
 import { RiArrowLeftLine } from "react-icons/ri";
 import Image from 'next/image';
-import { motion } from "framer-motion";
+import React from "react";
 
 export default function AllPosts() {
   const posts = allPosts
@@ -14,54 +11,10 @@ export default function AllPosts() {
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
     );
 
-  // Calculate reading time based on word count
-  const calculateReadingTime = (content: string) => {
-    const wordsPerMinute = 200;
-    const words = content.trim().split(/\s+/).length;
-    const minutes = Math.ceil(words / wordsPerMinute);
-    return `${minutes} min read`;
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const postVariants = {
-    initial: { opacity: 0.8 },
-    hover: { 
-      opacity: 1,
-      transition: { duration: 0.2 }
-    }
-  };
-
   return (
-    <motion.div 
-      className="flex flex-col gap-8"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
+    <div className="flex flex-col gap-8">
       {/* Header */}
-      <motion.div className="flex flex-col gap-4" variants={itemVariants}>
+      <div className="flex flex-col gap-4 animate-in">
         <Link 
           href="/blog" 
           className="text-secondary hover:text-primary transition-colors inline-flex items-center gap-2 text-sm font-medium w-fit"
@@ -76,18 +29,15 @@ export default function AllPosts() {
             {posts.length} posts about life, engineering, and more
           </p>
         </div>
-      </motion.div>
+      </div>
 
       {/* Posts List */}
-      <motion.div className="space-y-8" variants={itemVariants}>
+      <div className="space-y-8" style={{ "--index": 1 } as React.CSSProperties}>
         {posts.map((post, index) => (
-          <motion.article 
+          <article 
             key={post.slug} 
-            className="group"
-            variants={postVariants}
-            initial="initial"
-            whileHover="hover"
-            custom={index}
+            className="group animate-in"
+            style={{ "--index": index + 2 } as React.CSSProperties}
           >
             <Link href={`/blog/${post.slug}`} className="block">
               <div className="flex gap-6 items-start hover:bg-secondaryA/20 rounded-lg p-4 -m-4 transition-all duration-200">
@@ -114,7 +64,7 @@ export default function AllPosts() {
                       })}
                     </time>
                     <span className="opacity-40">•</span>
-                    <span>{calculateReadingTime(post.body.raw)}</span>
+                    <span>{post.readingTime}</span>
                   </div>
                 </div>
 
@@ -132,15 +82,15 @@ export default function AllPosts() {
                 )}
               </div>
             </Link>
-          </motion.article>
+          </article>
         ))}
-      </motion.div>
+      </div>
 
       {posts.length === 0 && (
-        <motion.div className="text-center py-12" variants={itemVariants}>
+        <div className="text-center py-12 animate-in" style={{ "--index": 2 } as React.CSSProperties}>
           <p className="text-secondary">No posts found.</p>
-        </motion.div>
+        </div>
       )}
-    </motion.div>
+    </div>
   );
 }
