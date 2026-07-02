@@ -37,9 +37,11 @@ export default function CommentList({ postId }: { postId: string }) {
 
   useEffect(() => {
     const fetchComments = async () => {
-      const response = await fetch(`/api/prisma/getComments?postId=${postId}`);
+      const response = await fetch(
+        `/api/prisma/getComments?postId=${encodeURIComponent(postId)}`,
+      );
       const data = await response.json();
-      setComments(data.comments.reverse());
+      setComments(data.comments);
     };
 
     fetchComments();

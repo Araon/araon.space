@@ -90,19 +90,19 @@ export default function RootLayout({
           href="/api/rss/json"
         />
       </head>
-      <Suspense>
-        <PostHogPageview />
-      </Suspense>
-      <PHProvider>
-        <body
-          className={clsx(
-            inter.className,
-            spaceGrotesk.variable,
-            spaceMono.variable,
-            matrixSans.variable,
-            "width-full bg-primary text-primary antialiased",
-          )}
-        >
+      <body
+        className={clsx(
+          inter.className,
+          spaceGrotesk.variable,
+          spaceMono.variable,
+          matrixSans.variable,
+          "width-full bg-primary text-primary antialiased",
+        )}
+      >
+        <PHProvider>
+          <Suspense>
+            <PostHogPageview />
+          </Suspense>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navigation />
             <div
@@ -114,8 +114,8 @@ export default function RootLayout({
             </div>
           </ThemeProvider>
           <Analytics />
-        </body>
-      </PHProvider>
+        </PHProvider>
+      </body>
     </html>
   );
 }

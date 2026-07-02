@@ -6,6 +6,9 @@ import { RateLimiterMemory } from "rate-limiter-flexible";
 
 export const dynamic = "force-dynamic";
 
+const MAX_AUTHOR_LENGTH = 80;
+const MAX_COMMENT_LENGTH = 2000;
+
 let limiter: RateLimiterMemory;
 
 function getLimiter() {
@@ -28,6 +31,14 @@ function getIP() {
   }
 
   return headers().get("x-real-ip") ?? FALLBACK_IP_ADDRESS;
+}
+
+function normalizeCommentField(value: unknown) {
+  if (typeof value !== "string") {
+    return "";
+  }
+
+  return value.replace(/\s+/g, " ").trim();
 }
 
 export async function POST(req: NextRequest) {
@@ -57,12 +68,46 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const body = await req.json();
-    const { postId, content, author } = body;
+    let body: unknown;
 
-    if (!content || !author) {
+    try {
+      body = await req.json();
+    } catch {
       return NextResponse.json(
-        { error: "Content and author fields are required" },
+        { error: "Please provide a valid JSON body" },
+        { status: 400 },
+      );
+    }
+
+    if (!body || typeof body !== "object") {
+      return NextResponse.json(
+        { error: "Please provide a valid JSON body" },
+        { status: 400 },
+      );
+    }
+
+    const { postId, content, author } = body as Record<string, unknown>;
+    const normalizedPostId = normalizeCommentField(postId);
+    const normalizedContent = normalizeCommentField(content);
+    const normalizedAuthor = normalizeCommentField(author);
+
+    if (!normalizedPostId || !normalizedContent || !normalizedAuthor) {
+      return NextResponse.json(
+        { error: "Post, content, and author fields are required" },
+        { status: 400 },
+      );
+    }
+
+    if (normalizedAuthor.length > MAX_AUTHOR_LENGTH) {
+      return NextResponse.json(
+        { error: "Author must be 80 characters or less" },
+        { status: 400 },
+      );
+    }
+
+    if (normalizedContent.length > MAX_COMMENT_LENGTH) {
+      return NextResponse.json(
+        { error: "Content must be 2000 characters or less" },
         { status: 400 },
       );
     }
@@ -71,7 +116,7 @@ export async function POST(req: NextRequest) {
 
     const post = await prisma.post.findUnique({
       where: {
-        slug: postId,
+        slug: normalizedPostId,
       },
     });
 
@@ -79,11 +124,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid post ID" }, { status: 400 });
     }
 
-    const newComment = await prisma.comments.create({
+    await prisma.comments.create({
       data: {
-        postId,
-        content,
-        author,
+        postId: normalizedPostId,
+        content: normalizedContent,
+        author: normalizedAuthor,
         ip_identity,
       },
     });
