@@ -143,16 +143,105 @@
   }
 
   .nothing img,
-  .nothing svg,
   .nothing video,
   .nothing canvas,
-  .nothing iframe {
+  .nothing iframe,
+  .nothing figcaption,
+  .nothing hr {
     display: none !important;
+  }
+
+  .nothing svg {
+    filter: grayscale(1) !important;
+    opacity: 0.5 !important;
   }
 
   .nothing * {
     background-image: none !important;
     box-shadow: none !important;
+    border: none !important;
+  }
+
+  .nothing .crown-logo {
+    display: none;
+  }
+
+  .nothing .crown-emoji {
+    display: inline !important;
+  }
+
+  .nothing .comment-avatar {
+    display: none !important;
+  }
+
+  .nothing .comment-avatar-dot {
+    display: inline-block !important;
+  }
+
+  /* Hide hover image previews (Post component on homepage) */
+  .nothing .absolute:has(img) {
+    display: none !important;
+  }
+
+  /* Hide photographs nav link and gallery in nothing mode */
+  .nothing a[href="/photos"] {
+    display: none !important;
+  }
+
+  .nothing section[aria-label="Photo gallery"] {
+    display: none !important;
+  }
+
+  /* Music: strip to plain text list */
+  .nothing .columns-1 > a {
+    display: block !important;
+    position: static !important;
+    height: auto !important;
+    min-height: 0 !important;
+    background: none transparent !important;
+    border-radius: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 0.25rem 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+  .nothing .columns-1 > a > div[class*="absolute"] {
+    position: static !important;
+    opacity: 1 !important;
+    background: none transparent !important;
+    padding: 0 !important;
+    justify-content: flex-start !important;
+  }
+  .nothing .columns-1 > a span {
+    color: var(--gray-11) !important;
+    text-align: left !important;
+    font-size: 0.875rem !important;
+  }
+
+  /* Collapse blank spaces from content image containers */
+  .nothing .flex-shrink-0:has(img),
+  .nothing [class*="aspect-"]:has(img),
+  .nothing .aspect-square:has(img) {
+    display: none !important;
+  }
+
+  .nothing .about-mobile-photos {
+    display: none !important;
+  }
+
+  /* Collapse about page photo wrappers in nothing mode */
+  .nothing .gap-16 > .mb-8.md\:hidden,
+  .nothing .gap-16 > .hidden.md\:block {
+    display: none !important;
+  }
+
+  /* Navigation: Matrix Sans font in nothing mode */
+  .nothing nav a {
+    font-family: var(--font-matrix-sans);
+  }
+
+  .nothing .nothing-matrix {
+    font-family: var(--font-matrix-sans) !important;
   }
 
   .nothing .brand-gradient,

@@ -37,8 +37,8 @@ export default function ThemeSwitcher() {
                 {resolvedTheme === "dark" ? (
                   <MoonIcon className={iconClassName} />
                 ) : resolvedTheme === "nothing" ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={iconClassName}>
-                    <circle cx="10" cy="10" r="3" />
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" className="w-5 h-5">
+                    <circle cx="10" cy="10" r="8" fill="#ff3b30" />
                   </svg>
                 ) : (
                   <SunIcon className={iconClassName} />
@@ -64,7 +64,7 @@ export default function ThemeSwitcher() {
                   >
                     {themes.map((t) => (
                       <Listbox.Option
-                        key={theme}
+                        key={t}
                         className={({ active }) =>
                           clsx(
                             "relative cursor-default select-none py-2 pl-10 pr-4 rounded-md",

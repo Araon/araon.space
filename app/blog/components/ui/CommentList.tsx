@@ -28,6 +28,13 @@ const authorFont = localFont({
 export default function CommentList({ postId }: { postId: string }) {
   const [comments, setComments] = useState<Comment[]>([]);
 
+  const dots = ["🔴", "🟠", "🟡", "🟢", "🔵", "🟣", "🟤"];
+
+  function getDot(name: string) {
+    const index = name.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0) % dots.length;
+    return dots[index];
+  }
+
   useEffect(() => {
     const fetchComments = async () => {
       const response = await fetch(`/api/prisma/getComments?postId=${postId}`);
@@ -51,10 +58,11 @@ export default function CommentList({ postId }: { postId: string }) {
             className="mb-1 flex p-2 text-base"
           >
             <img
-              className="mr-4 h-14 w-14 rounded-full"
+              className="comment-avatar mr-4 h-14 w-14 rounded-full"
               src={`https://api.dicebear.com/8.x/notionists/svg?seed=${comment.author}&flip=false`}
               alt={`${comment.author}'s profile picture`}
             />
+            <span className="comment-avatar-dot hidden mr-4 text-4xl leading-[3.5rem]">{getDot(comment.author)}</span>
             <div>
               <div className="flex items-center">
                 <p

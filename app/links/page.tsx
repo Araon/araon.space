@@ -1,6 +1,8 @@
 import Image from "next/image";
-import ConnectLinksList from "@/components/ConnectLinksList";
 import avatar from "public/avatar.jpg";
+
+import Link from "@/components/ui/Link";
+import ConnectLinks from "@/components/ConnectLinks";
 
 export default function Links() {
   return (
@@ -28,7 +30,33 @@ export default function Links() {
           </div>
         </div>
 
-        <ConnectLinksList />
+          <ul className="animated-list grid grid-cols-1 gap-3 md:grid-cols-2">
+            {ConnectLinks.map((link) => (
+              <li key={link.label}>
+                <Link
+                  href={link.href}
+                  className="inline-grid w-full rounded-lg border border-primary p-4 no-underline transition-opacity"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl">{link.icon}</span>
+                    {link.label}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="ml-auto h-5 w-5 text-secondary"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
       </div>
     </>
   );

@@ -31,7 +31,7 @@ export default async function Home() {
             <span className="font-bold">Araon</span>
           </h1>
           <p
-            className="animate-in text-secondary"
+            className="animate-in text-secondary nothing-matrix"
             style={{ "--index": 1 } as React.CSSProperties}
           >
             Code • Camera • Chaos
@@ -77,7 +77,7 @@ export default async function Home() {
         className="flex animate-in flex-col gap-8"
         style={{ "--index": 3 } as React.CSSProperties}
       >
-        <h2 className="text-secondary">Latest Rambles</h2>
+        <h2 className="text-secondary nothing-matrix">Latest Rambles</h2>
         <PostList posts={posts} />
         <Link
           href="/blog"
