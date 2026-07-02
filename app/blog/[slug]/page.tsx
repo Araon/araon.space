@@ -154,7 +154,47 @@ export default async function Post({ params }: { params: any }) {
           <Mdx code={post.body.code} />
         </div>
       </article>
+
+      <div className="flex items-center gap-3">
+        <span className="text-sm text-secondary">Share:</span>
+        <a
+          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://araon.space/blog/${post.slug}`)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 rounded-lg border border-secondary px-3 py-2 text-sm text-secondary transition-colors hover:border-primary hover:text-primary min-h-[44px]"
+        >
+          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span>Post</span>
+        </a>
+      </div>
+
       <Tags tags={post.tags} />
+
+      {(() => {
+        const related = allPosts
+          .filter((p) => p.slug !== post.slug && p.tags?.some((t: string) => post.tags?.includes(t)))
+          .slice(0, 3);
+        if (related.length > 0) {
+          return (
+            <div className="flex flex-col gap-4">
+              <h2 className="text-xl font-semibold text-primary">Related Posts</h2>
+              <div className="flex flex-col gap-3">
+                {related.map((p) => (
+                  <Link
+                    key={p.slug}
+                    href={`/blog/${p.slug}`}
+                    className="group rounded-lg border border-secondary p-4 transition-colors hover:border-primary"
+                  >
+                    <p className="font-medium text-primary group-hover:underline">{p.title}</p>
+                    <p className="mt-1 text-sm text-tertiary">{p.summary}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          );
+        }
+      })()}
+
       <CommentSection postId={post.slug} />
       <CommentList postId={post.slug} />
 
@@ -175,7 +215,6 @@ export default async function Post({ params }: { params: any }) {
         </p>
       </div>
 
-      <Link href="/blog">← All Blogs</Link>
     </div>
   );
 }

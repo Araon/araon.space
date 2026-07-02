@@ -4,11 +4,20 @@ import { prisma } from "@/lib/prisma";
 
 import { RateLimiterMemory } from "rate-limiter-flexible";
 
-const limiter = new RateLimiterMemory({
-  points: 5, // Allow 5 comments
-  duration: 60 * 60, // Per hour (60 * 60 seconds)
-  blockDuration: 60 * 60 * 24, // Block for 24 hours if limit is exceeded
-});
+export const dynamic = "force-dynamic";
+
+let limiter: RateLimiterMemory;
+
+function getLimiter() {
+  if (!limiter) {
+    limiter = new RateLimiterMemory({
+      points: 5,
+      duration: 60 * 60,
+      blockDuration: 60 * 60 * 24,
+    });
+  }
+  return limiter;
+}
 
 function getIP() {
   const FALLBACK_IP_ADDRESS = "0.0.0.0";
@@ -34,7 +43,7 @@ export async function POST(req: NextRequest) {
   try {
     // Rate limit check
     try {
-      await limiter.consume(ip);
+      await getLimiter().consume(ip);
     } catch (rateLimiterRes) {
       // Block the IP in the database
       await prisma.blockedIp.upsert({
