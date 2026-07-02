@@ -29,7 +29,6 @@ const nextConfig = {
       "en.wikipedia.org",
       "www.universetoday.com",
       "p.potaufeu.asahi.com",
-      "lh3.googleusercontent.com",
     ],
   },
 };
