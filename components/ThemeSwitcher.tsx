@@ -36,6 +36,10 @@ export default function ThemeSwitcher() {
               >
                 {resolvedTheme === "dark" ? (
                   <MoonIcon className={iconClassName} />
+                ) : resolvedTheme === "nothing" ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={iconClassName}>
+                    <circle cx="10" cy="10" r="4" />
+                  </svg>
                 ) : (
                   <SunIcon className={iconClassName} />
                 )}
@@ -72,7 +76,7 @@ export default function ThemeSwitcher() {
                                 selected ? "font-medium" : "font-normal"
                               }`}
                             >
-                              {theme == "system" ? "Automatic" : theme}
+                              {theme == "system" ? "Automatic" : theme == "nothing" ? "Text" : theme}
                             </span>
                             {selected ? (
                               <span className="absolute inset-y-0 left-0 flex items-center pl-3 dark:text-neutral-50">

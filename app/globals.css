@@ -93,6 +93,59 @@
     --tw-prose-quotes: var(--gray-11);
   }
 
+  .nothing {
+    --gray-1: #ffffff;
+    --gray-2: #f8f8f8;
+    --gray-3: #eeeeee;
+    --gray-4: #e0e0e0;
+    --gray-5: #bdbdbd;
+    --gray-6: #9e9e9e;
+    --gray-7: #757575;
+    --gray-8: #616161;
+    --gray-9: #424242;
+    --gray-10: #303030;
+    --gray-11: #1a1a1a;
+    --gray-12: #000000;
+
+    --gray-a1: #00000005;
+    --gray-a2: #00000008;
+    --gray-a3: #00000011;
+    --gray-a4: #0000001f;
+    --gray-a5: #00000042;
+    --gray-a6: #00000061;
+    --gray-a7: #0000008a;
+    --gray-a8: #0000009e;
+    --gray-a9: #000000bd;
+    --gray-a10: #000000cf;
+    --gray-a11: #000000e5;
+    --gray-a12: #000000;
+
+    --brand: #000000;
+    --brandTinted: #0000001f;
+    --blue-10: #000000;
+  }
+
+  .nothing,
+  .nothing * {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  }
+
+  .nothing img {
+    display: none !important;
+  }
+
+  .nothing svg {
+    display: none !important;
+  }
+
+  .nothing .like-button {
+    display: none !important;
+  }
+
+  .nothing .brand-gradient {
+    display: none !important;
+  }
+
   .main-header {
     -webkit-tap-highlight-color: transparent;
   }
