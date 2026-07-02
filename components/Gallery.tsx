@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import useSWR from "swr";
 import fetcher from "@/lib/fetcher";
 import Image, { StaticImageData } from "next/image";
@@ -59,10 +59,15 @@ function Photo({
   meta,
   children,
 }: PhotoProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
+
   const maxWidth = 1080;
   const maxHeight = 1920;
 
-  // Calculate the scaling factor
   let scaleFactor = 1;
   if (width > height) {
     scaleFactor = maxWidth / width;
@@ -70,7 +75,6 @@ function Photo({
     scaleFactor = maxHeight / height;
   }
 
-  // Calculate the new width and height
   const newWidth = width * scaleFactor;
   const newHeight = height * scaleFactor;
 
@@ -81,35 +85,37 @@ function Photo({
   const shared = "absolute h-full w-full rounded-2xl overflow-hidden";
   return (
     <motion.div
-      className="relative cursor-grab hover:before:absolute hover:before:-left-7 hover:before:-top-8 hover:before:block hover:before:h-[300px] hover:before:w-[calc(100%+55px)]"
+      className={clsx(
+        "hover:before:absolute hover:before:-left-7 hover:before:-top-8 hover:before:block hover:before:h-[300px] hover:before:w-[calc(100%+55px)]",
+        !isMobile && "cursor-grab",
+      )}
       style={{ width: newWidth, height: newHeight }}
       initial={{
         width,
         height,
         rotate: (rotate || 0) - 20,
-        y: 200 + index * 20,
+        y: isMobile ? 50 + index * 10 : 200 + index * 20,
         opacity: 0,
       }}
       transition={{
         default: {
-          type: "spring",
+          type: isMobile ? "tween" : "spring",
           bounce: 0.2,
-          duration:
-            index === 1 ? 0.8 : index === 2 ? 0.85 : index === 3 ? 0.9 : 1,
-          delay: index * 0.15,
+          duration: isMobile ? 0.3 : index === 1 ? 0.8 : index === 2 ? 0.85 : index === 3 ? 0.9 : 1,
+          delay: isMobile ? index * 0.05 : index * 0.15,
         },
         opacity: {
-          duration: 0.7,
+          duration: isMobile ? 0.3 : 0.7,
           ease: [0.23, 0.64, 0.13, 0.99],
-          delay: index * 0.15,
+          delay: isMobile ? index * 0.05 : index * 0.15,
         },
         scale: { duration: 0.12 },
       }}
       animate={{ width, height, rotate, y: 0, opacity: 1 }}
-      drag
-      whileTap="flipped"
-      whileDrag={{ scale: 1.1, cursor: "grabbing" }}
-      whileHover="flipped"
+      drag={isMobile ? false : true}
+      whileTap={isMobile ? undefined : "flipped"}
+      whileDrag={isMobile ? undefined : { scale: 1.1, cursor: "grabbing" }}
+      whileHover={isMobile ? undefined : "flipped"}
     >
       <motion.div
         className="relative h-full w-full rounded-2xl shadow-md will-change-transform"
@@ -197,7 +203,7 @@ export default function Gallery() {
 
   if (!photosUrl) {
     return (
-      <div className="grid animate-pulse grid-cols-1 gap-8 md:grid-cols-2 md:gap-16 lg:grid-cols-3 lg:gap-48">
+      <div className="grid animate-pulse grid-cols-1 gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3 lg:gap-12">
         {[1, 2, 3, 4, 5, 6].map((i) => (
           <div key={i} className="h-64 rounded-2xl bg-gray-200"></div>
         ))}
@@ -207,7 +213,7 @@ export default function Gallery() {
 
   return (
     <section
-      className="grid auto-rows-min grid-cols-1 place-items-center gap-8 md:grid-cols-2 md:gap-12 lg:grid-cols-3 lg:gap-16"
+      className="grid auto-rows-min grid-cols-1 place-items-center gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3 lg:gap-12"
       aria-label="Photo gallery"
       role="region"
     >
