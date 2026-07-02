@@ -36,6 +36,10 @@ export default function ThemeSwitcher() {
               >
                 {resolvedTheme === "dark" ? (
                   <MoonIcon className={iconClassName} />
+                ) : resolvedTheme === "nothing" ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" className="w-5 h-5">
+                    <circle cx="10" cy="10" r="8" fill="#ff3b30" />
+                  </svg>
                 ) : (
                   <SunIcon className={iconClassName} />
                 )}
@@ -51,28 +55,41 @@ export default function ThemeSwitcher() {
                     transition={{ type: "spring", bounce: 0.3, duration: 0.3 }}
                     className="absolute right-0 p-2 mt-2 overflow-auto text-base origin-top-right shadow-lg max-h-60 w-42 rounded-xl bg-white dark:bg-black focus:outline-none sm:text-sm capitalize"
                     style={
-                      theme === "terminal" ? { background: "#000000" } : {}
+                      theme === "terminal"
+                        ? { background: "#000000" }
+                        : theme === "nothing"
+                          ? { background: "#000000" }
+                          : {}
                     }
                   >
-                    {themes.map((theme) => (
+                    {themes.map((t) => (
                       <Listbox.Option
-                        key={theme}
+                        key={t}
                         className={({ active }) =>
                           clsx(
                             "relative cursor-default select-none py-2 pl-10 pr-4 rounded-md",
                             active ? "bg-tertiary" : ""
                           )
                         }
-                        value={theme}
+                        value={t}
                       >
                         {({ selected }) => (
                           <>
                             <span
                               className={`block truncate ${
                                 selected ? "font-medium" : "font-normal"
+                              } ${
+                                t === "nothing"
+                                  ? "font-matrix-sans tracking-wider"
+                                  : ""
                               }`}
+                              style={
+                                t === "nothing"
+                                  ? { fontFamily: "var(--font-matrix-sans)" }
+                                  : {}
+                              }
                             >
-                              {theme == "system" ? "Automatic" : theme}
+                              {t == "system" ? "Automatic" : t}
                             </span>
                             {selected ? (
                               <span className="absolute inset-y-0 left-0 flex items-center pl-3 dark:text-neutral-50">

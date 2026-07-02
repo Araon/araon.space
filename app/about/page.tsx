@@ -74,7 +74,7 @@ export default function About() {
       >
         <Section heading="About" headingAlignment="left">
           <div className="flex flex-col gap-6">
-            <p>Hey, I&apos;m Soumik!</p>
+            <p className="nothing-matrix">Hey, I&apos;m Soumik!</p>
             <p
               className="animate-in text-secondary"
               style={{ "--index": 1 } as React.CSSProperties}
@@ -110,9 +110,9 @@ export default function About() {
               </Link>{" "}
               or riding my bike somewhere.
             </p>
-            <p>
-              My favorite artwork is <FavoriteArtwork />.
-            </p>
+              <span>
+                My favorite artwork is <FavoriteArtwork />.
+              </span>
           </div>
         </Section>
 

@@ -32,7 +32,8 @@ export default function Navigation() {
         aria-label="Main navigation"
       >
         <Link href="/" className="shrink-0 text-primary" aria-label="Home">
-          <Image height={30} width={30} src="/crown.svg" alt="Araon's logo" />
+          <Image height={30} width={30} src="/crown.svg" alt="Araon's logo" className="crown-logo" />
+          <span className="crown-emoji hidden text-xl leading-none">👑</span>
         </Link>
         <ul className="hidden items-center gap-1 md:flex" role="list">
           {links.map((link) => (

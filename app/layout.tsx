@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk, Space_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
 import { PHProvider, PostHogPageview } from "@/providers/PostHog";
@@ -10,6 +11,22 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import Navigation from "@/components/Navigation";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+});
+
+const spaceMono = Space_Mono({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-space-mono",
+});
+
+const matrixSans = localFont({
+  src: "../public/fonts/matrix-sans/MatrixSansPrint-Regular.woff2",
+  variable: "--font-matrix-sans",
+});
 
 export const metadata: Metadata = {
   title: "Home | Araon",
@@ -56,7 +73,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://ik.imagekit.io" />
@@ -80,6 +97,9 @@ export default function RootLayout({
         <body
           className={clsx(
             inter.className,
+            spaceGrotesk.variable,
+            spaceMono.variable,
+            matrixSans.variable,
             "width-full bg-primary text-primary antialiased",
           )}
         >
