@@ -141,7 +141,7 @@ export default async function Post({ params }: { params: any }) {
               className="-ml-6 w-[calc(100%+48px)] max-w-none animate-in md:rounded-lg lg:-ml-16 lg:w-[calc(100%+128px)]"
               style={{ "--index": 2 } as React.CSSProperties}
               priority
-              quality={100}
+              quality={85}
             />
           </>
         )}

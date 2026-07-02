@@ -6,6 +6,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
+    formats: ['image/avif', 'image/webp'],
     domains: [
       "styles.redditmedia.com",
       "user-images.githubusercontent.com",
