@@ -1,5 +1,7 @@
 const API_SECRET = process.env.CONVERTKIT_API_SECRET;
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   // Endpoint
   // GET /v3/subscribers
@@ -18,11 +20,18 @@ export async function GET() {
     const response = await fetch(url, {
       cache: "no-store",
     });
+
+    if (!response.ok) {
+      return new Response("Failed to fetch subscribers", {
+        status: response.status,
+      });
+    }
+
     const data = await response.json();
     const subscribers = data.total_subscribers;
     return Response.json({ subscribers });
   } catch (error) {
     console.error(error);
-    return new Response(`Something went wrong: ${error}`, { status: 200 });
+    return new Response("Something went wrong", { status: 500 });
   }
 }

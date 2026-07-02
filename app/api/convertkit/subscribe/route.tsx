@@ -3,6 +3,8 @@ import { NextRequest } from "next/server";
 const API_KEY = process.env.CONVERTKIT_API_KEY;
 const FORM_ID = process.env.CONVERTKIT_FORM_ID;
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   // Endpoint
   // POST /v3/forms/#{form_id}/subscribe
@@ -14,7 +16,24 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const { email } = await req.json();
+  let body: unknown;
+
+  try {
+    body = await req.json();
+  } catch {
+    return new Response("Please provide a valid JSON body", {
+      status: 400,
+    });
+  }
+
+  const { email } = body as { email?: unknown };
+
+  if (typeof email !== "string" || !email.includes("@")) {
+    return new Response("Please provide a valid email address", {
+      status: 400,
+    });
+  }
+
   const url = `https://api.convertkit.com/v3/forms/${FORM_ID}/subscribe`;
 
   try {
@@ -30,12 +49,14 @@ export async function POST(req: NextRequest) {
     });
 
     if (!response.ok) {
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
+      return new Response("Failed to subscribe email address", {
+        status: response.status,
+      });
     }
 
     return Response.json({ success: true });
   } catch (error) {
     console.error(error);
-    return new Response(`Something went wrong: ${error}`, { status: 200 });
+    return new Response("Something went wrong", { status: 500 });
   }
 }

@@ -1,21 +1,40 @@
-// pages/api/unsplash-images.ts
-
+import { NextRequest } from "next/server";
 import { createApi } from "unsplash-js";
-import { PrismaClient } from "@prisma/client";
 
-import * as dotenv from "dotenv";
+import { prisma } from "@/lib/prisma";
 
-dotenv.config();
+const SYNC_SECRET = process.env.STORE_IMAGES_SECRET;
 
-const prisma = new PrismaClient();
+export const dynamic = "force-dynamic";
 
-// @ts-ignore
-const unsplash = createApi({
-  accessKey: process.env.UNSPLASH_ACCESS_KEY,
-});
+function isAuthorized(req: NextRequest) {
+  if (!SYNC_SECRET) {
+    console.error("STORE_IMAGES_SECRET is missing");
+    return false;
+  }
 
-export async function GET() {
+  const authHeader = req.headers.get("authorization");
+  const token = authHeader?.startsWith("Bearer ")
+    ? authHeader.slice("Bearer ".length)
+    : req.nextUrl.searchParams.get("secret");
+
+  return token === SYNC_SECRET;
+}
+
+export async function GET(req: NextRequest) {
+  if (!isAuthorized(req)) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  if (!process.env.UNSPLASH_ACCESS_KEY) {
+    console.error("UNSPLASH_ACCESS_KEY is missing");
+    return new Response("Unsplash access key is missing", { status: 500 });
+  }
+
   try {
+    const unsplash = createApi({
+      accessKey: process.env.UNSPLASH_ACCESS_KEY,
+    });
     const username = "ara0n";
     const responseData = await unsplash.users.getPhotos({
       username,
@@ -61,7 +80,5 @@ export async function GET() {
   } catch (err) {
     console.error(err);
     return new Response("Internal Server Error", { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

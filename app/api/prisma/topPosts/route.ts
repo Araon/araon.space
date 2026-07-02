@@ -6,7 +6,10 @@ export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
-    const limit = parseInt(searchParams.get("limit") || "5");
+    const requestedLimit = Number.parseInt(searchParams.get("limit") || "5", 10);
+    const limit = Number.isNaN(requestedLimit)
+      ? 5
+      : Math.min(Math.max(requestedLimit, 1), 20);
 
     // Get posts ordered by view count (descending)
     const topPosts = await prisma.post.findMany({

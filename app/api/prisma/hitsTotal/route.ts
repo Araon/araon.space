@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     // get total views
@@ -12,6 +14,6 @@ export async function GET() {
     return Response.json({ total: total._sum.views });
   } catch (error) {
     console.error(error);
-    return new Response("Something went wrong", { status: 200 });
+    return new Response("Something went wrong", { status: 500 });
   }
 }
