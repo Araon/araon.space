@@ -79,6 +79,7 @@ export default function Post({ post, mousePosition }: PostProps) {
                 initial="frombelow"
                 animate="visible"
                 whileHover={{ ...badgeVariants.hover, backgroundColor: "#54b3ff" }}
+                whileTap={{ ...badgeVariants.hover, backgroundColor: "#54b3ff" }}
                 className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs ml-2"
               >
                 New

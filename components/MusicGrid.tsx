@@ -32,7 +32,7 @@ function TrackItem({ track, index }: { track: Track; index: number }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: 1.02 }}
     >
       {/* Cover Image */}
       <Image

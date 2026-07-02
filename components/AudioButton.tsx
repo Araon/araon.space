@@ -23,17 +23,23 @@ export default function AudioButton({
     audio.play();
   };
 
+  const handleTap = () => {
+    playAudio();
+    setShowTooltip(true);
+    setTimeout(() => setShowTooltip(false), 2000);
+  };
+
   return (
     <span
       className={`relative cursor-pointer hover:opacity-80 ${className}`}
-      onClick={playAudio}
+      onClick={handleTap}
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
-          playAudio();
+          handleTap();
         }
       }}
       aria-label="Play pronunciation"
