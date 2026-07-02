@@ -1,0 +1,61 @@
+---
+title: Micro-LLM
+time: "2025"
+description: Training a tiny language model from scratch on an RTX 3080 - learning CUDA the hard way
+url: "https://github.com/Araon/micro-llm"
+tags: ["Python", "PyTorch", "CUDA", "Machine Learning"]
+index: 1
+---
+
+I got myself an RTX 3080 and had no idea what I was getting into. I wanted to actually understand what CUDA could do - not just read about it, but get my hands dirty.
+
+<Image width={600} height={400} src="/projects/micro-llm/image.png" caption="Training a tiny LLM from scratch"/>
+
+### Not My First Rodeo
+
+Back in 2019, I built [Sadhu-Kamra](https://github.com/Araon/Sadhu-Kamra) - a Twitter bot that combined tweets from Sadhguru and Kunal Kamra, trained on GPT-2. But I was just using pre-trained models. I never actually trained anything from scratch. I didn't understand what was happening under the hood.
+
+This time, I wanted to do it properly.
+
+### Memory Is Everything
+
+Turns out, CUDA is pretty wild. The RTX 3080 has 10GB of VRAM, which sounds like a lot until you start loading models and data.
+
+Key learnings:
+- **Mixed precision training** doubles your effective memory
+- **Gradient accumulation** lets you simulate larger batch sizes
+- You can't just throw everything at the GPU and hope it works
+
+### It's Actually Learning
+
+I built a tiny GPT-style model with ~7M parameters. It's not going to write Shakespeare (well, it tries), but it's a real language model that I trained myself.
+
+The training process is fascinating. Watching the loss decrease, seeing the model learn patterns, and then generating text that's... sometimes coherent, sometimes hilariously bad. But it's _learning_.
+
+### What I Took Away
+
+- Transformer architectures (attention is all you need, apparently)
+- Learning rate scheduling and gradient clipping
+- Tokenization (way more complex than I thought)
+- Mixed precision training
+
+The RTX 3080 can handle this stuff pretty well. For learning and experimentation, it's perfect. Training that would take days on a CPU can be done in hours.
+
+### Getting Started
+
+```bash
+# Install PyTorch with CUDA support
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+pip install -r requirements.txt
+
+# Train a model
+python train.py
+
+# Test it out
+python test.py --checkpoint checkpoints/model_final.pt --prompt "Hello"
+
+# Or run the web interface
+python chatbot_web.py
+```
+
+If you're curious about CUDA, GPU computing, or just want to train a tiny language model yourself, feel free to poke around the code.
