@@ -151,23 +151,14 @@ input:-webkit-autofill:focus {
 }
 
 @keyframes pulse {
-  0% {
+  0%, 100% {
     box-shadow:
       0px 0px 52px #6166dc,
       0px 0px 20px #d2a8ff,
       inset 0px 1px 3px rgba(255, 255, 255, 0.22);
   }
-  70% {
-    box-shadow:
-      0px 0px 70px #6166dc,
-      0px 0px 40px #d2a8ff,
-      inset 0px 1px 3px rgba(255, 255, 255, 0.22);
-  }
-  100% {
-    box-shadow:
-      0px 0px 52px #6166dc,
-      0px 0px 20px #d2a8ff,
-      inset 0px 1px 3px rgba(255, 255, 255, 0.22);
+  50% {
+    opacity: 0.85;
   }
 }
 
@@ -276,19 +267,4 @@ pre[class*="language-"] {
   content: attr(line);
 }
 
-/* Line clamp utilities */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
