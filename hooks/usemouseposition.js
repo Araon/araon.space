@@ -8,9 +8,15 @@ const useMousePosition = (ref) => {
 
   React.useEffect(() => {
     const updateMousePosition = (ev) => {
+      if (!ref.current) {
+        return;
+      }
+
+      const rect = ref.current.getBoundingClientRect();
+
       setMousePosition({
-        x: ev.clientX - ref.current.getBoundingClientRect().left,
-        y: ev.clientY - ref.current.getBoundingClientRect().top,
+        x: ev.clientX - rect.left,
+        y: ev.clientY - rect.top,
       });
     };
     window.addEventListener("mousemove", updateMousePosition);
