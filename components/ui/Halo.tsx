@@ -29,6 +29,7 @@ export default function Halo({
       ref={ref}
       className={clsx("relative w-full h-full overflow-hidden", className)}
       whileHover="hover"
+      whileTap={{ opacity: strength / 100 }}
     >
       <motion.div
         style={

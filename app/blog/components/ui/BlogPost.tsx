@@ -56,6 +56,7 @@ export default function BlogPost({ post }: BlogPostProps) {
       variants={postVariants}
       initial="initial"
       whileHover="hover"
+      whileTap="hover"
     >
       <Link href={`/blog/${slug}`} className="block">
         <div className="flex gap-4 items-start">

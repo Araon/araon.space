@@ -58,6 +58,7 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
                 initial="fromBelow"
                 animate="visible"
                 whileHover={badgeVariants.hover}
+                whileTap={badgeVariants.hover}
                 className="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium"
               >
                 New

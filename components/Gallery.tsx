@@ -107,7 +107,7 @@ function Photo({
       }}
       animate={{ width, height, rotate, y: 0, opacity: 1 }}
       drag
-      whileTap={{ scale: 1.1, cursor: "grabbing" }}
+      whileTap="flipped"
       whileDrag={{ scale: 1.1, cursor: "grabbing" }}
       whileHover="flipped"
     >

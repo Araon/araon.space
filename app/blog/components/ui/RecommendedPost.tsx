@@ -52,6 +52,7 @@ export default function RecommendedPost({ posts }: RecommendedPostProps) {
             className="text-xl font-bold"
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
+            onClick={() => setShowTooltip((prev) => !prev)}
           >
             Recommended
           </h2>
@@ -89,6 +90,7 @@ export default function RecommendedPost({ posts }: RecommendedPostProps) {
           className="text-xl font-bold text-primary"
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
+          onClick={() => setShowTooltip((prev) => !prev)}
         >
           Recommended
         </h2>
