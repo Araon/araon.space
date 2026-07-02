@@ -143,7 +143,22 @@
   }
 
   .nothing img,
-  .nothing svg {
+  .nothing svg,
+  .nothing video,
+  .nothing canvas,
+  .nothing iframe {
+    display: none !important;
+  }
+
+  .nothing * {
+    background-image: none !important;
+    box-shadow: none !important;
+  }
+
+  .nothing .brand-gradient,
+  .nothing .radial-fade,
+  .nothing .like-button,
+  .nothing .text-gradient {
     display: none !important;
   }
 
