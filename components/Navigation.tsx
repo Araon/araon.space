@@ -26,7 +26,7 @@ export default function Navigation() {
   const { theme } = useTheme();
 
   return (
-    <header className={clsx("relative top-0 z-20 bg-primary md:sticky")}>
+    <header className={clsx("sticky top-0 z-20 bg-primary")}>
       <nav
         className="lg mx-auto flex max-w-[700px] items-center justify-between gap-3 px-4 py-3 md:px-6"
         aria-label="Main navigation"
@@ -82,7 +82,7 @@ export default function Navigation() {
                 leaveTo="opacity-0 translate-y-1"
               >
                 <Popover.Panel
-                  className="absolute right-0 z-10 mt-2  w-40 origin-top-right overflow-auto rounded-xl border-2 border-[#0a76a8] bg-white p-2 text-base shadow-lg focus:outline-none dark:bg-black sm:text-sm"
+                  className="absolute right-0 z-10 mt-2  w-48 origin-top-right overflow-auto rounded-xl border-2 border-[#0a76a8] bg-white p-2 text-base shadow-lg focus:outline-none dark:bg-black sm:text-sm"
                   style={theme === "terminal" ? { background: "#040605" } : {}}
                 >
                   <div className="grid">

@@ -58,6 +58,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://ik.imagekit.io" />
         <link
           rel="alternate"
           type="application/rss+xml"
@@ -85,7 +87,7 @@ export default function RootLayout({
             <Navigation />
             <div
               className={
-                "mx-auto max-w-[700px] px-6 pb-24 pt-16 md:px-6 md:pb-44 md:pt-20"
+                "mx-auto max-w-[700px] px-6 pb-24 pt-16 md:px-8 md:pb-44 md:pt-20"
               }
             >
               {children}
