@@ -68,7 +68,7 @@ export default function CommentSection({ postId }: { postId: string }) {
       </p>
     ) : (
       <p className="font-primary text-dark mb-4 py-10 text-xl dark:text-white">
-        Leave a thought
+        Join the discussion — leave a thought
       </p>
     );
 
@@ -104,7 +104,7 @@ export default function CommentSection({ postId }: { postId: string }) {
               id="comment"
               rows={2}
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-zinc-950 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 min-h-[44px]"
-              placeholder="Type a comment"
+              placeholder="What do you think? I'd love to hear your thoughts..."
             />
           </div>
           <Halo strength={0} className="rounded-lg">
