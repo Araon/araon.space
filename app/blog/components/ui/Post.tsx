@@ -86,7 +86,7 @@ export default function Post({ post, mousePosition }: PostProps) {
             )}
           </Section>
           <div className="md:hidden aspect-square min-w-24 w-24 h-24 relative drop-shadow-sm">
-            <Image src={image} alt={title} fill className="object-cover rounded"/>
+            <Image src={image} alt={title} fill sizes="(max-width: 768px) 50vw, 96px" className="object-cover rounded"/>
           </div>
         </div>
       </div>

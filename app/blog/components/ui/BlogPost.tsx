@@ -66,6 +66,7 @@ export default function BlogPost({ post }: BlogPostProps) {
                 src={image} 
                 alt={title} 
                 fill 
+                sizes="(max-width: 768px) 80px, 96px"
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
             )}

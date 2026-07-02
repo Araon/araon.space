@@ -50,9 +50,8 @@ export default function Blog() {
                   <Image
                     src={project.image}
                     alt={project.title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="h-full w-full "
+                    fill
+                    className="h-full w-full object-cover"
                   />
                 </Halo>
               </Link>
