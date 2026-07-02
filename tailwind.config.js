@@ -16,6 +16,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        "matrix-sans": ["var(--font-matrix-sans)"],
+      },
       textColor: {
         primary: "var(--gray-12)",
         secondary: "var(--gray-11)",
