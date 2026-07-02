@@ -48,7 +48,7 @@ export default function FavoriteArtwork() {
         className="pointer-events-none absolute z-50 hidden overflow-hidden rounded-lg shadow-lg group-hover:block"
       >
         <Image
-          src="https://lh3.googleusercontent.com/ci/AL18g_Q7JJVvT7ox9updRd7tnn8a-X7ZJyc0ocL7jKkkijn68xAfoL1EE118ZtG2HQs8_1RAN7J3N2c"
+          src="/gallery/view-of-delft.jpg"
           alt="View of Delft by Johannes Vermeer"
           width={imageWidth}
           height={imageHeight}
