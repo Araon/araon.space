@@ -1,39 +1,42 @@
-![araon.space](docs/homepage_dark.png)
+# Personal website
+##Build the Docker image 
+Open a terminal window and navigate to the directory where your Dockerfile is located.
+Run the following command to build the Docker image:
+```
+docker build -t my-image .
+```
 
-My personal portfolio website designed to be simplistic and clean while including features like MDX blog posts with view counts, a dark mode toggle, photo gallary, an about page, and seemless sync with unsplash.
+This will build the Docker image and tag it with the name my-image.
 
-## Tech Stack
+Run the Docker container
+Once the image is built, you can run the Docker container using the following command:
+```
+docker run -p 3000:3000 my-image
+```
 
-backend:
-- [Next.js](nextjs.org) / TypeScript
-- [MDX](https://mdxjs.com) / [Contentlayer](https://contentlayer.dev/) (Blog Posts)
-- [Supabase](https://supabase.com/) (Database)
-- [Prisma](https://www.prisma.io) (ORM)
+This command will start the Docker container and map port 3000 in the container to port 3000 on your host machine. You can access the web server by visiting http://localhost:3000 in your web browser.
 
-frontend:
-- [Tailwind CSS](https://tailwindcss.com) (Styling)
-- [Radix Primitives](https://www.radix-ui.com/primitives) (Headless UI components)
-- [Radix UI Colors](https://www.radix-ui.com/colors) (Color system)
-- [Framer Motion](https://www.framer.com/motion/) (Animations)
+Stop the Docker container
+To stop the running container, open a new terminal window and run the following command:
 
-## Getting Started
+```
+docker ps
+```
 
-Make sure you have Node.js v18.17.0+ installed on your machine.
+This will list all running containers, along with their container ID, name, and status.
 
-1. **Install Dependencies**: `npm install`
-2. **Environment variables**: Copy `.env.example` to a new `.env.local`
-3. **Database Setup**: See [Database Setup](#database-setup)
-4. **Prisma Setup**: `npm install @prisma/client` (if you haven't already), then run `npx prisma generate`.
-5. **Start Developing**: `npm run dev`, this will automatically create the .contentlayer files and start the Next.js development server.
+Identify the container ID or name of the running container you want to stop.
 
-## Database Setup
+Once you have the container ID or name, run the following command to stop the container:
 
-- Sign up for a supabase account
-- Create a new database in supabase
-- Update the DATABASE_URL environment variable in your project's `.env.local` file with the connection string provided by Supabase
+```
+docker stop container-id-or-name
+```
 
-## Deployment
+For example, if your container ID is abc123, you can stop the container by running:
 
-This project can be easily deployed to [Vercel](https://vercel.com/new/clone). Simply connect your Vercel account to your GitHub repository, and Vercel will automatically build and deploy your application with each new push to the main branch.
+```
+docker stop abc123
+```
 
-Add the project .env variables to your Vercel project settings.
+This will gracefully stop the container and shut down the web server.
