@@ -91,11 +91,11 @@ export default function NewsletterSignupForm() {
               type="email"
               name={name}
               id="email"
-              className="block w-full rounded-md  px-4 py-1.5 text-primary border border-primary placeholder:text-tertiary focus:ring-inset focus:ring-indigo-600 bg-primary"
+              className="block w-full rounded-md  px-4 py-1.5 text-primary border border-primary placeholder:text-tertiary focus:ring-inset focus:ring-indigo-600 bg-primary min-h-[44px]"
               placeholder="you@example.com"
             />
           </div>
-          <button className="w-full whitespace-nowrap rounded-md bg-neutral-800 px-4 py-1.5 text-white hover:bg-neutral-900 focus:ring-inset focus:ring-indigo-600 focus-visible:outline focus-visible:outline-2 dark:bg-neutral-300 dark:text-black hover:dark:bg-neutral-100 md:w-fit ">
+          <button className="w-full whitespace-nowrap rounded-md bg-neutral-800 px-4 py-1.5 text-white hover:bg-neutral-900 focus:ring-inset focus:ring-indigo-600 focus-visible:outline focus-visible:outline-2 dark:bg-neutral-300 dark:text-black hover:dark:bg-neutral-100 md:w-fit min-h-[44px]">
             {"Sign up"}
           </button>
         </form>

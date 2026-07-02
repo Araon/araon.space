@@ -50,7 +50,7 @@ export default function Navigation() {
           {({ open }: { open: boolean }) => (
             <>
               <Popover.Button
-                className="flex items-center gap-1 rounded-lg border-2 border-[#0a76a8] p-1.5 text-secondary focus:ring-0 focus-visible:outline-none"
+                className="flex items-center gap-1 rounded-lg border-2 border-[#0a76a8] p-1.5 text-secondary focus:ring-0 focus-visible:outline-none min-h-[44px] min-w-[44px]"
                 aria-expanded={open}
                 aria-label="Toggle menu"
               >
@@ -91,7 +91,7 @@ export default function Navigation() {
                         key={link.href}
                         href={link.href}
                         className={clsx(
-                          "rounded-md px-4 py-2 transition-colors hover:text-primary",
+                          "rounded-md px-4 py-2 transition-colors hover:text-primary min-h-[44px] flex items-center",
                           pathname === link.href
                             ? "bg-tertiary font-medium"
                             : "font-normal",
