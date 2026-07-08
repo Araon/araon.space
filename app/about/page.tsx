@@ -12,8 +12,8 @@ import medarjeeling from "public/gallery/me-darjeeling.jpg";
 import punehill from "public/gallery/doremon-hill.jpg";
 import growthxLogo from "public/company/growthx.svg";
 import onlinesalesLogo from "public/company/onlinesales.svg";
-import matrixLogo from "public/company/matrix.svg";
 import NagarroLogo from "public/company/nagarro.svg";
+import ToneTagLogo from "public/company/tonetag.svg";
 
 import FavoriteArtwork from "./components/FavoriteArtwork";
 
@@ -204,9 +204,16 @@ export default function About() {
 
 const workplaces = [
   {
+    title: "Software Engineer",
+    company: "ToneTag",
+    time: "May 2026 - Present",
+    imageSrc: ToneTagLogo,
+    link: "https://www.tonetag.com",
+  },
+  {
     title: "Staff Engineer",
     company: "Nagarro",
-    time: "Present",
+    time: "Until Apr 2026",
     imageSrc: NagarroLogo,
     link: "https://www.nagarro.com",
   },
@@ -223,12 +230,5 @@ const workplaces = [
     time: "3 Years",
     imageSrc: onlinesalesLogo,
     link: "https://Onlinesales.ai",
-  },
-  {
-    title: "Intern",
-    company: "Matrix",
-    time: "1 Year",
-    imageSrc: matrixLogo,
-    link: "https://www.linkedin.com/company/matrix-international-/?originalSubdomain=in",
   },
 ];

@@ -2,7 +2,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk, Space_Mono } from "next/font/google";
 import localFont from "next/font/local";
-import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
 import { PHProvider, PostHogPageview } from "@/providers/PostHog";
 import { Suspense } from "react";
@@ -113,7 +112,6 @@ export default function RootLayout({
               {children}
             </div>
           </ThemeProvider>
-          <Analytics />
         </PHProvider>
       </body>
     </html>

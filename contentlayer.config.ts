@@ -3,10 +3,19 @@ import {
   makeSource,
   ComputedFields,
 } from "contentlayer/source-files"; // eslint-disable-line
+import { existsSync } from "fs";
 import rehypePrism from "rehype-prism-plus";
 import rehypeSlug from "rehype-slug";
 
 const getSlug = (doc: any) => doc._raw.sourceFileName.replace(/\.mdx$/, "");
+const resolvePublicImage = (directory: string, slug: string) => {
+  const basePath = `${directory}/${slug}/image`;
+  const extension = ["webp", "jpg", "jpeg", "png", "gif"].find((ext) =>
+    existsSync(`public${basePath}.${ext}`),
+  );
+
+  return `${basePath}.${extension ?? "png"}`;
+};
 
 const postComputedFields: ComputedFields = {
   slug: {
@@ -15,11 +24,11 @@ const postComputedFields: ComputedFields = {
   },
   image: {
     type: "string",
-    resolve: (doc) => `/blog/${getSlug(doc)}/image.png`,
+    resolve: (doc) => resolvePublicImage("/blog", getSlug(doc)),
   },
   og: {
     type: "string",
-    resolve: (doc) => `/blog/${getSlug(doc)}/image.png`,
+    resolve: (doc) => resolvePublicImage("/blog", getSlug(doc)),
   },
   readingTime: {
     type: "string",
@@ -55,7 +64,7 @@ const projectComputedFields: ComputedFields = {
   },
   image: {
     type: "string",
-    resolve: (doc) => `/projects/${getSlug(doc)}/image.png`,
+    resolve: (doc) => resolvePublicImage("/projects", getSlug(doc)),
   },
 };
 
