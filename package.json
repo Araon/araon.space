@@ -10,7 +10,9 @@
     "lint": "next lint",
     "check:images": "node scripts/check-public-images.mjs",
     "compress:images": "node scripts/compress-public-images.mjs",
-    "generate:og": "node scripts/generate-blog-og-images.mjs"
+    "generate:og": "node scripts/generate-blog-og-images.mjs",
+    "generate:og:force": "node scripts/generate-blog-og-images.mjs --force",
+    "sync:unsplash": "node scripts/sync-unsplash-images.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",

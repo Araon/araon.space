@@ -11,6 +11,7 @@ const fallbackImagePath = path.join(publicDir, "blog/awake/image.png");
 const fontPath = path.join(publicDir, "fonts/google/space-grotesk-400.ttf");
 
 const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"];
+const force = process.argv.includes("--force");
 
 function stripQuotes(value) {
   return value.replace(/^["']|["']$/g, "").trim();
@@ -42,9 +43,28 @@ function parseFrontmatter(content) {
   return fields;
 }
 
-function getMimeType(filePath) {
-  const ext = path.extname(filePath).toLowerCase();
+function getMimeType(data, filePath) {
+  if (data[0] === 0xff && data[1] === 0xd8 && data[2] === 0xff) {
+    return "image/jpeg";
+  }
 
+  if (
+    data[0] === 0x89 &&
+    data[1] === 0x50 &&
+    data[2] === 0x4e &&
+    data[3] === 0x47
+  ) {
+    return "image/png";
+  }
+
+  if (
+    data.subarray(0, 4).toString("ascii") === "RIFF" &&
+    data.subarray(8, 12).toString("ascii") === "WEBP"
+  ) {
+    return "image/webp";
+  }
+
+  const ext = path.extname(filePath).toLowerCase();
   if (ext === ".jpg" || ext === ".jpeg") {
     return "image/jpeg";
   }
@@ -89,7 +109,7 @@ async function findCoverImage(slug, image) {
 
 async function toDataUrl(filePath) {
   const data = await fs.readFile(filePath);
-  return `data:${getMimeType(filePath)};base64,${data.toString("base64")}`;
+  return `data:${getMimeType(data, filePath)};base64,${data.toString("base64")}`;
 }
 
 function el(type, props, ...children) {
@@ -270,9 +290,17 @@ const fontData = await fs.readFile(fontPath);
 const files = (await fs.readdir(blogDir)).filter((file) => file.endsWith(".mdx"));
 
 let generated = 0;
+let skipped = 0;
 
 for (const file of files) {
   const slug = path.basename(file, ".mdx");
+  const outputPath = path.join(outputDir, `${slug}.png`);
+
+  if (!force && (await pathExists(outputPath))) {
+    skipped += 1;
+    continue;
+  }
+
   const content = await fs.readFile(path.join(blogDir, file), "utf8");
   const frontmatter = parseFrontmatter(content);
 
@@ -290,8 +318,8 @@ for (const file of files) {
     fontData,
   });
 
-  await fs.writeFile(path.join(outputDir, `${slug}.png`), image);
+  await fs.writeFile(outputPath, image);
   generated += 1;
 }
 
-console.log(`Generated ${generated} blog OG images.`);
+console.log(`Generated ${generated} blog OG images. Skipped ${skipped} existing images.`);

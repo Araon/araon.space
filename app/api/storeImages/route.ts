@@ -59,17 +59,35 @@ export async function GET(req: NextRequest) {
       width: photo.width,
     }));
 
-    // Update existing photos or create new ones
+    let created = 0;
+    let updated = 0;
+
     for (const photo of photos) {
+      const existingPhoto = await prisma.photos.findUnique({
+        where: { photo_id: photo.photo_id },
+        select: { photo_id: true },
+      });
+
       await prisma.photos.upsert({
         where: { photo_id: photo.photo_id },
-        update: { views: photo.views },
+        update: photo,
         create: photo,
       });
+
+      if (existingPhoto) {
+        updated += 1;
+      } else {
+        created += 1;
+      }
     }
 
     return new Response(
-      JSON.stringify({ message: "Views updated successfully" }),
+      JSON.stringify({
+        message: "Unsplash photos synced successfully",
+        created,
+        updated,
+        total: photos.length,
+      }),
       {
         status: 200,
         headers: {
