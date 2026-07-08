@@ -1,6 +1,5 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Space_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import clsx from "clsx";
 import { PHProvider, PostHogPageview } from "@/providers/PostHog";
@@ -9,17 +8,21 @@ import { Suspense } from "react";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Navigation from "@/components/Navigation";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
+const inter = localFont({
+  src: "../public/fonts/google/inter-400.ttf",
+  display: "swap",
 });
 
-const spaceMono = Space_Mono({
-  weight: "400",
-  subsets: ["latin"],
+const spaceGrotesk = localFont({
+  src: "../public/fonts/google/space-grotesk-400.ttf",
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+
+const spaceMono = localFont({
+  src: "../public/fonts/google/space-mono-400.ttf",
   variable: "--font-space-mono",
+  display: "swap",
 });
 
 const matrixSans = localFont({

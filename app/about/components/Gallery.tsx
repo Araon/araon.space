@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 
 import medarjeeling from "public/gallery/me-darjeeling.jpg"
 import meandarka from "public/gallery/me-arka.jpg"
@@ -14,9 +14,9 @@ import guitar from "public/gallery/guitar.jpg"
 import Halo from "@/components/ui/Halo";
 
 
-const ticketingFont = Inter({
-  subsets: ['latin'],
-  display: 'swap',
+const ticketingFont = localFont({
+  src: "../../../public/fonts/google/inter-400.ttf",
+  display: "swap",
 })
 
 type PhotoProps = {

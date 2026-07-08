@@ -10,10 +10,10 @@ import AudioButton from "@/components/AudioButton";
 
 import medarjeeling from "public/gallery/me-darjeeling.jpg";
 import punehill from "public/gallery/doremon-hill.jpg";
-import growthxLogo from "public/company/growthx.svg";
-import onlinesalesLogo from "public/company/onlinesales.svg";
-import NagarroLogo from "public/company/nagarro.svg";
-import ToneTagLogo from "public/company/tonetag.svg";
+import growthxLogo from "public/company/growthx-logo.png";
+import NagarroLogo from "public/company/nagarro-logo.png";
+import onlinesalesLogo from "public/company/onlinesales-logo.png";
+import ToneTagLogo from "public/company/tonetag-logo.png";
 
 import FavoriteArtwork from "./components/FavoriteArtwork";
 
@@ -204,28 +204,24 @@ export default function About() {
 
 const workplaces = [
   {
-    title: "Software Engineer",
     company: "ToneTag",
-    time: "May 2026 - Present",
+    time: "Present",
     imageSrc: ToneTagLogo,
     link: "https://www.tonetag.com",
   },
   {
-    title: "Staff Engineer",
     company: "Nagarro",
-    time: "Until Apr 2026",
+    time: "1 Year",
     imageSrc: NagarroLogo,
     link: "https://www.nagarro.com",
   },
   {
-    title: "Senior SDE",
     company: "GrowthX",
     time: "1 Year",
     imageSrc: growthxLogo,
     link: "https://www.growthx.club",
   },
   {
-    title: "SDE 1",
     company: "Onlinesales.ai",
     time: "3 Years",
     imageSrc: onlinesalesLogo,

@@ -6,35 +6,40 @@ import clsx from "clsx";
 import Link from "@/components/ui/Link";
 
 type Workplace = {
-  title: string;
   company: string;
   imageSrc: string | StaticImageData;
   time?: string;
   link?: string;
 };
 
-function Workplace({ title, company, imageSrc, time, link }: Workplace) {
+function Workplace({ company, imageSrc, time, link }: Workplace) {
   const { theme } = useTheme();
 
   const content = (
     <>
-      <div className="flex items-center gap-4">
-        <Image
-          src={imageSrc}
-          alt={company}
-          width={48}
-          height={48}
-          className={clsx(
-            "rounded-full",
-            company === "University of Houston" && "bg-neutral-50"
-          )}
-        />
-        <div className="flex flex-col gap-px">
-          <p className={link ? "external-arrow" : ""}>{title}</p>
-          <p className="text-secondary">{company}</p>
+      <div className="flex min-w-0 items-center gap-4">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-primary bg-tertiary">
+          <Image
+            src={imageSrc}
+            alt={company}
+            width={48}
+            height={48}
+            className={clsx(
+              "h-full w-full object-cover",
+              company === "Nagarro" && "bg-black object-contain p-2",
+              company === "University of Houston" && "bg-neutral-50"
+            )}
+          />
         </div>
+        <p className={link ? "external-arrow min-w-0" : "min-w-0"}>
+          {company}
+        </p>
       </div>
-      {time && <time className="text-secondary">{time}</time>}
+      {time && (
+        <time className="shrink-0 whitespace-nowrap text-right text-secondary">
+          {time}
+        </time>
+      )}
     </>
   );
   return (
@@ -42,12 +47,14 @@ function Workplace({ title, company, imageSrc, time, link }: Workplace) {
       {link ? (
         <Link
           href={link}
-          className="flex justify-between w-full px-3 py-2 -mx-3 -my-2 no-underline"
+          className="-mx-3 -my-2 grid w-[calc(100%+1.5rem)] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-3 py-2 no-underline"
         >
           {content}
         </Link>
       ) : (
-        <div className="flex justify-between ">{content}</div>
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
+          {content}
+        </div>
       )}
     </li>
   );
