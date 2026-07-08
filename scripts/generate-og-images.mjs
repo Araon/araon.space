@@ -153,6 +153,40 @@ function splitProjectTitle(title) {
   return lines.slice(0, 2);
 }
 
+const tagColors = {
+  "AI/ML": "#ffd84d",
+  API: "#38bdf8",
+  "Chrome Extension": "#4285f4",
+  CUDA: "#76b900",
+  Discord: "#5865f2",
+  Docker: "#2496ed",
+  FastAPI: "#009688",
+  FFMPEG: "#007808",
+  Flask: "#ffffff",
+  JavaScript: "#f7df1e",
+  "Machine Learning": "#ff6f00",
+  MongoDB: "#47a248",
+  Prisma: "#2d3748",
+  PyTorch: "#ee4c2c",
+  Python: "#3776ab",
+  React: "#61dafb",
+  Selenium: "#43b02a",
+  Telegram: "#26a5e4",
+  Trading: "#16a34a",
+  "Transformers.js": "#ffcc4d",
+  TypeScript: "#3178c6",
+  WebScraping: "#f97316",
+};
+
+function getTagColor(tag) {
+  return tagColors[tag] ?? "rgba(255,255,255,0.72)";
+}
+
+function getProjectAccent(slug, tags) {
+  const tagAccent = tags.map((tag) => tagColors[tag]).find(Boolean);
+  return tagAccent ?? getAccent(slug);
+}
+
 async function renderOgImage({ title, summary, slug, coverDataUrl, fontData }) {
   const accent = getAccent(slug);
 
@@ -328,6 +362,7 @@ async function renderProjectOgImage({
   const visibleTags = tags.slice(0, 5);
   const titleLines = splitProjectTitle(title);
   const longTitle = titleLines.length > 1;
+  const accent = getProjectAccent(slug, tags);
 
   const response = new ImageResponse(
     el(
@@ -359,6 +394,18 @@ async function renderProjectOgImage({
           inset: 40,
           display: "flex",
           border: "1px solid rgba(255,255,255,0.14)",
+          boxShadow: `inset 0 0 0 1px rgba(255,255,255,0.04), inset 6px 0 0 ${accent}`,
+        },
+      }),
+      el("div", {
+        style: {
+          position: "absolute",
+          left: 72,
+          top: 94,
+          display: "flex",
+          width: 138,
+          height: 4,
+          background: accent,
         },
       }),
       el("div", {
@@ -388,7 +435,7 @@ async function renderProjectOgImage({
           },
         },
         el("span", null, "araon.space"),
-        el("span", { style: { color: "rgba(255,255,255,0.38)" } }, "/"),
+        el("span", { style: { color: accent } }, "/"),
         el("span", null, "project"),
         time ? el("span", { style: { color: "rgba(255,255,255,0.42)" } }, time) : null,
       ),
@@ -441,7 +488,7 @@ async function renderProjectOgImage({
           display: "flex",
           width: 270,
           height: 8,
-          background: "#f5f5f5",
+          background: accent,
         },
       }),
       el("div", {
@@ -503,6 +550,7 @@ async function renderProjectOgImage({
             border: "1px solid rgba(255,255,255,0.72)",
             background: "#f5f5f5",
             color: "#050505",
+            boxShadow: `8px 8px 0 ${accent}`,
             padding: "15px 18px",
             fontSize: 20,
             letterSpacing: "0.02em",
@@ -532,9 +580,10 @@ async function renderProjectOgImage({
               style: {
                 display: "flex",
                 padding: "10px 15px",
-                border: "1px solid rgba(255,255,255,0.72)",
+                border: `1px solid ${getTagColor(tag)}`,
                 borderLeft: "0",
-                color: "rgba(255,255,255,0.88)",
+                color: getTagColor(tag),
+                background: "rgba(255,255,255,0.02)",
                 fontSize: 18,
                 letterSpacing: "0.1em",
               },
@@ -551,7 +600,7 @@ async function renderProjectOgImage({
           display: "flex",
           width: 118,
           height: 118,
-          border: "1px solid rgba(255,255,255,0.78)",
+          border: `1px solid ${accent}`,
           transform: "rotate(45deg)",
         },
       }),
@@ -563,7 +612,7 @@ async function renderProjectOgImage({
           display: "flex",
           width: 28,
           height: 28,
-          background: "#f5f5f5",
+          background: accent,
         },
       }),
     ),
