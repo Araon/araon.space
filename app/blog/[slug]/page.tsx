@@ -37,15 +37,12 @@ export async function generateMetadata(
     title,
     publishedAt: publishedTime,
     summary: description,
-    image,
     slug,
   } = post;
 
   // Use absolute URLs
   const url = `https://araon.space/blog/${slug}`;
-  const ogImage = image
-    ? `https://araon.space${image}`
-    : `https://ik.imagekit.io/ara0n/Blog_Images/why_are_you_still_awake.jpeg`;
+  const ogImage = `https://araon.space/og/blog/${slug}.png`;
 
   const metadata: Metadata = {
     title: `${title} | Araon`,
