@@ -358,7 +358,6 @@ async function renderProjectOgImage({
   coverDataUrl,
   fontData,
 }) {
-  const command = `$ open /projects/${slug}`;
   const visibleTags = tags.slice(0, 5);
   const titleLines = splitProjectTitle(title);
   const longTitle = titleLines.length > 1;
@@ -463,8 +462,8 @@ async function renderProjectOgImage({
           width: 270,
           height: 250,
           objectFit: "cover",
-          opacity: 0.2,
-          filter: "grayscale(1) contrast(1.1)",
+          opacity: 0.46,
+          filter: "grayscale(1) contrast(1.08) brightness(1.28)",
         },
       }),
       el("div", {
@@ -477,7 +476,7 @@ async function renderProjectOgImage({
           height: 250,
           border: "1px solid rgba(255,255,255,0.32)",
           background:
-            "linear-gradient(135deg, rgba(5,5,5,0.1), rgba(5,5,5,0.72))",
+            "linear-gradient(135deg, rgba(5,5,5,0.02), rgba(5,5,5,0.42))",
         },
       }),
       el("div", {
@@ -543,29 +542,7 @@ async function renderProjectOgImage({
           style: {
             position: "absolute",
             left: 72,
-            bottom: 134,
-            display: "flex",
-            alignItems: "center",
-            width: 610,
-            border: "1px solid rgba(255,255,255,0.72)",
-            background: "#f5f5f5",
-            color: "#050505",
-            boxShadow: `8px 8px 0 ${accent}`,
-            padding: "15px 18px",
-            fontSize: 20,
-            letterSpacing: "0.02em",
-            textTransform: "none",
-          },
-        },
-        command,
-      ),
-      el(
-        "div",
-        {
-          style: {
-            position: "absolute",
-            left: 72,
-            bottom: 64,
+            bottom: 74,
             display: "flex",
             gap: 0,
             flexWrap: "wrap",
