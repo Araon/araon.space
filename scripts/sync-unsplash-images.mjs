@@ -1,4 +1,7 @@
-import "dotenv/config";
+import { config } from "dotenv";
+
+config({ path: ".env.local" });
+config();
 
 const siteUrl = process.env.SITE_URL || "https://araon.space";
 const secret = process.env.STORE_IMAGES_SECRET;
