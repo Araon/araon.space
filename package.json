@@ -5,9 +5,11 @@
   "scripts": {
     "postinstall": "prisma generate",
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run check:images && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check:images": "node scripts/check-public-images.mjs",
+    "compress:images": "node scripts/compress-public-images.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
