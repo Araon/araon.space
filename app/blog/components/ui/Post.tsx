@@ -12,9 +12,10 @@ type PostProps = {
     x: number;
     y: number;
   };
+  priority?: boolean;
 };
 
-export default function Post({ post, mousePosition }: PostProps) {
+export default function Post({ post, mousePosition, priority = false }: PostProps) {
   const { publishedAt, slug, title, image } = post;
   const publishDate = new Date(publishedAt);
   const showNewBadge =
@@ -87,7 +88,14 @@ export default function Post({ post, mousePosition }: PostProps) {
             )}
           </Section>
           <div className="md:hidden aspect-square min-w-24 w-24 h-24 relative drop-shadow-sm">
-            <Image src={image} alt={title} fill sizes="(max-width: 768px) 50vw, 96px" className="object-cover rounded"/>
+            <Image
+              src={image}
+              alt={title}
+              fill
+              sizes="96px"
+              priority={priority}
+              className="object-cover rounded"
+            />
           </div>
         </div>
       </div>

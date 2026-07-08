@@ -107,13 +107,14 @@ export default function RootLayout({
           </Suspense>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navigation />
-            <div
+            <main
+              id="main-content"
               className={
                 "mx-auto max-w-[700px] px-6 pb-24 pt-16 md:px-8 md:pb-44 md:pt-20"
               }
             >
               {children}
-            </div>
+            </main>
           </ThemeProvider>
         </PHProvider>
       </body>

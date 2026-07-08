@@ -55,8 +55,13 @@ export default function PostList({ posts }: PostListProps) {
       className="flex flex-col animated-list"
     >
       {posts.length === 0 && <p>No posts found</p>}
-      {posts.map((post) => (
-        <Post key={post.slug} post={post} mousePosition={mousePosition} />
+      {posts.map((post, index) => (
+        <Post
+          key={post.slug}
+          post={post}
+          mousePosition={mousePosition}
+          priority={index === 0}
+        />
       ))}
     </ul>
   );
