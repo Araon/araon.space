@@ -1,4 +1,5 @@
 import { allProjects } from ".contentlayer/generated";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import Mdx from "@/app/blog/components/ui/MdxWrapper";
@@ -8,6 +9,48 @@ export async function generateStaticParams() {
   return allProjects.map((project) => ({
     slug: project.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const project = allProjects.find((project) => project.slug === params.slug);
+
+  if (!project) {
+    throw new Error("Project not found");
+  }
+
+  const url = `https://araon.space/projects/${project.slug}`;
+  const ogImage = `https://araon.space/og/projects/${project.slug}.png`;
+
+  return {
+    title: `${project.title} | Araon`,
+    description: project.description,
+    openGraph: {
+      title: project.title,
+      description: project.description,
+      type: "article",
+      url,
+      siteName: "araon.space",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: project.title,
+        },
+      ],
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.description,
+      images: [ogImage],
+    },
+  };
 }
 
 export default function Project({ params }: { params: any }) {
