@@ -133,6 +133,26 @@ function getAccent(slug) {
   return colors[total % colors.length];
 }
 
+function splitProjectTitle(title) {
+  const words = title.toUpperCase().split(/\s+/);
+  const lines = [];
+
+  for (const word of words) {
+    const current = lines[lines.length - 1];
+    if (!current || `${current} ${word}`.length > 20) {
+      lines.push(word);
+    } else {
+      lines[lines.length - 1] = `${current} ${word}`;
+    }
+  }
+
+  if (lines.length > 2) {
+    lines[1] = `${lines.slice(1).join(" ")}`;
+  }
+
+  return lines.slice(0, 2);
+}
+
 async function renderOgImage({ title, summary, slug, coverDataUrl, fontData }) {
   const accent = getAccent(slug);
 
@@ -306,6 +326,8 @@ async function renderProjectOgImage({
 }) {
   const command = `$ open /projects/${slug}`;
   const visibleTags = tags.slice(0, 5);
+  const titleLines = splitProjectTitle(title);
+  const longTitle = titleLines.length > 1;
 
   const response = new ImageResponse(
     el(
@@ -390,9 +412,9 @@ async function renderProjectOgImage({
         style: {
           position: "absolute",
           right: 72,
-          top: 132,
-          width: 292,
-          height: 292,
+          top: 128,
+          width: 270,
+          height: 250,
           objectFit: "cover",
           opacity: 0.2,
           filter: "grayscale(1) contrast(1.1)",
@@ -402,10 +424,10 @@ async function renderProjectOgImage({
         style: {
           position: "absolute",
           right: 72,
-          top: 132,
+          top: 128,
           display: "flex",
-          width: 292,
-          height: 292,
+          width: 270,
+          height: 250,
           border: "1px solid rgba(255,255,255,0.32)",
           background:
             "linear-gradient(135deg, rgba(5,5,5,0.1), rgba(5,5,5,0.72))",
@@ -415,9 +437,9 @@ async function renderProjectOgImage({
         style: {
           position: "absolute",
           right: 72,
-          top: 448,
+          top: 404,
           display: "flex",
-          width: 292,
+          width: 270,
           height: 8,
           background: "#f5f5f5",
         },
@@ -426,9 +448,9 @@ async function renderProjectOgImage({
         style: {
           position: "absolute",
           right: 72,
-          top: 466,
+          top: 422,
           display: "flex",
-          width: 292,
+          width: 270,
           height: 1,
           background: "rgba(255,255,255,0.32)",
         },
@@ -439,16 +461,17 @@ async function renderProjectOgImage({
           style: {
             position: "absolute",
             left: 72,
-            top: 132,
+            top: longTitle ? 132 : 142,
             display: "flex",
-            maxWidth: 720,
-            fontSize: title.length > 28 ? 70 : 92,
-            lineHeight: 0.9,
+            flexDirection: "column",
+            maxWidth: 650,
+            fontSize: longTitle ? 64 : title.length > 14 ? 72 : 82,
+            lineHeight: 0.96,
             fontWeight: 400,
             letterSpacing: "0.03em",
           },
         },
-        title.toUpperCase(),
+        ...titleLines.map((line) => el("span", { key: line }, line)),
       ),
       el(
         "div",
@@ -456,11 +479,11 @@ async function renderProjectOgImage({
           style: {
             position: "absolute",
             left: 76,
-            top: 286,
+            top: longTitle ? 318 : 304,
             display: "flex",
-            maxWidth: 650,
-            fontSize: 28,
-            lineHeight: 1.3,
+            maxWidth: 620,
+            fontSize: 25,
+            lineHeight: 1.28,
             color: "rgba(255,255,255,0.78)",
             textTransform: "none",
           },
@@ -473,10 +496,10 @@ async function renderProjectOgImage({
           style: {
             position: "absolute",
             left: 72,
-            bottom: 142,
+            bottom: 134,
             display: "flex",
             alignItems: "center",
-            width: 650,
+            width: 610,
             border: "1px solid rgba(255,255,255,0.72)",
             background: "#f5f5f5",
             color: "#050505",
