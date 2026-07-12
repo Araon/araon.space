@@ -47,10 +47,8 @@ That variation is part of the result. Minute-level alpha is noisy. A positive av
 
 After model selection, I fit the chosen configuration on the development period and evaluated the later holdout on 55,884 rows.
 
-| Metric | Result |
-| --- | ---: |
-| Gradient-boosted model Pearson | `0.03611` |
-| One-minute-return baseline Pearson | `-0.00913` |
+- **Gradient-boosted model Pearson**: `0.03611`
+- **One-minute-return baseline Pearson**: `-0.00913`
 
 Both scores use the identical set of rows. The pipeline refuses to silently drop invalid predictions or weights during scoring, because that can make a broken model look better than it is.
 
