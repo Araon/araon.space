@@ -1,0 +1,71 @@
+---
+title: Taramani Quant Research
+time: "2026"
+description: A leakage-aware gradient-boosting baseline for minute-level crypto forecasting
+url: "https://github.com/Araon/taramani-quant-research"
+tags: ["Python", "Quant Research", "Machine Learning", "Time Series"]
+index: 0
+---
+
+I wanted a quant project that did more than fit a model and print a number. The interesting part is the discipline around the number: what the model was allowed to know, whether the validation period came after the training period, and whether a simpler idea could beat it.
+
+I started with a public mirror of the G-Research Crypto Forecasting data. The original competition is much broader, but this slice gave me 372,665 one-minute Cardano observations from 2018. That was enough to build a serious baseline and, importantly, enough to find where the easy mistakes are.
+
+<Image
+  width={1200}
+  height={630}
+  src="/projects/taramani-quant-research/image.png"
+  caption="Two gradient-boosting configurations across three expanding validation windows, with the final holdout's rolling Pearson correlation on the right."
+/>
+
+### The Problem
+
+At every minute, the data has OHLCV information and a target based on a future residualized return. The job is to predict that target. I used weighted Pearson correlation as the score because that is the shape of the original competition metric.
+
+The public file has an important limitation: it has one asset and its weight column is blank. I use equal weights in this version and record that fact in the run metadata. Calling this an exact recreation of the competition would be wrong.
+
+### What The Model Sees
+
+The final model is a histogram gradient-boosted tree. It gets 17 features, all available after a minute's candle has closed:
+
+- returns over 1, 5, 15, 30, and 60 minutes;
+- short and medium rolling volatility;
+- relative volume over 15 and 60 observations;
+- candle shape, VWAP gap, and cyclical time features.
+
+The feature code checks that a lag really is the requested number of calendar minutes old. Crypto feeds have gaps. Treating "60 rows ago" as "60 minutes ago" without checking it is a small detail that can quietly corrupt a backtest.
+
+### Validation Before The Final Number
+
+I did not shuffle the rows. The data is split into three expanding validation windows, with a 16-minute embargo around each boundary because the label looks into the future. The model only trains on the past, then predicts a later period.
+
+I compared two configurations. The selected model used a learning rate of `0.08`, 63 leaf nodes, L2 regularization of `10`, and 60 boosting rounds. Its three validation correlations were `0.04863`, `0.00140`, and `0.03066`, for a mean of `0.02690`.
+
+That variation is part of the result. Minute-level alpha is noisy. A positive average is more useful than one lucky split, but it is still a reason to be cautious, not to declare victory.
+
+### Final Holdout
+
+After model selection, I fit the chosen configuration on the development period and evaluated the later holdout on 55,884 rows.
+
+| Metric | Result |
+| --- | ---: |
+| Gradient-boosted model Pearson | `0.03611` |
+| One-minute-return baseline Pearson | `-0.00913` |
+
+Both scores use the identical set of rows. The pipeline refuses to silently drop invalid predictions or weights during scoring, because that can make a broken model look better than it is.
+
+There is one caveat: I had inspected this holdout in an earlier exploratory run. I now treat it as a retrospective evaluation set, not a pristine final test. The next honest experiment is a fresh later period with the same pipeline untouched.
+
+### The Pipeline
+
+The repository contains the data download, feature generation, strict metric checks, unit tests, model-selection table, fitted model, source checksum, package versions, and this chart. A full run is:
+
+```bash
+python3.13 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python download_data.py
+.venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python advanced_solution.py
+```
+
+The next step is not a larger model. It is better evidence: the original multi-asset data, a genuinely untouched later test period, and eventually a portfolio layer that accounts for turnover and trading costs. Until then, this is research infrastructure, not a trading strategy.
