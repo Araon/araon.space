@@ -37,7 +37,7 @@ My basic reading order is: read the x-axis first, check the units on each y-axis
 
 The Cardano-only run taught me how to build timestamp-safe features, but it could not reproduce the competition setup. The original archive contains 14 assets and their official weights, so I switched to that source rather than mixing several reconstructed datasets.
 
-For a reproducible first full run, I took the final 180 days of the archive: `3,627,788` rows across all 14 assets. I used 17 price, volatility, volume, candle, time-of-day, and cross-asset features. The model is LightGBM, a gradient-boosted tree model that can learn nonlinear combinations of those inputs without requiring a deep-learning stack.
+For a reproducible first full run, I took the final 180 days of the archive: `3,627,788` rows across all 14 assets. I used 20 price, volatility, volume, candle, time-of-day, and cross-asset features. The model is LightGBM, a gradient-boosted tree model that can learn nonlinear combinations of those inputs without requiring a deep-learning stack.
 
 One detail I nearly missed: a five-row lag is not necessarily a five-minute lag. Market feeds can have missing minutes. The feature code checks the timestamp at every requested lag and leaves a value missing when the data jumps. The model can handle that missing value, but it never gets to pretend the gap was a normal observation.
 
