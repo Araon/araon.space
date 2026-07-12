@@ -1,69 +1,82 @@
 ---
 title: G-Research Crypto Forecasting
 time: "2026"
-description: A leakage-aware gradient-boosting baseline for minute-level crypto forecasting
+description: My first pass at a quant competition, from minute bars to a leakage-aware forecasting baseline
 url: "https://github.com/Araon/g-research-crypto-forecasting"
 tags: ["Python", "Quant Research", "Machine Learning", "Time Series"]
 index: 0
 ---
 
-I wanted a quant project that did more than fit a model and print a number. The interesting part is the discipline around the number: what the model was allowed to know, whether the validation period came after the training period, and whether a simpler idea could beat it.
+This was my first real attempt at a quant competition, and also my first time working with market data that moves every minute. I came in thinking the interesting part would be choosing a machine-learning model. It was not. The difficult part was figuring out what a model is actually allowed to know, and then being honest about whether a result means anything.
 
-I started with a public mirror of the G-Research Crypto Forecasting data. The original competition is much broader, but this slice gave me 372,665 one-minute Cardano observations from 2018. That was enough to build a serious baseline and, importantly, enough to find where the easy mistakes are.
+The competition is G-Research Crypto Forecasting. It asks for a prediction of a future crypto-market return using data available at the current minute. I used the public **Cryptocurrency Extra Data - Cardano** mirror to get started. The project currently has a verified 2018 Cardano baseline; I am separately pulling the canonical multi-asset competition files before treating this as anything more than a first research result.
+
+### First, The Vocabulary I Had To Learn
+
+The source gives one row per minute. A few terms kept appearing, so here is the version I wish I had before starting:
+
+- **OHLCV** means open, high, low, close, and volume. It is the compact record of what happened in a market during one minute.
+- A **feature** is information the model can see now, such as the price change in the last five minutes or whether volume is unusually high.
+- The **target** is the future value we want to predict. It must never become an input feature, even indirectly.
+- **Pearson correlation** measures whether a prediction and target move together. `1` is perfectly aligned, `0` has no linear relationship, and negative values point the wrong way.
+- **Leakage** is accidentally letting future information influence the past. It is an easy way to get an impressive score that disappears in a real setting.
+
+<Image
+  width={1200}
+  height={770}
+  src="/projects/g-research-crypto-forecasting/data-overview.png"
+  caption="One actual day of minute-level Cardano data: close price, trading volume, and the future-return target. Breaks in the lines are missing source minutes, not interpolated values."
+/>
+
+**How to read this chart:** time runs left to right in UTC. The blue line is the last traded price at every recorded minute. The green middle panel is trading volume: tall spikes mean much more Cardano changed hands during that minute than usual. The orange line is not the price. It is the competition's future-return target, so values above zero mean the later residual return was positive and values below zero mean it was negative. The broken sections are important: they show places where the data source did not provide a minute, and I deliberately do not draw a fake line across them.
+
+My basic reading order is: read the x-axis first, check the units on each y-axis, find the zero line when there is one, then look for changes rather than a single dramatic point. The three panels use different scales, so a tall volume spike does not mean the price moved by the same amount. It only tells me that unusually much trading happened at that time. A chart can suggest a question to test; it cannot, by itself, prove the answer.
+
+### What I Built
+
+I started with the kind of baseline that is almost embarrassing: use the previous one-minute return as the prediction. It scored `-0.00913` on the final holdout. In plain English, it was slightly worse than useless.
+
+The next model is a histogram gradient-boosted tree. I chose it because it can learn nonlinear relationships without needing a huge deep-learning stack. It sees 17 features: returns over 1, 5, 15, 30, and 60 minutes; short and medium volatility; relative volume; candle shape; VWAP gap; and time-of-day features.
+
+One detail I nearly missed: a five-row lag is not always a five-minute lag. Market feeds can have missing minutes. The feature code checks the timestamp for every requested lag and leaves a value missing if the data jumps over time. The model can handle those missing values, but it never gets to pretend they are normal observations.
+
+### How I Checked It
+
+I did not randomly shuffle the data. That is normal for many ML problems, but wrong here: shuffled rows would let the model learn from a future market regime and then call it validation.
+
+Instead, I used three expanding windows. The model trains on an early section, validates on a later section, then moves forward. I also leave a 16-minute **embargo** around every boundary. Since the target looks into the future, the embargo prevents a training label from reaching into the period where validation begins.
+
+I compared two tree configurations. The selected one used a learning rate of `0.08`, 63 leaf nodes, L2 regularization of `10`, and 60 boosting rounds. Its validation correlations were `0.04863`, `0.00140`, and `0.03066`, with a mean of `0.02690`.
+
+That middle fold is a useful reality check. A model that works in one market stretch and not another is not a solved problem. It is a reason to look harder.
 
 <Image
   width={1200}
   height={630}
   src="/projects/g-research-crypto-forecasting/image.png"
-  caption="Two gradient-boosting configurations across three expanding validation windows, with the final holdout's rolling Pearson correlation on the right."
+  caption="Mean correlation across the expanding validation windows on the left, and the rolling correlation on the later holdout on the right."
 />
 
-### The Problem
+**How to read this chart:** the bars on the left compare two versions of the same tree model. Higher is better because a larger positive Pearson correlation means predictions lined up more often with later targets. The difference is small, which is normal in this kind of problem. The line on the right is a 1,440-row rolling Pearson correlation. In uninterrupted minute data that is about a day, but the graph uses recorded rows rather than inventing missing ones. When it sits above zero, the model is locally aligning with the target; when it drops below zero, it is locally pointing the wrong way. The frequent crossings are the visual version of the warning from the validation folds: this signal is unstable, not a smooth source of profit.
 
-At every minute, the data has OHLCV information and a target based on a future residualized return. The job is to predict that target. I used weighted Pearson correlation as the score because that is the shape of the original competition metric.
+The zero line is the useful reference here, not the highest spike. A brief high positive value can still be noise, and a positive correlation is not a return, a probability, or permission to trade. It is only evidence that the rank and direction of the predictions had some local relationship with later outcomes. That distinction is why I kept the chart next to the validation bars instead of presenting one number as a victory.
 
-The public file has an important limitation: it has one asset and its weight column is blank. I use equal weights in this version and record that fact in the run metadata. Calling this an exact recreation of the competition would be wrong.
+### The First Result
 
-### What The Model Sees
+After choosing the configuration only from validation, I fit it on the development period and evaluated 55,884 later rows. The gradient-boosted model reached a Pearson correlation of `0.03611`, while the matched-coverage one-minute baseline stayed at `-0.00913`.
 
-The final model is a histogram gradient-boosted tree. It gets 17 features, all available after a minute's candle has closed:
+The pipeline forces every model and baseline to be scored on the same rows. It refuses to silently drop invalid predictions or zero weights, because that can make a broken model look better than it is. It also saves the fitted model, input checksum, package versions, feature list, score table, and report image.
 
-- returns over 1, 5, 15, 30, and 60 minutes;
-- short and medium rolling volatility;
-- relative volume over 15 and 60 observations;
-- candle shape, VWAP gap, and cyclical time features.
+There is still an important caveat. I had seen this final period during an earlier exploratory run, so I describe it as a **retrospective holdout**, not a pristine final test. Saying that out loud matters. The next real test needs to be a fresh, untouched period.
 
-The feature code checks that a lag really is the requested number of calendar minutes old. Crypto feeds have gaps. Treating "60 rows ago" as "60 minutes ago" without checking it is a small detail that can quietly corrupt a backtest.
+### What I Learned
 
-### Validation Before The Final Number
+The model is the smallest part of the work. The useful habits were:
 
-I did not shuffle the rows. The data is split into three expanding validation windows, with a 16-minute embargo around each boundary because the label looks into the future. The model only trains on the past, then predicts a later period.
+- make the naive baseline fail before celebrating a complicated model;
+- write down exactly when a feature becomes available;
+- validate in chronological order;
+- keep gaps in the data visible instead of smoothing them away;
+- treat a score as evidence with limits, not a claim that a strategy will make money.
 
-I compared two configurations. The selected model used a learning rate of `0.08`, 63 leaf nodes, L2 regularization of `10`, and 60 boosting rounds. Its three validation correlations were `0.04863`, `0.00140`, and `0.03066`, for a mean of `0.02690`.
-
-That variation is part of the result. Minute-level alpha is noisy. A positive average is more useful than one lucky split, but it is still a reason to be cautious, not to declare victory.
-
-### Final Holdout
-
-After model selection, I fit the chosen configuration on the development period and evaluated the later holdout on 55,884 rows.
-
-- **Gradient-boosted model Pearson**: `0.03611`
-- **One-minute-return baseline Pearson**: `-0.00913`
-
-Both scores use the identical set of rows. The pipeline refuses to silently drop invalid predictions or weights during scoring, because that can make a broken model look better than it is.
-
-There is one caveat: I had inspected this holdout in an earlier exploratory run. I now treat it as a retrospective evaluation set, not a pristine final test. The next honest experiment is a fresh later period with the same pipeline untouched.
-
-### The Pipeline
-
-The repository contains the data download, feature generation, strict metric checks, unit tests, model-selection table, fitted model, source checksum, package versions, and this chart. A full run is:
-
-```bash
-python3.13 -m venv .venv
-.venv/bin/pip install -r requirements.txt
-.venv/bin/python download_data.py
-.venv/bin/python -m unittest discover -s tests -v
-.venv/bin/python advanced_solution.py
-```
-
-The next step is not a larger model. It is better evidence: the original multi-asset data, a genuinely untouched later test period, and eventually a portfolio layer that accounts for turnover and trading costs. Until then, this is research infrastructure, not a trading strategy.
+The repository has the downloader, feature code, strict metric checks, tests, saved artifacts, and reproduction command. Next I am moving from this public one-asset mirror to the official multi-asset files, where the competition's true asset weights and cross-asset relationships matter.
