@@ -29,7 +29,11 @@ jobs:
         run: |
           # Get list of changed image files in the last commit
           changed_files=$(git diff --name-only HEAD~1 HEAD | grep -E '\.(jpg|jpeg|png|webp|gif)$' || true)
-          echo "files=$changed_files" >> $GITHUB_OUTPUT
+          {
+            echo "files<<EOF"
+            echo "$changed_files"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
           echo "Changed image files: $changed_files"
 
           # Check each file size
@@ -50,7 +54,11 @@ jobs:
           done
 
           echo "has_large_files=$has_large_files" >> $GITHUB_OUTPUT
-          echo "large_files=$large_files" >> $GITHUB_OUTPUT
+          {
+            echo "large_files<<EOF"
+            echo "$large_files"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
 
       - name: Create warning issue
         if: steps.changed-files.outputs.has_large_files == 'true'
