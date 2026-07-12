@@ -56,13 +56,13 @@ The pipeline scores every model and baseline on exactly the same valid rows with
   caption="Official multi-asset experiment: mean weighted Pearson across the two expanding selection folds on the left, and daily weighted Pearson on the untouched final holdout on the right."
 />
 
-**How to read this report:** the bars on the left compare the two LightGBM configurations during model selection. Higher is better because a larger positive weighted Pearson means predictions lined up more often with later targets after applying the official asset weights. I selected the `63`-leaf, `0.03` learning-rate configuration because its mean across the two chronological folds was higher.
+**How to read this report:** the bars on the left compare the two LightGBM configurations during model selection. Higher is better because a larger positive weighted Pearson means predictions lined up more often with later targets after applying the official asset weights. I treated `Asset_ID` as a categorical input, so the model can learn asset-specific patterns without pretending that the numeric asset labels have a natural order. I selected the configuration with the higher mean across the two chronological folds: `0.02298045`.
 
 The line on the right breaks the untouched final-holdout score into individual days. The horizontal zero line is the key reference: days above it had a positive local relationship between predictions and later targets; days below it did not. The day-to-day fluctuation is a warning, not a live edge. A positive aggregate correlation is not a return, a probability, or permission to trade. It is evidence from this fixed historical evaluation, and it needs further tests before any claim about a live strategy.
 
 ### The official result
 
-After selecting the configuration only on the two development folds, I trained it on all `3,081,619` development rows and evaluated the `543,876` rows that had remained untouched. The final weighted Pearson was `0.03894945`. The matched-coverage naive one-minute-return baseline was `-0.00786728`.
+After selecting the configuration only on the two development folds, I trained it on all `3,081,619` development rows and evaluated the `543,876` rows that had remained untouched. The final weighted Pearson was `0.04855914`. The matched-coverage naive one-minute-return baseline was `-0.00786728`.
 
 That is a meaningful improvement over the naive baseline in this experiment, not proof that I found a profitable trading strategy. Costs, execution, changing market regimes, and further untouched periods all matter. The important improvement over my first Cardano smoke test is not just the number: the result now uses the original 14-asset archive, the competition weights, chronological selection, an embargo, and a genuinely untouched final window.
 
