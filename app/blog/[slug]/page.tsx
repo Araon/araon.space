@@ -7,11 +7,14 @@ import Tags from "@/components/Tags";
 import Link from "@/components/ui/Link";
 import Mdx from "@/app/blog/components/ui/MdxWrapper";
 import ViewCounter from "@/app/blog/components/ui/ViewCounter";
+import BlogPostAnalytics from "@/app/blog/components/ui/BlogPostAnalytics";
+import ShareButtons from "@/app/blog/components/ui/ShareButtons";
 
 import CommentList from "@/app/blog/components/ui/CommentList";
 import CommentSection from "@/app/blog/components/ui/CommentSection";
 
 import { formatDate } from "lib/formatdate";
+import { getRelatedPosts } from "@/lib/relatedPosts";
 
 import Avatar from "@/public/avatar.jpg";
 
@@ -33,12 +36,7 @@ export async function generateMetadata(
     throw new Error("Post not found");
   }
 
-  const {
-    title,
-    publishedAt: publishedTime,
-    summary: description,
-    slug,
-  } = post;
+  const { title, publishedAt: publishedTime, summary: description, slug } = post;
 
   // Use absolute URLs
   const url = `https://araon.space/blog/${slug}`;
@@ -47,11 +45,19 @@ export async function generateMetadata(
   const metadata: Metadata = {
     title: `${title} | Araon`,
     description,
+    alternates: {
+      canonical: url,
+    },
+    authors: [{ name: "Araon", url: "https://araon.space/about" }],
+    keywords: post.tags,
     openGraph: {
       title,
       description,
       type: "article",
       publishedTime,
+      modifiedTime: post.updatedAt,
+      authors: ["Araon"],
+      tags: post.tags,
       url,
       siteName: "araon.space",
       images: [
@@ -69,6 +75,7 @@ export async function generateMetadata(
       title,
       description,
       images: [ogImage],
+      creator: "@ara0n_",
     },
   };
   return metadata;
@@ -89,6 +96,36 @@ export default async function Post({ params }: { params: any }) {
 
   return (
     <div className="flex flex-col gap-20">
+      <BlogPostAnalytics slug={post.slug} title={post.title} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: post.title,
+            description: post.summary,
+            image: `https://araon.space/og/blog/${post.slug}.png`,
+            datePublished: post.publishedAt,
+            dateModified: post.updatedAt ?? post.publishedAt,
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": `https://araon.space/blog/${post.slug}`,
+            },
+            author: {
+              "@type": "Person",
+              name: "Araon",
+              url: "https://araon.space/about",
+            },
+            publisher: {
+              "@type": "Person",
+              name: "Araon",
+              url: "https://araon.space",
+            },
+            keywords: post.tags?.join(", "),
+          }),
+        }}
+      />
       <article>
         <div
           className="flex animate-in flex-col gap-8"
@@ -152,44 +189,30 @@ export default async function Post({ params }: { params: any }) {
         </div>
       </article>
 
-      <div className="flex items-center gap-3">
-        <span className="text-sm text-secondary">Share:</span>
-        <a
-          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://araon.space/blog/${post.slug}`)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 rounded-lg border border-secondary px-3 py-2 text-sm text-secondary transition-colors hover:border-primary hover:text-primary min-h-[44px]"
-        >
-          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          <span>Post</span>
-        </a>
-      </div>
+      <ShareButtons slug={post.slug} title={post.title} />
 
       <Tags tags={post.tags} />
 
       {(() => {
-        const related = allPosts
-          .filter((p) => p.slug !== post.slug && p.tags?.some((t: string) => post.tags?.includes(t)))
-          .slice(0, 3);
-        if (related.length > 0) {
-          return (
-            <div className="flex flex-col gap-4">
-              <h2 className="text-xl font-semibold text-primary">Related Posts</h2>
-              <div className="flex flex-col gap-3">
-                {related.map((p) => (
-                  <Link
-                    key={p.slug}
-                    href={`/blog/${p.slug}`}
-                    className="group rounded-lg border border-secondary p-4 transition-colors hover:border-primary"
-                  >
-                    <p className="font-medium text-primary group-hover:underline">{p.title}</p>
-                    <p className="mt-1 text-sm text-tertiary">{p.summary}</p>
-                  </Link>
-                ))}
-              </div>
+        const related = getRelatedPosts(post, allPosts);
+
+        return (
+          <div className="flex flex-col gap-4">
+            <h2 className="text-xl font-semibold text-primary">Keep reading</h2>
+            <div className="flex flex-col gap-3">
+              {related.map((relatedPost) => (
+                <Link
+                  key={relatedPost.slug}
+                  href={`/blog/${relatedPost.slug}`}
+                  className="group rounded-lg border border-secondary p-4 transition-colors hover:border-primary"
+                >
+                  <p className="font-medium text-primary group-hover:underline">{relatedPost.title}</p>
+                  <p className="mt-1 text-sm text-tertiary">{relatedPost.summary}</p>
+                </Link>
+              ))}
             </div>
-          );
-        }
+          </div>
+        );
       })()}
 
       <CommentSection postId={post.slug} />
