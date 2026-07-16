@@ -40,7 +40,9 @@ export async function generateMetadata(
 
   // Use absolute URLs
   const url = `https://araon.space/blog/${slug}`;
-  const ogImage = `https://araon.space/og/blog/${slug}.png`;
+  const ogImage = post.ogImage
+    ? `https://araon.space${post.ogImage}`
+    : `https://araon.space/og/blog/${slug}.png`;
 
   const metadata: Metadata = {
     title: `${title} | Araon`,
@@ -66,6 +68,7 @@ export async function generateMetadata(
           width: 1200,
           height: 630,
           alt: title,
+          type: post.ogImage ? "image/jpeg" : undefined,
         },
       ],
       locale: "en_US",
