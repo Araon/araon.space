@@ -1,0 +1,75 @@
+---
+title: "The Things We Leave Behind"
+publishedAt: "2026-07-11"
+summary: "Every merge shapes the environment an AI pair programmer learns from."
+tags:
+  - Engineering
+  - AI
+  - Writing
+---
+
+There's an old quote:
+
+> "Add comments to your code under the assumption that the next person to maintain it is a homicidal maniac who knows where you live."
+
+For the longest time, that's how I thought about writing code. Someone else is eventually going to read this. Future me. A teammate. Someone who's about to question every life decision I made at 2 AM.
+
+Lately though, I've been spending a lot of time writing with DeepSeek Flash v4 and GLM 5.2.
+
+The weird thing is that the code usually works.
+
+Tests pass.
+
+Linters are happy.
+
+Nothing is obviously wrong.
+
+But every once in a while, if you look between the "&lt;thinking&gt;" tags, you catch something interesting.
+
+"This function already exists... but rewriting it is easier."
+
+"Good enough."
+
+"Nobody is going to touch this anyway."
+
+At first I thought it was just the model being lazy.
+
+Now I'm not so sure.
+
+LLMs don't invent a codebase. They inherit one.
+
+They look at what's already there. Which files are open. Which abstractions already exist. How you name things. Whether you duplicate logic or extract it. Even what eventually survives long enough to be merged into "main".
+
+Every merge request is another example.
+
+Not because your repository is training the model, but because your repository is the context the model reasons over.
+
+That made me realize something.
+
+We spent years writing clean code because humans had to maintain it.
+
+Now there's something else reading it.
+
+Something that never gets tired. Never forgets. Never says, "this abstraction feels wrong." It simply notices the patterns and assumes they were intentional.
+
+A codebase with inconsistent naming doesn't stay inconsistent.
+
+It becomes consistently inconsistent.
+
+The same goes for duplicated business logic, 400-line services, helper functions with three unrelated responsibilities, or variables named "temp2_final_final".
+
+The model doesn't know they're mistakes.
+
+It thinks they're conventions.
+
+Maybe that's the shift we're going through.
+
+Clean code isn't just about making the next engineer's life easier anymore.
+
+It's about shaping the environment your AI pair programmer learns from every single day.
+
+I don't think we've updated our mental model of software engineering yet.
+
+We still treat every merge as something that changes the repository.
+
+Maybe every merge also changes the teammate that's going to help us write the next one.
