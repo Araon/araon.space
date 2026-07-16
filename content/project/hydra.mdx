@@ -69,4 +69,26 @@ GET /schedule/<task_id>
 ```
 Retrieve a task status by its ID.
 
+## 2026 update: verified edge-batch runner
 
+Hydra now has a tested capacity-aware runtime for trusted edge workers. Workers
+declare their concurrency, the coordinator leases work only to workers with
+available capacity, and task state, retry budgets, assigned workers, and lease
+expiry are persisted in PostgreSQL. Due work notifies the coordinator
+immediately; a one-second scan remains as a recovery path.
+
+The public scheduling API now accepts typed, allowlisted jobs instead of raw
+shell commands. The built-ins are `echo`, bounded `sleep`, and a
+workspace-scoped `sha256` job. This keeps a Raspberry Pi or homelab worker from
+becoming an arbitrary command-execution endpoint.
+
+For a real distribution check, ten ARMv6 workers were constrained to the
+Raspberry Pi Zero W envelope (one CPU and 512 MiB RAM each). Twenty independent
+two-second jobs completed across all ten workers in two parallel waves in 4.68
+seconds. An invalid checksum job retried twice and reached a visible final
+failure state rather than being lost.
+
+The current fit is controlled batch work across machines you own: checksums,
+media preparation, device maintenance, and scheduled edge processing. See the
+[Hydra repository](https://github.com/Araon/Hydra) for the typed-job API and
+Raspberry Pi test profile.
