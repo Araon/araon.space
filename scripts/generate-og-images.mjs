@@ -655,6 +655,8 @@ for (const section of sections) {
     const content = await fs.readFile(path.join(sourceDir, file), "utf8");
     const frontmatter = parseFrontmatter(content);
     const summary = frontmatter[section.summaryField];
+    const ogSummary =
+      section.name === "blog" && frontmatter.hideSummary === "true" ? "" : summary;
 
     if (!frontmatter.title || !summary) {
       throw new Error(`Missing title or ${section.summaryField} in ${file}`);
@@ -670,7 +672,7 @@ for (const section of sections) {
           }
         : {}),
       title: sanitizeOgText(frontmatter.title),
-      summary: sanitizeOgText(summary),
+      summary: sanitizeOgText(ogSummary),
       slug,
       coverDataUrl,
       fontData,

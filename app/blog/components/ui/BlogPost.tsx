@@ -91,7 +91,7 @@ export default function BlogPost({ post }: BlogPostProps) {
                     </motion.span>
                   )}
                 </h3>
-                {summary && (
+                {!post.hideSummary && summary && (
                   <p className="text-secondary text-sm leading-relaxed line-clamp-2 mt-1">
                     {summary}
                   </p>

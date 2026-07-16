@@ -135,9 +135,11 @@ export default async function Post({ params }: { params: any }) {
             <h1 className="text-3xl font-bold leading-tight tracking-tight text-primary">
               {post.title}
             </h1>
-            <p className="text-lg leading-tight text-secondary md:text-xl">
-              {post.summary}
-            </p>
+            {!post.hideSummary && (
+              <p className="text-lg leading-tight text-secondary md:text-xl">
+                {post.summary}
+              </p>
+            )}
           </div>
 
           <div className="flex max-w-none items-center gap-4">
@@ -207,7 +209,9 @@ export default async function Post({ params }: { params: any }) {
                   className="group rounded-lg border border-secondary p-4 transition-colors hover:border-primary"
                 >
                   <p className="font-medium text-primary group-hover:underline">{relatedPost.title}</p>
-                  <p className="mt-1 text-sm text-tertiary">{relatedPost.summary}</p>
+                  {!relatedPost.hideSummary && (
+                    <p className="mt-1 text-sm text-tertiary">{relatedPost.summary}</p>
+                  )}
                 </Link>
               ))}
             </div>

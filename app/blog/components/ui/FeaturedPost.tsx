@@ -81,7 +81,7 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
           </h1>
           
           {/* Summary */}
-          {summary && (
+          {!post.hideSummary && summary && (
             <p className="text-lg leading-relaxed text-secondary line-clamp-3">
               {summary}
             </p>
