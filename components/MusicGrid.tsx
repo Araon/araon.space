@@ -81,13 +81,21 @@ function LoadingSkeleton() {
   );
 }
 
+function TrackError() {
+  return (
+    <p role="alert" className="text-sm text-secondary">
+      spotify tracks are unavailable
+    </p>
+  );
+}
+
 export function TopTracks() {
   const { data: tracks, error } = useSWR<Track[]>(
     "/api/spotify/top-tracks",
     fetcher,
   );
 
-  if (error) return <div>Failed to load top tracks</div>;
+  if (error || (tracks && !Array.isArray(tracks))) return <TrackError />;
   if (!tracks) return <LoadingSkeleton />;
 
   return (
@@ -105,7 +113,7 @@ export function RecentlyPlayed() {
     fetcher,
   );
 
-  if (error) return <div>Failed to load recently played tracks</div>;
+  if (error || (tracks && !Array.isArray(tracks))) return <TrackError />;
   if (!tracks) return <LoadingSkeleton />;
 
   return (

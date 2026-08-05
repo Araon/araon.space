@@ -1,0 +1,264 @@
+---
+title: "the tokenizer keeps its own count"
+publishedAt: "2026-07-29"
+summary: "Hinglish textese saved a few tokens and lost some meaning"
+tags:
+  - Engineering
+  - AI
+  - Language
+  - Research
+---
+
+my friend's boss still writes WhatsApp messages like every character costs
+money.
+
+not their exact messages. i never collected or used any private chats.
+
+but imagine something like this:
+
+```text
+kal 4pm mtg h pls tym pe aa jana
+```
+
+tomorrow. 4 pm. meeting. please be on time.
+
+the message is perfectly ordinary if you grew up around SMS shorthand. vowels
+disappear. words become initials. english and romanized Hindi sit in the same
+sentence. numbers do two jobs at once.
+
+the strange part is that the original constraint is gone.
+
+WhatsApp does not charge by the 160-character SMS segment. nobody has to press
+the `7` key four times to type an `s`. the phone has a full keyboard and an
+internet connection.
+
+the writing survived anyway.
+
+that gave me a question which sounded clever for about five minutes.
+
+if people invented this way of writing to save keystrokes and characters,
+could it also save LLM tokens?
+
+## the old unit was a character
+
+keypad phones made typing expensive in two different ways.
+
+there was the small physical argument between your thumb and a numeric keypad.
+there was also the cost of crossing an SMS boundary. a longer message could
+become two billed messages.
+
+writers responded by compressing text.
+
+```text
+please -> pls
+meeting -> mtg
+tomorrow -> tmrw
+great -> gr8
+```
+
+in multilingual conversations the result became more interesting. a message
+could combine english, romanized Hindi, an acronym, phonetic spelling, and a
+number that stood in for a sound or a word.
+
+the academic description is **romanized Hindi-English code-mixed textese**.
+the shorter name is **Hinglish textese**.
+
+it is a written register, not a new language. Benglish has its own patterns
+and deserves a separate experiment instead of being folded into the same
+bucket.
+
+the human goal is clear. remove work from the fingers.
+
+an LLM does not count work that way.
+
+## the model sees pieces
+
+a tokenizer turns text into pieces before a language model reads it.
+
+shorter text can use fewer pieces. it does not have to.
+
+an ordinary word may be common enough to occupy one token. remove two vowels,
+and the unfamiliar spelling can break into three.
+
+```text
+familiar long string -> one token
+short unfamiliar string -> several tokens
+```
+
+the tokenizer is not counting characters. it is matching text against a
+learned vocabulary.
+
+that distinction is small enough to miss when you look at one message. it
+becomes difficult to ignore across thousands of pairs.
+
+## the first test
+
+i started with 13,494 pairs from `hinglishNorm`. each pair contains a noisy
+Hinglish sentence and a human-normalized version.
+
+the noisy side used 12.59% fewer characters.
+
+under two OpenAI-compatible tokenizer vocabularies, that became only 3.86% and
+3.46% fewer tokens.
+
+even that small average hides how inconsistent the effect was. under
+`o200k_base`, only 31.04% of the rows used fewer tokens. 51.66% tied. 17.30%
+used more.
+
+the label that sounded most promising did worse.
+
+4,334 rows tagged `Short Form` used 1.96% more `o200k_base` tokens in their
+shortened form.
+
+acronyms were different. 435 acronym rows saved about 15% under both
+tokenizers. familiar forms such as `EOD` or `OTP` have a better chance of
+already existing as stable pieces.
+
+so the broad idea was failing, but one narrow part of it was still alive.
+
+## fifteen messages
+
+corpus counts only tell you how a tokenizer splits text. they do not tell you
+whether a model understands what remains.
+
+i wrote 15 synthetic pairs for a pilot.
+
+```text
+ordinary:
+paise mil gaye? nahi toh UPI id bhejo
+
+compressed:
+pse mil gye? ni 2 UPI id bhej
+```
+
+the intended meaning is:
+
+```text
+did you receive the money?
+if not, send your UPI ID.
+```
+
+the compressed set removed 29.72% of the characters.
+
+the two proxy tokenizers saved only 5.45% and 9.94%. native counts from the
+two local model artifacts landed at 8.43% for Llama 3.1 8B and 9.39% for
+Qwen3 14B.
+
+then i asked both models to translate every ordinary and compressed message
+into english.
+
+both models read the `2` in the UPI message as a quantity. one asked for two
+UPI IDs.
+
+in another synthetic case:
+
+```text
+agr test fail ho 2 deploy mt krna
+```
+
+the intended instruction was:
+
+```text
+do not deploy if the test fails
+```
+
+one model lost the condition and the negation.
+
+the shorter message did not merely become less elegant. it acquired a
+different instruction.
+
+## counting the whole exchange
+
+the first pilot had another weakness. i had saved the translations, but not
+the exact model digest and token accounting at generation time.
+
+so i ran the 15 pairs again.
+
+the new run recorded the Ollama version, inventory digest, exact local model
+blob hash, prompt hash, request hash, token counts, and duration for every
+call. it checked the server and model identity again at the end.
+
+every translation matched the old run.
+
+when i counted the full reported prompt and output tokens, Llama went from
+1,063 tokens for the ordinary messages to 1,039 for the textese messages.
+that is 2.26%.
+
+Qwen went from 1,166 to 1,145. that is 1.80%.
+
+the fixed run order makes the latency totals unsuitable for comparison, so i
+left them out. the token result is enough.
+
+the model processed slightly fewer tokens and understood less.
+
+for Llama, meaning-unit coverage fell from 89.29% to 73.21%. for Qwen it fell
+from 92.86% to 91.07%.
+
+a compression method does not succeed by making the bill smaller after it
+changes the task.
+
+## this is not an internal monologue
+
+the original idea went one step further.
+
+perhaps a model could use a compact register inside its reasoning and spend
+fewer tokens before producing a normal answer.
+
+this experiment does not test that.
+
+hosted models do not expose a raw internal trace that lets me verify the
+language they used. a shorter visible answer also says nothing about hidden
+reasoning tokens.
+
+a proper hosted-model experiment would compare total provider-reported usage
+at matched task success. it would randomize the prompt condition, repeat
+stochastic runs, and keep model snapshots and request parameters.
+
+the current work is a retrospective pilot. one investigator wrote the 15
+controlled pairs and the meaning checklist. no bilingual raters judged the
+outputs. two local models cannot represent deployed LLMs or every Hinglish
+speaker.
+
+the paper says so because a negative result becomes useful only when its
+boundary is visible.
+
+## what survived
+
+Hinglish textese is good at the job people made it for.
+
+it saves keystrokes. it carries social context. it lets someone type a full
+thought before their thumb gets bored.
+
+tokenizers have a different economy.
+
+they reward familiar sequences, not short ones. broad vowel deletion and
+phonetic clipping can turn one familiar token into several unfamiliar pieces.
+numbers can save a character and introduce a new meaning.
+
+the pilot killed the idea of using arbitrary Hinglish textese as a general
+codec.
+
+it left a narrower experiment behind: build a tokenizer-specific allowlist of
+stable acronyms, test every replacement on downstream tasks, and reject any
+entry that creates a second reading.
+
+my friend's boss will keep writing the same way on WhatsApp.
+
+the old character limit disappeared. the language it shaped did not.
+
+it still saves a human's fingers.
+
+the tokenizer keeps its own count.
+
+---
+
+the study uses the
+[hinglishNorm corpus](https://aclanthology.org/2020.coling-industry.13/),
+the [PHINC corpus](https://aclanthology.org/2020.wnut-1.7/), and the tokenizer
+idea described in
+[Neural Machine Translation of Rare Words with Subword Units](https://aclanthology.org/P16-1162/).
+the paper and research artifact are being prepared for public release.
+
+cover photo: [Nokia 3310 mobile phone](https://commons.wikimedia.org/wiki/File:Nokia_3310_mobile_phone.jpg)
+by Santeri Viinamäki, cropped from the original under
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
