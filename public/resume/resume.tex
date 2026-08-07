@@ -1,0 +1,96 @@
+% Resume source. The phone number has intentionally been removed.
+\documentclass[letterpaper,11pt]{article}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\addtolength{\oddsidemargin}{-0.375in}
+\addtolength{\evensidemargin}{-0.375in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.8in}
+\addtolength{\textheight}{1.5in}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+\titleformat{\section}{\vspace{-4pt}\scshape\raggedright\large}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+\newcommand{\resumeItem}[2]{\item\small{\textbf{#1}{ #2 \vspace{-2pt}}}}
+\newcommand{\resumeSubheading}[4]{\vspace{-1pt}\item\begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}\textbf{#1} & #2 \\\textit{\small#3} & \textit{\small #4} \\\end{tabular*}\vspace{-5pt}}
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+\renewcommand{\labelitemii}{$\circ$}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+\begin{center}
+  \textbf{\Huge Soumik Ghosh} \\
+  Email : \href{mailto:ayy.soumik@gmail.com}{ayy.soumik@gmail.com} \\
+  \href{https://www.linkedin.com/in/soumik-gh0sh/}{LinkedIn} |
+  \href{https://github.com/araon/}{Github} |
+  \href{https://araon.space/}{Portfolio}
+\end{center}
+
+\section{Programming Skills}
+\resumeSubHeadingListStart
+\resumeSubItem{}{\textbf{Programming Languages and frameworks}{: Python, Golang, Typescript, Java, FastAPI, Flask, Express, GoFiber, Lexical}}
+\resumeSubItem{}{\textbf{Databases}{: SQL (PostgreSQL, MySQL), NoSQL (Redis, MongoDB), VectorDB (ChromaDB, PgVector)}}
+\resumeSubItem{}{\textbf{DevOps}{: Docker, AWS, Git, GitHub Actions, OpenShift}}
+\resumeSubHeadingListEnd
+
+\section{Experience}
+\resumeSubHeadingListStart
+\resumeSubheading{Nagarro}{Bangalore}{Staff Engineer - Full time}{August 2025 - Present}
+\resumeItemListStart
+\resumeItem{}{Played a key role in a Java $\rightarrow$ Node.js service migration, including decommissioning legacy TIBCO-based integration layers, simplifying inter-system communication and improving service maintainability.}
+\resumeItem{}{Assisted in decomposing large Java monoliths into domain-aligned microservices, enabling independent deployments and region-specific scalability across UAE, KSA, UK (London), and India.}
+\resumeItemListEnd
+\resumeSubheading{GrowthX.club}{Remote}{Senior SDE - Full time}{May 2024 - August 2025}
+\resumeItemListStart
+\resumeItem{}{Engineered a job board using \textbf{Express (Typescript)}, designing the \textbf{Mongodb} schema to manage complex relationships between \textbf{4000+} members and \textbf{200+} companies.}
+\resumeItem{}{Designed and implemented \textbf{RESTful APIs} for a job tracking module, featuring efficient \textbf{server-side pagination} and filtering to power a Chrome extension and dashboard, complete with Clevertap and new relic setup for funnel visibility.}
+\resumeItem{}{Built a \textbf{real-time collaborative text editor} with a fully functioning version history used by over 2500 members. This system uses the \href{https://github.com/facebook/lexical}{Lexical library by Meta} as a base, engineering a state synchronization mechanism to ensure data consistency across concurrent user sessions.}
+\resumeItem{}{Integrated Razorpay Orders and Subscription APIs to launch a secure paywall, automatically issuing user-level access keys and restricting premium product features to paid subscribers.}
+\resumeItem{}{Architected a centralized LLM gateway microservice in Python, implementing provider failover for high availability, token-bucket rate limiting, and granular usage tracking to power all in-house AI features.}
+\resumeItemListEnd
+\resumeSubheading{Onlinesales.ai}{Pune}{SDE - Full time}{February 2021 - January 2024}
+\resumeItemListStart
+\resumeItem{}{Collaborated on designing and implementation of the inventory and SKU system, expanding its reach from large agencies to individual store owners through a new product launch. Prioritized enhancing SKU management functionalities, enabling broader user access, and enhancing campaign and account management features.}
+\resumeItem{}{Designed and implemented a data pipeline to analyze user wallet balances and proactively identify users at risk of balance depletion or with low balances, resulting in a \textbf{57\% increase in product retention}.}
+\resumeItem{}{Leveraged CleverTap to automate personalized email notifications to targeted user segments, reducing the number of days a user has zero wallet balance by 50\% and fostering user engagement.}
+\resumeItem{}{Developed and implemented a Google Business Messages (GBM)-enabled chatbot for \textbf{Xiaomi}, facilitating seamless communication between \textbf{700 stores nationwide} and their users. Allowing users to receive and respond to messages, access self-service like view real-time stock availability, pricing, ongoing offers.}
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+\section{Projects}
+\resumeSubHeadingListStart
+\resumeSubItem{Shawty} | \href{https://github.com/Araon/shawty}{https://github.com/Araon/shawty}
+\resumeItemListStart
+\resumeItem{}{A robust and self-hosted URL shortener powered by \textbf{Node.js}, \textbf{MySQL}, and \textbf{Redis}, boasts lightning-fast link redirection. Offering support for link expiration, It also integrates analytics for each short link}
+\resumeItemListEnd
+\resumeSubItem{Hydra} | \href{https://github.com/Araon/Hydra}{https://github.com/Araon/Hydra}
+\resumeItemListStart
+\resumeItem{}{High-volume task scheduler in \textbf{Python} and \textbf{Go} with a Scheduler, Coordinator, and Worker components. communicating via gRPC and HTTP, backed by a \textbf{PostgreSQL} database for efficient task management.}
+\resumeItemListEnd
+\resumeSubItem{Search} | \href{https://github.com/Araon/search}{https://github.com/Araon/search}
+\resumeItemListStart
+\resumeItem{}{A semantic search engine with regularly refreshed data and relevance-based retrieval.}
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubheading{Hooghly Engineering and Technology College}{Kolkata, India}{Bachelor's Degree in Computer Science and Engineering (B.Tech); CGPA: 8.8/10}{Jul 2017 - Aug 2021}
+\resumeSubHeadingListEnd
+\end{document}
