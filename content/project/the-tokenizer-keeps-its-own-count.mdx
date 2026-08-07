@@ -1,13 +1,46 @@
 ---
-title: "the tokenizer keeps its own count"
-publishedAt: "2026-07-29"
-summary: "Hinglish textese saved a few tokens and lost some meaning"
+title: "The Tokenizer Keeps Its Own Count"
+time: "2026"
+description: "Hinglish textese saved a few tokens and lost some meaning"
+url: "https://github.com/Araon/swaspeak"
 tags:
   - Engineering
   - AI
   - Language
   - Research
+index: 9
 ---
+
+## The project
+
+Swaspeak tests whether romanized Hindi-English code-mixed textese can reduce
+LLM token use while preserving meaning. The repository contains the corpus
+analysis, tokenizer comparisons, local-model evaluations, reproducibility
+artifacts, and the current paper.
+
+## What the data says
+
+- `hinglishNorm` text used 12.59% fewer characters than its normalized form,
+  but only 3.86% fewer `o200k_base` tokens.
+- The 15-message controlled set saved 29.72% of characters, but only 5.45% of
+  tokens.
+- On the local model artifacts, token use fell by 2.26% for Llama 3.1 8B and
+  1.80% for Qwen 3 14B.
+- Meaning-unit coverage fell from 89.29% to 73.21% for Llama and from 92.86%
+  to 91.07% for Qwen.
+
+The result is a boundary, not a general compression claim: textese is useful
+for saving human typing effort, but shortening text does not reliably shorten
+what a tokenizer or model has to process. The repository’s [README](https://github.com/Araon/swaspeak)
+and [public preprint](https://github.com/Araon/swaspeak/blob/main/paper/swaspeak_preprint.pdf)
+contain the methods, caveats, and reproducibility instructions.
+
+<Image
+  width={1200}
+  height={720}
+  src="/projects/the-tokenizer-keeps-its-own-count/evidence.svg"
+  caption="Swaspeak controlled-set evidence"
+/>
 
 my friend's boss still writes WhatsApp messages like every character costs
 money.
