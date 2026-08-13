@@ -8,6 +8,10 @@ const contentDir = path.join(rootDir, "content");
 const publicDir = path.join(rootDir, "public");
 const fallbackImagePath = path.join(publicDir, "blog/awake/image.png");
 const fontPath = path.join(publicDir, "fonts/google/space-grotesk-400.ttf");
+const bengaliFontPath = path.join(
+  publicDir,
+  "fonts/google/noto-sans-bengali.ttf",
+);
 
 const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"];
 const force = process.argv.includes("--force");
@@ -187,7 +191,14 @@ function getProjectAccent(slug, tags) {
   return tagAccent ?? getAccent(slug);
 }
 
-async function renderOgImage({ title, summary, slug, coverDataUrl, fontData }) {
+async function renderOgImage({
+  title,
+  summary,
+  slug,
+  coverDataUrl,
+  fontData,
+  bengaliFontData,
+}) {
   const accent = getAccent(slug);
 
   const response = new ImageResponse(
@@ -200,7 +211,7 @@ async function renderOgImage({ title, summary, slug, coverDataUrl, fontData }) {
           height: "100%",
           position: "relative",
           background: "#0a0a0a",
-          fontFamily: "Space Grotesk",
+          fontFamily: "Space Grotesk, Noto Sans Bengali",
           overflow: "hidden",
         },
       },
@@ -339,6 +350,12 @@ async function renderOgImage({ title, summary, slug, coverDataUrl, fontData }) {
         {
           name: "Space Grotesk",
           data: fontData,
+          style: "normal",
+          weight: 400,
+        },
+        {
+          name: "Noto Sans Bengali",
+          data: bengaliFontData,
           style: "normal",
           weight: 400,
         },
@@ -630,6 +647,7 @@ const sections = [
 ];
 
 const fontData = await fs.readFile(fontPath);
+const bengaliFontData = await fs.readFile(bengaliFontPath);
 
 let totalGenerated = 0;
 let totalSkipped = 0;
@@ -676,6 +694,7 @@ for (const section of sections) {
       slug,
       coverDataUrl,
       fontData,
+      bengaliFontData,
     });
 
     await fs.writeFile(outputPath, image);
