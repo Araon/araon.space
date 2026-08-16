@@ -72,10 +72,7 @@ export default async function Home() {
             </Link>
           </li>
           <li className="transition-opacity">
-            <Link href="/now" className="flex items-center gap-2 no-underline">
-              <ArrowUpRightIcon className="h-5 w-5" />
-              <span>What I&apos;m up to now</span>
-            </Link>
+
           </li>
         </ul>
       </div>
