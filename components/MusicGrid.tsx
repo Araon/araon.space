@@ -1,18 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import useSWR from "swr";
-import fetcher from "@/lib/fetcher";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import useSWR from "swr";
 
-type Track = {
-  title: string;
-  artist: string;
-  url: string;
-  coverImage: string;
-  playedAt?: string;
-};
+import fetcher from "@/lib/fetcher";
+import type { Track } from "@/lib/spotify";
+
+const TRACK_GRID_CLASSES =
+  "columns-1 gap-4 sm:columns-2 md:columns-3 xl:columns-5 2xl:columns-6";
 
 function TrackItem({ track, index }: { track: Track; index: number }) {
   const sizeClass =
@@ -63,7 +60,7 @@ function TrackItem({ track, index }: { track: Track; index: number }) {
 // Loading skeleton remains the same
 function LoadingSkeleton() {
   return (
-    <div className="columns-1 gap-4 sm:columns-2 md:columns-3 xl:columns-5 2xl:columns-6">
+    <div className={TRACK_GRID_CLASSES}>
       {[...Array(8)].map((_, i) => {
         const sizeClass = i % 5 === 0 ? "h-96" : i % 3 === 0 ? "h-72" : "h-48";
 
@@ -89,38 +86,29 @@ function TrackError() {
   );
 }
 
-export function TopTracks() {
-  const { data: tracks, error } = useSWR<Track[]>(
-    "/api/spotify/top-tracks",
-    fetcher,
-  );
+function TrackGrid({ endpoint }: { endpoint: string }) {
+  const { data: tracks, error } = useSWR<Track[]>(endpoint, fetcher);
 
   if (error || (tracks && !Array.isArray(tracks))) return <TrackError />;
   if (!tracks) return <LoadingSkeleton />;
 
   return (
-    <div className="columns-1 gap-4 sm:columns-2 md:columns-3 xl:columns-5 2xl:columns-6">
+    <div className={TRACK_GRID_CLASSES}>
       {tracks.map((track, i) => (
-        <TrackItem key={i} track={track} index={i} />
+        <TrackItem
+          key={`${track.url}-${track.playedAt ?? i}`}
+          track={track}
+          index={i}
+        />
       ))}
     </div>
   );
 }
 
+export function TopTracks() {
+  return <TrackGrid endpoint="/api/spotify/top-tracks" />;
+}
+
 export function RecentlyPlayed() {
-  const { data: tracks, error } = useSWR<Track[]>(
-    "/api/spotify/recently-played",
-    fetcher,
-  );
-
-  if (error || (tracks && !Array.isArray(tracks))) return <TrackError />;
-  if (!tracks) return <LoadingSkeleton />;
-
-  return (
-    <div className="columns-1 gap-4 sm:columns-2 md:columns-3 xl:columns-5 2xl:columns-6">
-      {tracks.map((track, i) => (
-        <TrackItem key={i} track={track} index={i} />
-      ))}
-    </div>
-  );
+  return <TrackGrid endpoint="/api/spotify/recently-played" />;
 }

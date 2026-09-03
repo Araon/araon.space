@@ -1,67 +1,99 @@
-const express = require('express');
-const querystring = require('querystring');
-const axios = require('axios');
-require('dotenv').config({ path: '.env.local' });
+const { mkdtemp, writeFile } = require("node:fs/promises");
+const http = require("node:http");
+const os = require("node:os");
+const path = require("node:path");
 
-const app = express();
+require("dotenv").config({ path: ".env.local" });
+
+const HOST = "127.0.0.1";
 const PORT = 3001;
+const REDIRECT_URI = `http://${HOST}:${PORT}/callback`;
+const SCOPE = "user-read-recently-played user-top-read";
+const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 
-const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
-const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
-const REDIRECT_URI = `http://localhost:${PORT}/callback`;
-const SCOPE = 'user-read-recently-played user-top-read';
+const clientId = process.env.SPOTIFY_CLIENT_ID;
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
-app.get('/login', (req, res) => {
-  res.redirect('https://accounts.spotify.com/authorize?' +
-    querystring.stringify({
-      response_type: 'code',
-      client_id: CLIENT_ID,
+if (!clientId || !clientSecret) {
+  console.error("SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET are required.");
+  process.exit(1);
+}
+
+function send(res, status, body, contentType = "text/plain; charset=utf-8") {
+  res.writeHead(status, { "Content-Type": contentType });
+  res.end(body);
+}
+
+const server = http.createServer(async (req, res) => {
+  const requestUrl = new URL(req.url ?? "/", REDIRECT_URI);
+
+  if (requestUrl.pathname === "/login") {
+    const authorizeUrl = new URL("https://accounts.spotify.com/authorize");
+    authorizeUrl.search = new URLSearchParams({
+      response_type: "code",
+      client_id: clientId,
       scope: SCOPE,
       redirect_uri: REDIRECT_URI,
-    }));
-});
+    }).toString();
 
-app.get('/callback', async (req, res) => {
-  const code = req.query.code || null;
+    res.writeHead(302, { Location: authorizeUrl.toString() });
+    res.end();
+    return;
+  }
+
+  if (requestUrl.pathname !== "/callback") {
+    send(res, 404, "Not found");
+    return;
+  }
+
+  const authorizationError = requestUrl.searchParams.get("error");
+  const code = requestUrl.searchParams.get("code");
+
+  if (authorizationError || !code) {
+    send(res, 400, authorizationError || "Authorization code is missing");
+    return;
+  }
 
   try {
-    const response = await axios({
-      method: 'post',
-      url: 'https://accounts.spotify.com/api/token',
-      params: {
-        code: code,
-        redirect_uri: REDIRECT_URI,
-        grant_type: 'authorization_code'
-      },
+    const response = await fetch(TOKEN_ENDPOINT, {
+      method: "POST",
       headers: {
-        'Authorization': 'Basic ' + Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'),
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        code,
+        redirect_uri: REDIRECT_URI,
+        grant_type: "authorization_code",
+      }),
     });
+    const data = await response.json();
 
-    const { access_token, refresh_token } = response.data;
-    
-    res.send(`
-      <h1>Success! Here are your tokens:</h1>
-      <p>Add this refresh token to your .env.local file:</p>
-      <pre>SPOTIFY_REFRESH_TOKEN=${refresh_token}</pre>
-      <p>Keep this token safe and never share it publicly!</p>
-    `);
+    if (!response.ok || typeof data.refresh_token !== "string") {
+      throw new Error(
+        data.error_description || "Spotify token exchange failed",
+      );
+    }
+
+    const tokenDirectory = await mkdtemp(
+      path.join(os.tmpdir(), "araon-spotify-"),
+    );
+    const tokenPath = path.join(tokenDirectory, "refresh-token");
+    await writeFile(tokenPath, data.refresh_token, { mode: 0o600 });
+
+    send(
+      res,
+      200,
+      `<h1>Spotify authorization succeeded</h1><p>The refresh token was written to:</p><pre>${tokenPath}</pre><p>The file is readable only by your user.</p>`,
+      "text/html; charset=utf-8",
+    );
   } catch (error) {
-    console.error('Error:', error.response ? error.response.data : error);
-    res.send('Error getting tokens');
+    console.error("Spotify authorization failed:", error.message);
+    send(res, 502, "Spotify authorization failed");
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`
-  🎵 Spotify Token Generator is running!
-  
-  1. Make sure your Spotify app has http://localhost:${PORT}/callback
-     set as a Redirect URI in your Spotify Developer Dashboard
-     
-  2. Visit http://localhost:${PORT}/login to start the authorization process
-  
-  3. After authorizing, you'll get your refresh token to add to .env.local
-  `);
+server.listen(PORT, HOST, () => {
+  console.log(`Spotify authorization helper: http://${HOST}:${PORT}/login`);
+  console.log(`Registered redirect URI: ${REDIRECT_URI}`);
 });

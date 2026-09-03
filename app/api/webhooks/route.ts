@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.CHAT_ID;
 
 export async function POST(req: NextRequest) {
   try {
+    if (!TELEGRAM_BOT_TOKEN || !CHAT_ID) {
+      console.error("Telegram webhook credentials are missing");
+      return NextResponse.json(
+        { error: "Webhook is not configured" },
+        { status: 500 },
+      );
+    }
+
     const body = await req.json();
 
     if (body.type !== "INSERT") {
@@ -26,14 +33,21 @@ export async function POST(req: NextRequest) {
 
     const message = `New comment added to your blog!\n\nPost Link: https://araon.space/blog/${postId}\n\nName: ${author}\nComment: ${content}\n\nIP: https://whatismyipaddress.com/ip/${ip_identity}`;
 
-    // Send the message to Telegram using the bot token and chat ID
-    await axios.post(
+    const response = await fetch(
       `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
       {
-        chat_id: CHAT_ID,
-        text: message,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: message,
+        }),
       },
     );
+
+    if (!response.ok) {
+      throw new Error(`Telegram returned status ${response.status}`);
+    }
 
     return NextResponse.json({ comment: "Comment added" }, { status: 201 });
   } catch (error) {

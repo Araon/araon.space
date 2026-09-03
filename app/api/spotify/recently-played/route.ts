@@ -1,11 +1,19 @@
-import { getRecentlyPlayed } from "@/lib/spotify";
+import { unstable_cache } from "next/cache";
 import { NextResponse } from "next/server";
 
-export const revalidate = 60; // Revalidate every minute
+import { getRecentlyPlayed } from "@/lib/spotify";
+
+export const dynamic = "force-dynamic";
+
+const getCachedRecentlyPlayed = unstable_cache(
+  getRecentlyPlayed,
+  ["spotify-recently-played"],
+  { revalidate: 60 },
+);
 
 export async function GET() {
   try {
-    const tracks = await getRecentlyPlayed();
+    const tracks = await getCachedRecentlyPlayed();
     return NextResponse.json(tracks);
   } catch (error) {
     console.error("Error fetching recently played:", error);

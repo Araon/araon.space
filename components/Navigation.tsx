@@ -1,15 +1,14 @@
 "use client";
 import { Fragment } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
-import Image from "next/image";
-
-import NavLink from "./ui/NavLink";
-import ThemeSwitcher from "./ThemeSwitcher";
-
 import { Popover, Transition } from "@headlessui/react";
 import clsx from "clsx";
+import { useTheme } from "next-themes";
+
+import ThemeSwitcher from "./ThemeSwitcher";
+import NavLink from "./ui/NavLink";
 
 const links = [
   { label: "Stories/Notes", href: "/blog" },
@@ -32,16 +31,19 @@ export default function Navigation() {
         aria-label="Main navigation"
       >
         <Link href="/" className="shrink-0 text-primary" aria-label="Home">
-          <Image height={30} width={30} src="/crown.svg" alt="Araon's logo" className="crown-logo" />
+          <Image
+            height={30}
+            width={30}
+            src="/crown.svg"
+            alt="Araon's logo"
+            className="crown-logo"
+          />
           <span className="crown-emoji hidden text-xl leading-none">👑</span>
         </Link>
         <ul className="hidden items-center gap-1 md:flex" role="list">
           {links.map((link) => (
             <li key={link.href}>
-              <NavLink
-                href={link.href}
-                aria-current={pathname === link.href ? "page" : undefined}
-              >
+              <NavLink href={link.href} active={pathname === link.href}>
                 {link.label}
               </NavLink>
             </li>
@@ -51,7 +53,7 @@ export default function Navigation() {
           {({ open }: { open: boolean }) => (
             <>
               <Popover.Button
-                className="flex items-center gap-1 rounded-lg border-2 border-[#0a76a8] p-1.5 text-secondary focus:ring-0 focus-visible:outline-none min-h-[44px] min-w-[44px]"
+                className="flex min-h-[44px] min-w-[44px] items-center gap-1 rounded-lg border-2 border-[#0a76a8] p-1.5 text-secondary focus:ring-0 focus-visible:outline-none"
                 aria-expanded={open}
                 aria-label="Toggle menu"
               >
@@ -92,7 +94,7 @@ export default function Navigation() {
                         key={link.href}
                         href={link.href}
                         className={clsx(
-                          "rounded-md px-4 py-2 transition-colors hover:text-primary min-h-[44px] flex items-center",
+                          "flex min-h-[44px] items-center rounded-md px-4 py-2 transition-colors hover:text-primary",
                           pathname === link.href
                             ? "bg-tertiary font-medium"
                             : "font-normal",

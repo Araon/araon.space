@@ -31,7 +31,7 @@ export default async function Home() {
             <span className="font-bold">Araon</span>
           </h1>
           <p
-            className="animate-in text-secondary nothing-matrix"
+            className="nothing-matrix animate-in text-secondary"
             style={{ "--index": 1 } as React.CSSProperties}
           >
             Code • Camera • Chaos
@@ -71,16 +71,13 @@ export default async function Home() {
               <span>More ways to connect</span>
             </Link>
           </li>
-          <li className="transition-opacity">
-
-          </li>
         </ul>
       </div>
       <div
         className="flex animate-in flex-col gap-8"
         style={{ "--index": 3 } as React.CSSProperties}
       >
-        <h2 className="text-secondary nothing-matrix">Latest Rambles</h2>
+        <h2 className="nothing-matrix text-secondary">Latest Rambles</h2>
         <PostList posts={posts} />
         <Link
           href="/blog"

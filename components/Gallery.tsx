@@ -29,16 +29,6 @@ type PhotoProps = {
   children?: ReactNode;
 };
 
-export function GetPhotos() {
-  const { data: photosUrl, error: photosError } = useSWR(
-    `/api/prisma/fetchPhotos`,
-    fetcher,
-  );
-
-  if (photosError) return <div>failed to load</div>;
-  return photosUrl;
-}
-
 function Photo({
   src,
   alt,
@@ -94,7 +84,15 @@ function Photo({
         default: {
           type: isMobile ? "tween" : "spring",
           bounce: 0.2,
-          duration: isMobile ? 0.3 : index === 1 ? 0.8 : index === 2 ? 0.85 : index === 3 ? 0.9 : 1,
+          duration: isMobile
+            ? 0.3
+            : index === 1
+              ? 0.8
+              : index === 2
+                ? 0.85
+                : index === 3
+                  ? 0.9
+                  : 1,
           delay: isMobile ? index * 0.05 : index * 0.15,
         },
         opacity: {

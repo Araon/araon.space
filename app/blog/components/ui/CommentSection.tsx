@@ -1,61 +1,53 @@
 "use client";
 
 import { FormEventHandler, useCallback, useState } from "react";
-import DOMPurify from "dompurify";
 import Halo from "@/components/ui/Halo";
 
 export default function CommentSection({ postId }: { postId: string }) {
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>();
   const [isCommentSubmitted, setIsCommentSubmitted] = useState(false);
 
-  const onSubmit: FormEventHandler = useCallback(async (event) => {
-    event.preventDefault();
+  const onSubmit: FormEventHandler = useCallback(
+    async (event) => {
+      event.preventDefault();
 
-    const target = event.target as HTMLFormElement;
-    const data = new FormData(target);
+      const target = event.target as HTMLFormElement;
+      const data = new FormData(target);
 
-    const author = data.get("name")?.toString() ?? "";
-    const content = data.get("comment")?.toString() ?? "";
+      const author = data.get("name")?.toString().trim() ?? "";
+      const content = data.get("comment")?.toString().trim() ?? "";
 
-    const sanitizedAuthor = DOMPurify.sanitize(author);
-    const sanitizedContent = DOMPurify.sanitize(content);
-
-    const trimAuthor = sanitizedAuthor.trim();
-    const trimContent = sanitizedContent.trim();
-
-    console.log("sending data to backend: ", trimContent, trimAuthor);
-
-    const body = JSON.stringify({
-      postId,
-      author: trimAuthor,
-      content: trimContent,
-    });
-
-    const headers = new Headers({
-      "Content-Type": "application/json; charset=utf-8",
-    });
-
-    console.log(body);
-
-    try {
-      const response = await fetch(`/api/prisma/postComments`, {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        headers,
-        body,
+      const body = JSON.stringify({
+        postId,
+        author,
+        content,
       });
 
-      if (response.status === 201) {
-        setIsSuccess(true);
-        setIsCommentSubmitted(true);
-      } else {
+      const headers = new Headers({
+        "Content-Type": "application/json; charset=utf-8",
+      });
+
+      try {
+        const response = await fetch(`/api/prisma/postComments`, {
+          method: "POST",
+          mode: "cors",
+          cache: "no-cache",
+          headers,
+          body,
+        });
+
+        if (response.status === 201) {
+          setIsSuccess(true);
+          setIsCommentSubmitted(true);
+        } else {
+          setIsSuccess(false);
+        }
+      } catch {
         setIsSuccess(false);
       }
-    } catch {
-      setIsSuccess(false);
-    }
-  }, [postId]);
+    },
+    [postId],
+  );
 
   const message =
     isSuccess === false ? (
@@ -88,7 +80,7 @@ export default function CommentSection({ postId }: { postId: string }) {
               type="text"
               name="name"
               id="name"
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-zinc-950 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 min-h-[44px]"
+              className="block min-h-[44px] w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-zinc-950 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               placeholder="Name"
             />
           </div>
@@ -103,7 +95,7 @@ export default function CommentSection({ postId }: { postId: string }) {
               name="comment"
               id="comment"
               rows={2}
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-zinc-950 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 min-h-[44px]"
+              className="block min-h-[44px] w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-zinc-950 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               placeholder="What do you think? I'd love to hear your thoughts..."
             />
           </div>
@@ -112,7 +104,7 @@ export default function CommentSection({ postId }: { postId: string }) {
               type="submit"
               className="group relative mb-2 me-2 inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 p-0.5 text-sm font-medium text-gray-900 focus:outline-none focus:ring-4 focus:ring-red-100 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 dark:focus:ring-red-400"
             >
-              <span className="relative rounded-md bg-white px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-0 dark:bg-zinc-950 min-h-[44px] inline-flex items-center">
+              <span className="relative inline-flex min-h-[44px] items-center rounded-md bg-white px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-0 dark:bg-zinc-950">
                 Post Comment
               </span>
             </button>

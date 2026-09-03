@@ -3,7 +3,7 @@ import path from "node:path";
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 const MAX_BYTES = 1024 * 1024;
-const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
+const IMAGE_EXTENSIONS = new Set([".gif", ".jpg", ".jpeg", ".png", ".webp"]);
 
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -50,7 +50,8 @@ if (oversized.length > 0) {
     console.error(`- ${image.path} (${formatBytes(image.size)})`);
   }
 
-  console.error("\nRun `npm run compress:images` before building.");
+  console.error("\nRun `npm run compress:images` for still images.");
+  console.error("Convert oversized animations to animated WebP.");
   process.exit(1);
 }
 

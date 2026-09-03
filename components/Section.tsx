@@ -1,9 +1,5 @@
-"use client";
-
 import { ReactNode } from "react";
 import clsx from "clsx";
-import { useTheme } from "next-themes";
-
 
 type SectionProps = {
   heading: string;
@@ -16,17 +12,13 @@ export default function Section({
   headingAlignment,
   children,
 }: SectionProps) {
-
-  const { theme } = useTheme();
-
   return (
-    <section className="flex flex-col md:flex-row gap-2 md:gap-9 col-reverse">
+    <section className="col-reverse flex flex-col gap-2 md:flex-row md:gap-9">
       <h2
         className={clsx(
-          "md:w-32 text-secondary shrink-0",
+          "section-heading shrink-0 text-secondary md:w-32",
           headingAlignment === "right" && "md:text-right",
-          theme === "terminal" ? "font-mono tracking-tight" : ""
-          )}
+        )}
       >
         {heading}
       </h2>

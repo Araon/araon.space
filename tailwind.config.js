@@ -23,7 +23,6 @@ module.exports = {
         primary: "var(--gray-12)",
         secondary: "var(--gray-11)",
         tertiary: "var(--gray-9)",
-        brand: "var(--brand)",
         link: "var(--blue-10)",
       },
       backgroundColor: {
@@ -31,7 +30,7 @@ module.exports = {
         secondary: "var(--gray-4)",
         secondaryA: "var(--gray-a4)",
         tertiary: "var(--gray-3)",
-              },
+      },
       borderColor: {
         primary: "var(--gray-6)",
         secondary: "var(--gray-4)",
@@ -55,7 +54,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/typography"),
-  ],
+  plugins: [require("@tailwindcss/typography")],
 };

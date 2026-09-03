@@ -26,10 +26,6 @@ const postComputedFields: ComputedFields = {
     type: "string",
     resolve: (doc) => resolvePublicImage("/blog", getSlug(doc)),
   },
-  og: {
-    type: "string",
-    resolve: (doc) => resolvePublicImage("/blog", getSlug(doc)),
-  },
   readingTime: {
     type: "string",
     resolve: (doc) => {

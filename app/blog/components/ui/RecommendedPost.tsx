@@ -44,45 +44,6 @@ export default function RecommendedPost({ posts }: RecommendedPostProps) {
     },
   };
 
-  if (!posts || posts.length === 0) {
-    return (
-      <div className="space-y-6">
-        <div className="relative">
-          <h2
-            className="text-xl font-bold"
-            onMouseEnter={() => setShowTooltip(true)}
-            onMouseLeave={() => setShowTooltip(false)}
-            onClick={() => setShowTooltip((prev) => !prev)}
-          >
-            Recommended
-          </h2>
-          {/* Tooltip */}
-          <AnimatePresence>
-            {showTooltip && (
-              <motion.div
-                variants={tooltipVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="text-primary-foreground absolute bottom-full left-0 z-10 mb-2 w-64 rounded-lg bg-primary p-3 text-sm shadow-lg"
-              >
-                <div className="relative">
-                  Posts recommended based on view counts, excluding very recent
-                  posts.
-                  {/* Tooltip arrow */}
-                  <div className="absolute -bottom-2 left-4 h-0 w-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-primary"></div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-        <div className="text-secondary">
-          <p>Coming soon...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-6">
       <div className="relative">
@@ -94,7 +55,6 @@ export default function RecommendedPost({ posts }: RecommendedPostProps) {
         >
           Recommended
         </h2>
-        {/* Tooltip */}
         <AnimatePresence>
           {showTooltip && (
             <motion.div
@@ -113,8 +73,8 @@ export default function RecommendedPost({ posts }: RecommendedPostProps) {
         </AnimatePresence>
       </div>
       <div className="space-y-5">
-        {posts.map((post, index) => {
-          const { publishedAt, slug, title, image, summary, views } = post;
+        {posts.map((post) => {
+          const { publishedAt, slug, title, image, views } = post;
 
           return (
             <article key={slug} className="group">
@@ -135,11 +95,6 @@ export default function RecommendedPost({ posts }: RecommendedPostProps) {
                     <h3 className="line-clamp-2 text-base font-semibold leading-snug transition-colors group-hover:text-primary">
                       {title}
                     </h3>
-                    {/* {summary && (
-                      <p className="line-clamp-2 text-sm leading-relaxed text-secondary/80">
-                        {summary}
-                      </p>
-                    )} */}
                     <div className="flex items-center gap-2 pt-0.5">
                       <time
                         dateTime={publishedAt}

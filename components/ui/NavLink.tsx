@@ -1,24 +1,22 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 import clsx from "clsx";
-import { usePathname } from "next/navigation";
 
 type NavLinkProps = {
   href: string;
   children: ReactNode;
+  active: boolean;
 };
 
-export default function NavLink({ href, children }: NavLinkProps) {
-  const pathname = `/${usePathname().split("/")[1]}`; // active paths on dynamic subpages
-  const active = pathname === href;
-
+export default function NavLink({ href, children, active }: NavLinkProps) {
   return (
     <Link
       className={clsx(
-        "px-4 py-2 rounded-lg text-sm hover:text-primary transition-colors min-h-[44px] flex items-center",
-        active ? "bg-secondaryA text-primary" : "text-secondary"
+        "flex min-h-[44px] items-center rounded-lg px-4 py-2 text-sm transition-colors hover:text-primary",
+        active ? "bg-secondaryA text-primary" : "text-secondary",
       )}
       href={href}
+      aria-current={active ? "page" : undefined}
     >
       {children}
     </Link>

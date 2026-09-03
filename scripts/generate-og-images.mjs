@@ -113,7 +113,12 @@ async function findCoverImage(section, slug, image) {
   }
 
   for (const ext of IMAGE_EXTENSIONS) {
-    const imagePath = path.join(publicDir, section.publicPath, slug, `image${ext}`);
+    const imagePath = path.join(
+      publicDir,
+      section.publicPath,
+      slug,
+      `image${ext}`,
+    );
     if (await pathExists(imagePath)) {
       return imagePath;
     }
@@ -312,36 +317,30 @@ async function renderOgImage({
           summary,
         ),
       ),
-      el(
-        "div",
-        {
-          style: {
-            position: "absolute",
-            right: 58,
-            bottom: 54,
-            display: "flex",
-            width: 190,
-            height: 190,
-            border: "2px solid rgba(0,0,0,0.42)",
-            borderRadius: 999,
-          },
+      el("div", {
+        style: {
+          position: "absolute",
+          right: 58,
+          bottom: 54,
+          display: "flex",
+          width: 190,
+          height: 190,
+          border: "2px solid rgba(0,0,0,0.42)",
+          borderRadius: 999,
         },
-      ),
-      el(
-        "div",
-        {
-          style: {
-            position: "absolute",
-            right: 126,
-            bottom: 122,
-            display: "flex",
-            width: 54,
-            height: 54,
-            background: "#0a0a0a",
-            borderRadius: 999,
-          },
+      }),
+      el("div", {
+        style: {
+          position: "absolute",
+          right: 126,
+          bottom: 122,
+          display: "flex",
+          width: 54,
+          height: 54,
+          background: "#0a0a0a",
+          borderRadius: 999,
         },
-      ),
+      }),
     ),
     {
       width: 1200,
@@ -453,7 +452,9 @@ async function renderProjectOgImage({
         el("span", null, "araon.space"),
         el("span", { style: { color: accent } }, "/"),
         el("span", null, "project"),
-        time ? el("span", { style: { color: "rgba(255,255,255,0.42)" } }, time) : null,
+        time
+          ? el("span", { style: { color: "rgba(255,255,255,0.42)" } }, time)
+          : null,
       ),
       el(
         "div",
@@ -651,15 +652,31 @@ const bengaliFontData = await fs.readFile(bengaliFontPath);
 
 let totalGenerated = 0;
 let totalSkipped = 0;
+let totalPruned = 0;
 
 for (const section of sections) {
   const sourceDir = path.join(contentDir, section.contentPath);
   const outputDir = path.join(publicDir, section.outputPath);
-  const files = (await fs.readdir(sourceDir)).filter((file) => file.endsWith(".mdx"));
+  const files = (await fs.readdir(sourceDir)).filter((file) =>
+    file.endsWith(".mdx"),
+  );
+  const slugs = new Set(files.map((file) => path.basename(file, ".mdx")));
   let generated = 0;
   let skipped = 0;
+  let pruned = 0;
 
   await fs.mkdir(outputDir, { recursive: true });
+
+  const generatedFiles = (await fs.readdir(outputDir)).filter((file) =>
+    file.endsWith(".png"),
+  );
+
+  for (const file of generatedFiles) {
+    if (!slugs.has(path.basename(file, ".png"))) {
+      await fs.unlink(path.join(outputDir, file));
+      pruned += 1;
+    }
+  }
 
   for (const file of files) {
     const slug = path.basename(file, ".mdx");
@@ -674,7 +691,9 @@ for (const section of sections) {
     const frontmatter = parseFrontmatter(content);
     const summary = frontmatter[section.summaryField];
     const ogSummary =
-      section.name === "blog" && frontmatter.hideSummary === "true" ? "" : summary;
+      section.name === "blog" && frontmatter.hideSummary === "true"
+        ? ""
+        : summary;
 
     if (!frontmatter.title || !summary) {
       throw new Error(`Missing title or ${section.summaryField} in ${file}`);
@@ -703,9 +722,12 @@ for (const section of sections) {
 
   totalGenerated += generated;
   totalSkipped += skipped;
+  totalPruned += pruned;
   console.log(
-    `Generated ${generated} ${section.name} OG images. Skipped ${skipped} existing images.`,
+    `Generated ${generated} ${section.name} OG images. Skipped ${skipped} existing images. Pruned ${pruned} stale images.`,
   );
 }
 
-console.log(`Generated ${totalGenerated} OG images. Skipped ${totalSkipped} existing images.`);
+console.log(
+  `Generated ${totalGenerated} OG images. Skipped ${totalSkipped} existing images. Pruned ${totalPruned} stale images.`,
+);
