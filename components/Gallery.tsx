@@ -43,6 +43,7 @@ function Photo({
   children,
 }: PhotoProps) {
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     setIsMobile(window.matchMedia("(pointer: coarse)").matches);
@@ -102,7 +103,7 @@ function Photo({
         },
         scale: { duration: 0.12 },
       }}
-      animate={{ width, height, rotate, y: 0, opacity: 1 }}
+      animate={{ width, height, rotate, y: 0, opacity: isLoaded ? 1 : 0 }}
       drag={isMobile ? false : true}
       whileTap={isMobile ? undefined : "flipped"}
       whileDrag={isMobile ? undefined : { scale: 1.1, cursor: "grabbing" }}
@@ -126,9 +127,10 @@ function Photo({
             alt={alt}
             width={newWidth}
             height={newHeight}
-            className="pointer-events-none absolute inset-0 h-full w-full rounded-2xl bg-gray-400 object-cover"
+            className="pointer-events-none absolute inset-0 h-full w-full rounded-2xl object-cover"
             priority={index <= 2}
             aria-describedby={`photo-${index}-description`}
+            onLoad={() => setIsLoaded(true)}
           />
           {meta && (
             <span id={`photo-${index}-description`} className="sr-only">
@@ -194,11 +196,9 @@ export default function Gallery() {
 
   if (!photosUrl) {
     return (
-      <div className="grid animate-pulse grid-cols-1 gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3 lg:gap-12">
-        {[1, 2, 3, 4, 5, 6].map((i) => (
-          <div key={i} className="h-64 rounded-2xl bg-gray-200"></div>
-        ))}
-      </div>
+      <p role="status" className="sr-only">
+        Loading photographs
+      </p>
     );
   }
 
