@@ -258,6 +258,43 @@
     overflow-x: hidden;
     background-color: var(--gray-1);
   }
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid var(--gray-11);
+    outline-offset: 4px;
+  }
+
+  :where(h1, h2, h3, h4, [id]) {
+    scroll-margin-top: 6rem;
+  }
+}
+
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 50;
+  transform: translateY(calc(-100% - 2rem));
+  border: 1px solid var(--gray-6);
+  border-radius: 0.5rem;
+  background: var(--gray-1);
+  color: var(--gray-12);
+  padding: 0.75rem 1rem;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 input:-webkit-autofill,

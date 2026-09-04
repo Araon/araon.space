@@ -106,9 +106,11 @@ export default function RootLayout({
             <PostHogPageview />
           </Suspense>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <a href="#main-content" className="skip-link">Skip to content</a>
             <Navigation />
             <main
               id="main-content"
+              tabIndex={-1}
               className={
                 "mx-auto max-w-[700px] px-6 pb-24 pt-16 md:px-8 md:pb-44 md:pt-20"
               }

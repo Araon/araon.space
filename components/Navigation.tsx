@@ -21,11 +21,12 @@ const links = [
 ];
 
 export default function Navigation() {
-  const pathname = `/${usePathname().split("/")[1]}`; // active paths on dynamic subpages
+  const currentPath = usePathname();
+  const pathname = `/${currentPath.split('/')[1]}`;
   const { theme } = useTheme();
 
   return (
-    <header className={clsx("sticky top-0 z-20 bg-primary")}>
+    <header className="relative z-20 bg-primary">
       <nav
         className="lg mx-auto flex max-w-[700px] items-center justify-between gap-3 px-4 py-3 md:px-6"
         aria-label="Main navigation"
@@ -49,8 +50,8 @@ export default function Navigation() {
             </li>
           ))}
         </ul>
-        <Popover className="relative ml-auto md:hidden">
-          {({ open }: { open: boolean }) => (
+        <Popover key={currentPath} className="relative ml-auto md:hidden">
+          {({ open, close }) => (
             <>
               <Popover.Button
                 className="flex min-h-[44px] min-w-[44px] items-center gap-1 rounded-lg border-2 border-[#0a76a8] p-1.5 text-secondary focus:ring-0 focus-visible:outline-none"
@@ -85,7 +86,7 @@ export default function Navigation() {
                 leaveTo="opacity-0 translate-y-1"
               >
                 <Popover.Panel
-                  className="absolute right-0 z-10 mt-2  w-48 origin-top-right overflow-auto rounded-xl border-2 border-[#0a76a8] bg-white p-2 text-base shadow-lg focus:outline-none dark:bg-black sm:text-sm"
+                  className="absolute right-0 z-10 mt-2  w-48 origin-top-right overflow-auto rounded-xl border-2 border-[#0a76a8] bg-primary p-2 text-base shadow-lg focus:outline-none sm:text-sm"
                   style={theme === "terminal" ? { background: "#040605" } : {}}
                 >
                   <div className="grid">
@@ -93,6 +94,8 @@ export default function Navigation() {
                       <Link
                         key={link.href}
                         href={link.href}
+                        onClick={() => close()}
+                        aria-current={pathname === link.href ? 'page' : undefined}
                         className={clsx(
                           "flex min-h-[44px] items-center rounded-md px-4 py-2 transition-colors hover:text-primary",
                           pathname === link.href

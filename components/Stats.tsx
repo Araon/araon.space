@@ -39,28 +39,27 @@ export default function Stats() {
     revalidateOnFocus: false,
     dedupingInterval: 60000,
     refreshInterval: 300000,
-    fallbackData: { stars: 0 }
+    errorRetryCount: 2,
   };
 
-  const { data: githubData, error: githubError } = useSWR(
+  const { data: githubData } = useSWR(
     `/api/github?username=${username}`,
     fetcher,
     swrConfig
   );
   
-  const { data: postsData, error: postsError } = useSWR(
+  const { data: postsData } = useSWR(
     `/api/prisma/hitsTotal`,
     fetcher,
-    { ...swrConfig, fallbackData: { total: 0 } }
+    swrConfig
   );
 
-  if (githubError || postsError) {
-    return (
-      <div className="text-red-500 text-sm">
-        Unable to load stats. Please try again later.
-      </div>
-    );
-  }
+  const stars = typeof githubData?.stars === 'number' && Number.isFinite(githubData.stars) && githubData.stars >= 0
+    ? githubData.stars
+    : undefined;
+  const views = typeof postsData?.total === 'number' && Number.isFinite(postsData.total) && postsData.total >= 0
+    ? postsData.total
+    : undefined;
 
   return (
     <ul
@@ -76,12 +75,12 @@ export default function Stats() {
           href={"https://github.com/araon"}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`${githubData?.stars || 0} GitHub repository stars`}
+          aria-label={stars === undefined ? 'GitHub repository stars unavailable' : `${stars} GitHub repository stars`}
         >
           <FaGithub className="text-xl" aria-hidden="true" />
           <div>
             <FlipNumber>
-              {githubData?.stars ? addCommas(githubData.stars) : "0"}
+              {stars === undefined ? '—' : addCommas(stars)}
             </FlipNumber>
             <span> Repository Stars</span>
           </div>
@@ -91,12 +90,12 @@ export default function Stats() {
         <Link 
           className="flex items-center gap-3 hover:text-primary transition-colors" 
           href="/blog"
-          aria-label={`${postsData?.total || 0} total blog views`}
+          aria-label={views === undefined ? 'Total blog views unavailable' : `${views} total blog views`}
         >
           <ArrowTrendingUpIcon className="h-5 w-5" aria-hidden="true" />
           <div>
             <FlipNumber>
-              {postsData?.total ? addCommas(postsData.total) : "0"}
+              {views === undefined ? '—' : addCommas(views)}
             </FlipNumber>
             <span> Total Blog Views</span>
           </div>
