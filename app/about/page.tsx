@@ -181,25 +181,21 @@ export default function About() {
 const workplaces = [
   {
     company: "ToneTag",
-    time: "Present",
     imageSrc: ToneTagLogo,
     link: "https://www.tonetag.com",
   },
   {
     company: "Nagarro",
-    time: "1 Year",
     imageSrc: NagarroLogo,
     link: "https://www.nagarro.com",
   },
   {
     company: "GrowthX",
-    time: "1 Year",
     imageSrc: growthxLogo,
     link: "https://www.growthx.club",
   },
   {
     company: "Onlinesales.ai",
-    time: "3 Years",
     imageSrc: onlinesalesLogo,
     link: "https://Onlinesales.ai",
   },
