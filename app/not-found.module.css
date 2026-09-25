@@ -1,0 +1,64 @@
+.page {
+  position: fixed;
+  inset: 0;
+  height: 100dvh;
+  overflow: hidden;
+  background: #0c0c0c;
+  color: #fff;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+}
+
+.image {
+  object-fit: cover;
+  /* Keep the characters and speech bubble in the portrait crop. */
+  object-position: 14% center;
+}
+
+.message {
+  position: absolute;
+  top: max(6rem, calc(env(safe-area-inset-top) + 5rem));
+  left: 1.5rem;
+  right: 1.5rem;
+  text-align: center;
+  text-shadow: 0 2px 8px #000;
+}
+
+.home {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 0.25rem;
+  color: #fff;
+}
+
+:global(html):has(.page),
+:global(body):has(.page) {
+  overflow: hidden;
+  height: 100dvh;
+}
+
+:global(body):has(.page) :global(#main-content) {
+  padding: 0;
+  max-width: none;
+}
+
+:global(body):has(.page) :global(header):has(:global(nav[aria-label="Main navigation"])) {
+  background: transparent;
+  --gray-12: #fff;
+  --gray-11: #ddd;
+}
+
+:global(body):has(.page) :global(nav[aria-label="Main navigation"]) {
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .image {
+    object-position: left center;
+  }
+}
