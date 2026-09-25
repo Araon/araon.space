@@ -1,8 +1,17 @@
 import Image from "next/image";
+import type { Metadata } from "next";
 import avatar from "public/avatar.jpg";
 
 import Link from "@/components/ui/Link";
 import ConnectLinks from "@/components/ConnectLinks";
+
+export const metadata: Metadata = {
+  title: "Links | Araon",
+  description: "Find Araon across the web.",
+  alternates: {
+    canonical: "/links",
+  },
+};
 
 export default function Links() {
   return (

@@ -91,7 +91,8 @@ export default function Post({ post, mousePosition, priority = false }: PostProp
             <Image
               src={image}
               alt={title}
-              fill
+              width={96}
+              height={96}
               sizes="96px"
               priority={priority}
               className="object-cover rounded"

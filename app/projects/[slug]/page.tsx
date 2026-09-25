@@ -28,6 +28,9 @@ export async function generateMetadata({
   return {
     title: `${project.title} | Araon`,
     description: project.description,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
       title: project.title,
       description: project.description,
@@ -62,6 +65,31 @@ export default function Project({ params }: { params: any }) {
 
   return (
     <div className="flex flex-col gap-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            name: post.title,
+            description: post.description,
+            url: `https://araon.space/projects/${post.slug}`,
+            image: `https://araon.space/og/projects/${post.slug}.png`,
+            dateCreated: post.time,
+            keywords: post.tags?.join(", "),
+            author: {
+              "@type": "Person",
+              name: "Soumik Ghosh",
+              alternateName: "Araon",
+              url: "https://araon.space/about",
+            },
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": `https://araon.space/projects/${post.slug}`,
+            },
+          }),
+        }}
+      />
       <article>
         <div className="flex animate-in flex-col gap-3">
           <div className="flex gap-3 text-secondary">

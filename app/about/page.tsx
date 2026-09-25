@@ -21,6 +21,9 @@ import ResumeLink from "./components/ResumeLink";
 export const metadata: Metadata = {
   title: "Me? | Araon",
   description: "very gpu-poor optimist, loves cs, hardware, retro and bikes",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function About() {

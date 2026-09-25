@@ -1,8 +1,17 @@
 import { allPosts } from ".contentlayer/generated";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { RiArrowLeftLine } from "react-icons/ri";
 import Image from 'next/image';
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "All Stories/Notes | Araon",
+  description: "All stories and notes by Araon.",
+  alternates: {
+    canonical: "/blog/all",
+  },
+};
 
 export default function AllPosts() {
   const posts = allPosts

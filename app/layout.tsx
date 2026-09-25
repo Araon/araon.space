@@ -31,9 +31,13 @@ const matrixSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Home | Araon",
-  description: "Code • Camera • Chaos",
+  title: "Araon | Code, Camera & Chaos",
+  description:
+    "Code, camera, and chaos: Araon's personal projects, photography, music, and notes on technology and life.",
   metadataBase: new URL("https://araon.space"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "araon.space",
     description: "Code • Camera • Chaos",

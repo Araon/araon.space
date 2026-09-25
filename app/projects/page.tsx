@@ -8,6 +8,9 @@ import Halo from "@/components/ui/Halo";
 export const metadata: Metadata = {
   title: "Works | Araon",
   description: "Here are some of the side-projects I've worked on.",
+  alternates: {
+    canonical: "/projects",
+  },
 };
 
 export default function Blog() {

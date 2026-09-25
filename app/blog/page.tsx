@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Stories/Notes | Araon",
   description:
     "I write about programming, stories, and occasionally life updates!",
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 export default async function Blog() {

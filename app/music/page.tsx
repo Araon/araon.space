@@ -5,6 +5,9 @@ import { TopTracks, RecentlyPlayed } from "@/components/MusicGrid";
 export const metadata: Metadata = {
   title: "Music | Araon",
   description: "Songs that makes it worth while.",
+  alternates: {
+    canonical: "/music",
+  },
 };
 
 export default function MusicPage() {

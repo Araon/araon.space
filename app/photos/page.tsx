@@ -6,6 +6,9 @@ import Gallery from "@/components/Gallery";
 export const metadata: Metadata = {
   title: "Photographs | Araon",
   description: "Some photos I took",
+  alternates: {
+    canonical: "/photos",
+  },
 };
 
 export default function Photos() {
