@@ -40,6 +40,7 @@
 :global(body):has(.page) {
   overflow: hidden;
   height: 100dvh;
+  background-color: #0c0c0c;
 }
 
 :global(body):has(.page) :global(#main-content) {

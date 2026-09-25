@@ -8,6 +8,10 @@ import styles from "./not-found.module.css";
 export const metadata: Metadata = {
   title: "404 | Araon",
   description: "Uh oh! This page does not exist",
+  // Next.js can send its minimal error document before mounting this page.
+  // Give that document a dark canvas before styles and the image arrive.
+  colorScheme: "dark",
+  themeColor: "#0c0c0c",
 };
 
 const Custom404 = (): JSX.Element => (
