@@ -53,7 +53,20 @@
   --gray-11: #ddd;
 }
 
+:global(body):has(.page) :global(header):has(:global(nav[aria-label="Main navigation"]))::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -1.5rem;
+  pointer-events: none;
+  background: rgb(0 0 0 / 20%);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 20%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 20%, transparent 100%);
+}
+
 :global(body):has(.page) :global(nav[aria-label="Main navigation"]) {
+  position: relative;
   color: #fff;
 }
 
