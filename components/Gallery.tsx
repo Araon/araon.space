@@ -15,9 +15,26 @@ const ticketingFont = localFont({
   display: "swap",
 });
 
+const handwrittenFont = localFont({
+  src: [
+    {
+      path: "../public/fonts/google/caveat-400.ttf",
+      weight: "400",
+    },
+    {
+      path: "../public/fonts/google/caveat-500.ttf",
+      weight: "500",
+    },
+  ],
+  display: "swap",
+});
+
 type PhotoProps = {
   src: StaticImageData | string;
   meta?: ReactNode;
+  views: number;
+  date?: string;
+  location?: string;
   filename?: string;
   alt: string;
   width: number;
@@ -40,6 +57,9 @@ function Photo({
   index,
   flipDirection,
   meta,
+  views,
+  date,
+  location,
   children,
 }: PhotoProps) {
   const [isMobile, setIsMobile] = useState(false);
@@ -149,24 +169,73 @@ function Photo({
             transform: "rotateY(180deg)",
           }}
         >
-          <Halo strength={50} className="flex items-center">
+          <Halo strength={50}>
             <span className="absolute h-[500px] w-[500px] rotate-[-20deg] bg-[url('/photopaper.png')] bg-[length:280px] bg-repeat" />
-            <div className="z-[1] px-6">
-              <div
-                className={clsx(
-                  ticketingFont.className,
-                  "flex flex-col gap-1 uppercase",
-                )}
-              >
-                <p className="text-sm text-secondary">{fileName}</p>
-                {meta && <p className="text-xl text-secondary">{meta}</p>}
+            <p
+              className={clsx(
+                handwrittenFont.className,
+                "absolute left-5 top-5 z-[1] text-xl font-medium tabular-nums leading-none text-secondary",
+              )}
+            >
+              {views.toLocaleString()}
+            </p>
+            <div className="relative z-[1] grid h-full grid-rows-[minmax(0,1fr)_auto] px-6 pb-5 pt-5">
+              <div className="flex min-h-0 items-center pr-5">
+                <div
+                  className={clsx(
+                    ticketingFont.className,
+                    "flex flex-col gap-1 uppercase",
+                  )}
+                >
+                  <p className="text-sm text-secondary">{fileName}</p>
+                  {meta && (
+                    <p className="text-[clamp(0.875rem,1.8vw,1.25rem)] leading-tight text-secondary">
+                      {meta}
+                    </p>
+                  )}
+                </div>
               </div>
+              {(date || location) && (
+                <div
+                  className={clsx(
+                    handwrittenFont.className,
+                    "max-w-[70%] translate-x-1 rotate-[1.5deg] justify-self-end text-right font-medium leading-none text-[#74685e]",
+                  )}
+                >
+                  {date && (
+                    <p
+                      className={clsx(
+                        ticketingFont.className,
+                        "text-secondary/70 mb-1 text-[clamp(0.65rem,1.2vw,0.75rem)] font-normal tracking-[0.12em]",
+                      )}
+                    >
+                      {date}
+                    </p>
+                  )}
+                  {location && (
+                    <p className="text-[clamp(0.65rem,1.2vw,0.75rem)] leading-tight">
+                      {location}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </Halo>
         </div>
       </motion.div>
     </motion.div>
   );
+}
+
+function formatPhotoDate(date: string | null) {
+  if (!date) return undefined;
+
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    timeZone: "UTC",
+    year: "numeric",
+  }).format(new Date(date));
 }
 
 export default function Gallery() {
@@ -213,7 +282,10 @@ export default function Gallery() {
         <Photo
           key={photo.photo_url}
           src={photo.photo_url}
-          meta={photo.views + " " + photo.alt_text}
+          meta={photo.alt_text}
+          views={photo.views}
+          date={formatPhotoDate(photo.published_at)}
+          location={photo.location ?? undefined}
           alt={photo.alt_text}
           width={photo.width / 12}
           height={photo.height / 12}

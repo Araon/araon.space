@@ -9,6 +9,8 @@ export async function GET() {
         photo_id: false,
         photo_url: true,
         alt_text: true,
+        published_at: true,
+        location: true,
         is_published: true,
         color: true,
         views: true,

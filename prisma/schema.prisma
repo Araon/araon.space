@@ -24,6 +24,8 @@ model Photos {
   photo_id   String   @unique
   photo_url  String
   alt_text   String?
+  published_at DateTime?
+  location   String?
   is_published Boolean @default(true)
   color      String
   views      Int
