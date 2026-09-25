@@ -33,9 +33,12 @@ const Custom404 = (): JSX.Element => (
       </figcaption>
     </figure>
     <div className={styles.message}>
-      <h1 className="text-lg font-medium">404 — Took a wrong turn at Orion.</h1>
-      <Link href="/" className={styles.home} aria-label="Back to Earth — return home" underline>
-        Back to Earth
+      <h1 className={styles.heading}>
+        <span className={styles.code}>404</span>
+        <span className={styles.subtitle}>Page not found</span>
+      </h1>
+      <Link href="/" className={styles.home}>
+        Return home <span aria-hidden="true">↗</span>
       </Link>
     </div>
   </div>

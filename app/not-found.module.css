@@ -32,8 +32,55 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  margin-top: 0.25rem;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding: 0.625rem 1.25rem;
+  border: 1px solid rgb(255 255 255 / 25%) !important;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 7%);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: background-color 160ms ease, border-color 160ms ease;
   color: #fff;
+}
+
+.home:hover,
+.home:focus-visible {
+  background: rgb(255 255 255 / 15%);
+  border-color: rgb(255 255 255 / 55%) !important;
+}
+
+.home:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.code {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: min(clamp(5rem, 12vw, 9rem), 18svh);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(255 255 255 / 65%);
+  text-shadow: none;
+}
+
+.subtitle {
+  color: rgb(255 255 255 / 80%);
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
 }
 
 :global(html):has(.page),
