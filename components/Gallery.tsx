@@ -16,16 +16,8 @@ const ticketingFont = localFont({
 });
 
 const handwrittenFont = localFont({
-  src: [
-    {
-      path: "../public/fonts/google/caveat-400.ttf",
-      weight: "400",
-    },
-    {
-      path: "../public/fonts/google/caveat-500.ttf",
-      weight: "500",
-    },
-  ],
+  src: "../public/fonts/Handwritten.ttf",
+  weight: "500",
   display: "swap",
 });
 
@@ -203,12 +195,7 @@ function Photo({
                   )}
                 >
                   {date && (
-                    <p
-                      className={clsx(
-                        ticketingFont.className,
-                        "text-secondary/70 mb-1 text-[clamp(0.65rem,1.2vw,0.75rem)] font-normal tracking-[0.12em]",
-                      )}
-                    >
+                    <p className="text-secondary/70 mb-1 text-[clamp(0.65rem,1.2vw,0.75rem)] font-normal tracking-[0.12em]">
                       {date}
                     </p>
                   )}
